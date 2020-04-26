@@ -1,0 +1,19 @@
+div {
+  background: #FFFAF0;
+}
+
+a:link {
+  color: #3A86FF;
+}
+
+a:visited {
+  color: #4181A4;
+}
+
+a:active {
+  color: #E76F91;
+}
+
+a:hover {
+  color: #513B56;
+}

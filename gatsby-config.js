@@ -1,14 +1,17 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `mojaie.github.io`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Seiji Matsuoka`,
+      summary: `chem|bio生乾きエンジニア`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    description: `ケモインフォ関連`,
+    siteUrl: `https://mojaie.github.io/`,
+    license: `CC BY 4.0`,
+    licenseURL: `https://creativecommons.org/licenses/by/4.0/legalcode`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `mojaie`,
+      github: `mojaie`
     },
   },
   plugins: [
@@ -50,12 +53,6 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
-      },
-    },
     `gatsby-plugin-feed`,
     {
       resolve: `gatsby-plugin-manifest`,

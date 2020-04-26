@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import kebabCase from "lodash/kebabCase"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -8,34 +9,60 @@ import { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
-  const siteTitle = data.site.siteMetadata.title
+  const metadata = {
+    title: data.site.siteMetadata.title,
+    author: data.site.siteMetadata.author.name,
+    license: data.site.siteMetadata.license,
+    licenseURL: data.site.siteMetadata.licenseURL
+  }
   const { previous, next } = pageContext
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} metadata={metadata}>
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
       <article>
         <header>
-          <h1
+          <h2
             style={{
               marginTop: rhythm(1),
               marginBottom: 0,
             }}
           >
             {post.frontmatter.title}
-          </h1>
-          <p
+          </h2>
+          <div
+            style={{
+              ...scale(-1 / 5),
+              display: `block`,
+            }}
+          >
+            {post.frontmatter.date}
+          </div>
+          <div
             style={{
               ...scale(-1 / 5),
               display: `block`,
               marginBottom: rhythm(1),
             }}
-          >
-            {post.frontmatter.date}
-          </p>
+          >Tags:
+          
+          {post.frontmatter.tags === null || post.frontmatter.tags.map(tag => {
+            return (
+              <span
+                key={tag}
+                style={{
+                  marginLeft: rhythm(0.2),
+                  marginRight: rhythm(0.2),
+                }}
+              >
+                <Link to={`tags/${kebabCase(tag)}`}>{tag}</Link>
+              </span>
+            )
+          })}
+          </div>
         </header>
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
         <hr
@@ -85,6 +112,12 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        author {
+          name
+          summary
+        }
+        license
+        licenseURL
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
@@ -94,6 +127,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        tags
         description
       }
     }

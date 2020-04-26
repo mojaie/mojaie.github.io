@@ -7,11 +7,18 @@ import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
 
 const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata.title
+  const metadata = {
+    title: data.site.siteMetadata.title,
+    author: data.site.siteMetadata.author.name,
+    license: data.site.siteMetadata.license,
+    licenseURL: data.site.siteMetadata.licenseURL
+  }
+  const isdev = process.env.NODE_ENV !== `production`
   const posts = data.allMarkdownRemark.edges
+    .filter(edge => isdev || edge.node.frontmatter.published)
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} metadata={metadata}>
       <SEO title="All posts" />
       <Bio />
       {posts.map(({ node }) => {
@@ -19,15 +26,17 @@ const BlogIndex = ({ data, location }) => {
         return (
           <article key={node.fields.slug}>
             <header>
-              <h3
+              <h2
                 style={{
-                  marginBottom: rhythm(1 / 4),
+                  fontSize: rhythm(0.8),
+                  marginTop: rhythm(2.5),
+                  marginBottom: rhythm(0.5)
                 }}
               >
                 <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
                 </Link>
-              </h3>
+              </h2>
               <small>{node.frontmatter.date}</small>
             </header>
             <section>
@@ -51,6 +60,12 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        author {
+          name
+          summary
+        }
+        license
+        licenseURL
       }
     }
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
@@ -63,6 +78,8 @@ export const pageQuery = graphql`
           frontmatter {
             date(formatString: "MMMM DD, YYYY")
             title
+            tags
+            published
             description
           }
         }
