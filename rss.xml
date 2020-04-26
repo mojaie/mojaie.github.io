@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sun, 26 Apr 2020 14:32:09 GMT</lastBuildDate><item><title><![CDATA[このブログについて]]></title><description><![CDATA[Qiita等に書いていた技術記事やDIY、料理の備忘録としていきたいと思います。
+よろしくお願いいたします。]]></description><link>https://mojaie.github.io/200426/</link><guid isPermaLink="false">https://mojaie.github.io/200426/</guid><pubDate>Sun, 26 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Qiita等に書いていた技術記事やDIY、料理の備忘録としていきたいと思います。
+よろしくお願いいたします。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[表面プラズモン共鳴(SPR)の学習リソースまとめ]]></title><description><![CDATA[生体分子相互作用解析(Biointeraction analysis)に関する学習リソースのまとめです。 (2020年3月4日現在) Webページ SPR pages
+https://www.sprpages.nl/ 言わずと知れた最大手、メーカー問わず幅広い知識を掲載 Dr…]]></description><link>https://mojaie.github.io/spr-bookmarks/</link><guid isPermaLink="false">https://mojaie.github.io/spr-bookmarks/</guid><pubDate>Wed, 04 Mar 2020 05:39:15 GMT</pubDate><content:encoded>&lt;p&gt;生体分子相互作用解析(Biointeraction analysis)に関する学習リソースのまとめです。&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;(2020年3月4日現在)&lt;/p&gt;
+&lt;h2&gt;Webページ&lt;/h2&gt;
+&lt;p&gt;SPR pages
+&lt;a href=&quot;https://www.sprpages.nl/&quot;&gt;https://www.sprpages.nl/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;言わずと知れた最大手、メーカー問わず幅広い知識を掲載&lt;/p&gt;
+&lt;p&gt;Dr.津本 相互作用解析の王道（GE Healthcare）
+&lt;a href=&quot;https://www.gelifesciences.co.jp/technologies/biacore/road/index.html&quot;&gt;https://www.gelifesciences.co.jp/technologies/biacore/road/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;日本国内で独学技術習得のユーザはまず読み込んでいるであろうサイト。創薬の実務で必要な知識と実例を豊富に掲載&lt;/p&gt;
+&lt;h2&gt;文献&lt;/h2&gt;
+&lt;p&gt;Determination of the refractive index increments of small molecules for correction of surface plasmon resonance data.
+&lt;a href=&quot;https://dx.doi.org/10.1006/abio.2000.4726&quot;&gt;https://dx.doi.org/10.1006/abio.2000.4726&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Surface plasmon resonance based assay for the detection and characterization of promiscuous inhibitors.
+&lt;a href=&quot;https://dx.doi.org/10.1021/jm700952v&quot;&gt;https://dx.doi.org/10.1021/jm700952v&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;書籍&lt;/h2&gt;</content:encoded></item><item><title><![CDATA[Juliaでパッケージを作成して公開する]]></title><description><![CDATA[Juliaでパッケージを作成する方法です。 (2020年2月時点での情報です。Juliaのパッケージシステムはまだ開発途上なので、頻繁に変更があります。) プロジェクトの作成 メタファイルの作成 最低限必要と思われるメタファイルは以下です。 Project.toml…]]></description><link>https://mojaie.github.io/julia-package-publish/</link><guid isPermaLink="false">https://mojaie.github.io/julia-package-publish/</guid><pubDate>Mon, 24 Feb 2020 08:54:56 GMT</pubDate><content:encoded>&lt;p&gt;Juliaでパッケージを作成する方法です。&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;(2020年2月時点での情報です。Juliaのパッケージシステムはまだ開発途上なので、頻繁に変更があります。)&lt;/p&gt;
+&lt;h2&gt;プロジェクトの作成&lt;/h2&gt;
+&lt;h2&gt;メタファイルの作成&lt;/h2&gt;
+&lt;p&gt;最低限必要と思われるメタファイルは以下です。&lt;/p&gt;
+&lt;h2&gt;Project.toml&lt;/h2&gt;
+&lt;p&gt;プロジェクトの設定が書かれたファイルです。&lt;/p&gt;
+&lt;h2&gt;Manifest.toml&lt;/h2&gt;
+&lt;p&gt;REPLでプロジェクトにパッケージをインストールすると自動的に生成されます。&lt;/p&gt;
+&lt;h2&gt;.travis.yml&lt;/h2&gt;
+&lt;p&gt;パッケージ登録、バージョンアップの際にTravisCIがPassしていることが自動マージの条件の一つになっています。CIのチェックが通らない場合、毎回レジストリ管理者のレビューが必要になります。&lt;/p&gt;
+&lt;h2&gt;JuliaRegistratorのインストール&lt;/h2&gt;
+&lt;p&gt;JuliaRegistratorはGitHub appsで、下記ページからインストールできます。
+パッケージの更新(新規作成またはバージョンアップ)をレジストリに知らせるツールです。&lt;/p&gt;
+&lt;h2&gt;TagBotのインストール&lt;/h2&gt;
+&lt;p&gt;以前はTagBotもGitHub appsでしたが、2020年2月頃からはGitHub Actionになっています。
+.github/workflows以下に設定ファイルを置くことで、定期的にレジストリの更新をチェックし、&lt;/p&gt;
+&lt;h2&gt;新規パッケージの登録&lt;/h2&gt;
+&lt;p&gt;コミットのコメント蘭、もしくはissueに&lt;code class=&quot;language-text&quot;&gt;@JuliaRegistrator register&lt;/code&gt;と入力して投稿すると、自動的にレジストリにPull requestが送信されます。新しいパッケージを登録するリクエストを送ると、一定期間は登録が保留され、レジストリ管理者らによるレビューが行われます。&lt;/p&gt;
+&lt;h3&gt;パッケージの名前&lt;/h3&gt;
+&lt;p&gt;命名規則に合っているか
+　キャメルケース
+名前が長すぎないか
+パッケージの内容が端的に分かるものか
+アクロニムは原則ダメです
+一般的すぎる名称ではないか&lt;/p&gt;
+&lt;h3&gt;類似したパッケージが既にレジストリに登録されていないか&lt;/h3&gt;
+&lt;h2&gt;バージョンアップ&lt;/h2&gt;
+&lt;p&gt;Project.tomlのバージョンを変更する&lt;/p&gt;
+&lt;p&gt;コミットしてgithubにpush
+(注意:この時点でタグは付けない、register時に重複existing tagでエラーになる)&lt;/p&gt;
+&lt;p&gt;GitHubからコミットにアクセスしてコメント欄に
+&lt;code class=&quot;language-text&quot;&gt;@JuliaRegistrator register&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;自動的にJuliaRegistoryへのPull requestが生成される&lt;/p&gt;
+&lt;p&gt;Pull requestが通ったらTagBotが自動的にタグとリリースとリリースノートを作成&lt;/p&gt;</content:encoded></item></channel></rss>
