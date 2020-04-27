@@ -1,0 +1,1 @@
+{"componentChunkName":"component---src-templates-tags-js","path":"/tags/static-site-generator/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/200427gatsby-blog/"},"frontmatter":{"title":"Gatsbyでブログを構築した際の備忘録"}}}]}},"pageContext":{"tag":"Static site generator"}}}
