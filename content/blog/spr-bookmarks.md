@@ -1,6 +1,6 @@
 ---
 title: "表面プラズモン共鳴(SPR)の学習リソースまとめ"
-date: 2020-03-04T14:39:15+09:00
+date: 2020-03-04
 published: false
 tags:
   - Biointeraction
@@ -9,7 +9,7 @@ description: 生体分子相互作用解析(Biointeraction analysis)に関する
 ---
 
 生体分子相互作用解析(Biointeraction analysis)に関する学習リソースのまとめです。
-<!--more-->
+
 
 (2020年3月4日現在)
 

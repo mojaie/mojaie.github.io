@@ -1,13 +1,13 @@
 import Typography from "typography"
 
 const typography = new Typography({
-  baseFontSize: '18px',
-  baseLineHeight: 1.666,
+  baseFontSize: '16px',
+  baseLineHeight: 1.8,
   headerFontFamily: ['Noto Sans JP', 'sans-serif'],
   bodyFontFamily: ['Noto Sans JP', 'sans-serif'],
   googleFonts: [
     {
-      name: 'Noto Sans JP', styles: ['300'],
+      name: 'Noto Sans JP', styles: ['400'],
     },
   ]
 })

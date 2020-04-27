@@ -1,4 +1,4 @@
-div {
+body {
   background: #FFFAF0;
 }
 
@@ -16,4 +16,15 @@ a:active {
 
 a:hover {
   color: #513B56;
+}
+
+h3 {
+  border-left: 8px double #00cc99;
+  padding-left: 10px;
+}
+
+h4 {
+  border-left: 5px solid #9999ff;
+  margin-left: 10px;
+  padding-left: 10px;
 }
