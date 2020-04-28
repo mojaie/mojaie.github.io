@@ -1,24 +1,19 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
+import kebabCase from "lodash/kebabCase"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
+import { rhythm, scale } from "../utils/typography"
 
 const BlogIndex = ({ data, location }) => {
-  const metadata = {
-    title: data.site.siteMetadata.title,
-    author: data.site.siteMetadata.author.name,
-    license: data.site.siteMetadata.license,
-    licenseURL: data.site.siteMetadata.licenseURL
-  }
   const isdev = process.env.NODE_ENV !== `production`
   const posts = data.allMarkdownRemark.edges
-    .filter(edge => isdev || edge.node.frontmatter.published)
-
+    .filter(edge => isdev || !edge.node.frontmatter.draft)
+  console.log(data)
   return (
-    <Layout location={location} metadata={metadata}>
+    <Layout location={location}>
       <SEO title="All posts" />
       <Bio />
       {posts.map(({ node }) => {
@@ -30,14 +25,43 @@ const BlogIndex = ({ data, location }) => {
                 style={{
                   fontSize: rhythm(0.8),
                   marginTop: rhythm(2.5),
-                  marginBottom: rhythm(0.5)
+                  marginBottom: 0
                 }}
               >
                 <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
                 </Link>
               </h2>
-              <small>{node.frontmatter.date}</small>
+              <div
+                style={{
+                  ...scale(-1 / 5),
+                  display: `block`,
+                }}
+              >
+                Last modified: {node.frontmatter.dateModified}
+              </div>
+              <div
+                style={{
+                  ...scale(-1 / 5),
+                  display: `block`,
+                  marginBottom: rhythm(0.2),
+                }}
+              >Tags:
+              
+              {node.frontmatter.tags === null || node.frontmatter.tags.map(tag => {
+                return (
+                  <span
+                    key={tag}
+                    style={{
+                      marginLeft: rhythm(0.2),
+                      marginRight: rhythm(0.2),
+                    }}
+                  >
+                    <Link to={`tags/${kebabCase(tag)}`}>{tag}</Link>
+                  </span>
+                )
+              })}
+              </div>
             </header>
             <section>
               <p
@@ -68,7 +92,7 @@ export const pageQuery = graphql`
         licenseURL
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(sort: { fields: [frontmatter___dateModified], order: DESC }) {
       edges {
         node {
           excerpt
@@ -76,10 +100,11 @@ export const pageQuery = graphql`
             slug
           }
           frontmatter {
-            date(formatString: "MMMM DD, YYYY")
             title
+            dateCreated(formatString: "MMMM DD, YYYY")
+            dateModified(formatString: "MMMM DD, YYYY")
             tags
-            published
+            draft
             description
           }
         }

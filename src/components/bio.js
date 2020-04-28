@@ -61,7 +61,7 @@ const Bio = () => {
           fontSize: rhythm(0.5)
         }}
       >
-        <strong>{author.name}</strong><br />
+        <strong>Author: {author.name}</strong><br />
         <a href={`https://twitter.com/${social.twitter}`}>
           Twitter
         </a>

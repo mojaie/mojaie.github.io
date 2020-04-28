@@ -2,17 +2,47 @@ const path = require(`path`)
 const _ = require("lodash")
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
+exports.createSchemaCustomization = ({ actions, schema }) => {
+  const { createTypes } = actions
+  const typeDefs = [
+    `type MarkdownRemark implements Node {
+      frontmatter: Frontmatter
+    }`,
+    schema.buildObjectType({
+      name: "Frontmatter",
+      fields: {
+        title: "String!",
+        dateCreated: {
+          type: "Date!",
+          extensions: { dateformat: {} }
+        },
+        dateModified: {
+          type: "Date!",
+          extensions: { dateformat: {} }
+        },
+        draft: {
+          type: "Boolean",
+          resolve: source => source.draft == null ? false : source.draft
+        },
+        tags: "[String!]",
+        description: "String"
+      },
+    })
+  ]
+  createTypes(typeDefs)
+}
+
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const filterQuery = process.env.NODE_ENV === `production` ?
-    `filter: { frontmatter: { published: { eq: true } } }` : ""
+    `filter: { frontmatter: { draft: { eq: false } } }` : ""
   const result = await graphql(
     `
       {
         postsRemark: allMarkdownRemark(
           ${filterQuery}
-          sort: { fields: [frontmatter___date], order: DESC }
+          sort: { fields: [frontmatter___dateModified], order: DESC }
           limit: 1000
         ) {
           edges {

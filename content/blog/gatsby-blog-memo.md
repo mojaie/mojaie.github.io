@@ -1,7 +1,7 @@
 ---
 title: Gatsbyでブログを構築した際の備忘録
-date: 2020-04-27
-published: true
+dateCreated: 2020-04-27
+dateModified: 2020-04-27
 tags:
   - Gatsby
   - React

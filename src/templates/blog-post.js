@@ -9,16 +9,10 @@ import { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
-  const metadata = {
-    title: data.site.siteMetadata.title,
-    author: data.site.siteMetadata.author.name,
-    license: data.site.siteMetadata.license,
-    licenseURL: data.site.siteMetadata.licenseURL
-  }
   const { previous, next } = pageContext
 
   return (
-    <Layout location={location} metadata={metadata}>
+    <Layout location={location}>
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
@@ -39,7 +33,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
               display: `block`,
             }}
           >
-            {post.frontmatter.date}
+            Last modified: {post.frontmatter.dateModified}
           </div>
           <div
             style={{
@@ -126,7 +120,8 @@ export const pageQuery = graphql`
       html
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        dateCreated(formatString: "MMMM DD, YYYY")
+        dateModified(formatString: "MMMM DD, YYYY")
         tags
         description
       }

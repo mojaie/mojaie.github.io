@@ -1,9 +1,27 @@
 import React from "react"
 import { Link } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import "./layout.css"
 
-const Layout = ({ location, metadata, children }) => {
+const Layout = ({ location, children }) => {
+  const { site } = useStaticQuery(
+    graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+            author {
+              name
+              summary
+            }
+            license
+            licenseURL
+          }
+        }
+      }
+    `
+  )
   return (
     <div
       style={{
@@ -28,15 +46,15 @@ const Layout = ({ location, metadata, children }) => {
             }}
             to={`/`}
           >
-            {metadata.title}
+            {site.siteMetadata.title}
           </Link>
         </h1>
       </header>
       <main>{children}</main>
       <footer style={{ fontSize: rhythm(0.5) }}>
         © {new Date().getFullYear()} {` `}
-        {metadata.author} All rights reserved, {` `}
-        <a href={metadata.licenseURL}>{metadata.license}</a>, {` `}
+        {site.siteMetadata.author.name} All rights reserved, {` `}
+        <a href={site.siteMetadata.licenseURL}>{site.siteMetadata.license}</a>, {` `}
         Built with {` `} <a href="https://www.gatsbyjs.org">Gatsby</a>
       </footer>
     </div>

@@ -5,7 +5,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const NotFoundPage = ({ data, location }) => {
-  const metadata = {title: data.site.siteMetadata.title}
+  const metadata = data.site.siteMetadata
 
   return (
     <Layout location={location} metadata={metadata}>
