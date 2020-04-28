@@ -1,1 +1,1 @@
-{"componentChunkName":"component---src-templates-tags-js","path":"/tags/gatsby/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/200427gatsby-blog/"},"frontmatter":{"title":"Gatsbyでブログを構築した際の備忘録"}}}]}},"pageContext":{"tag":"Gatsby"}}}
+{"componentChunkName":"component---src-templates-tags-js","path":"/tags/gatsby/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/gatsby-blog-memo/"},"frontmatter":{"title":"Gatsbyでブログを構築した際の備忘録"}}}]}},"pageContext":{"tag":"Gatsby"}}}
