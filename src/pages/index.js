@@ -7,12 +7,13 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 
-const BlogIndex = ({ data, location }) => {
+
+const BlogIndex = ({ data }) => {
   const isdev = process.env.NODE_ENV !== `production`
   const posts = data.allMarkdownRemark.edges
     .filter(edge => isdev || !edge.node.frontmatter.draft)
   return (
-    <Layout location={location}>
+    <Layout>
       <SEO title="All posts" />
       <Bio />
       {posts.map(({ node }) => {

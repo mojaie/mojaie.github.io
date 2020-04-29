@@ -1,8 +1,10 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-// Components
 import { Link, graphql } from "gatsby"
+
+import Layout from "../components/layout"
+
 
 const Tags = ({ pageContext, data }) => {
   const { tag } = pageContext
@@ -11,8 +13,8 @@ const Tags = ({ pageContext, data }) => {
     totalCount === 1 ? "" : "s"
   } tagged with "${tag}"`
   return (
-    <div>
-      <h1>{tagHeader}</h1>
+    <Layout>
+      <h2>{tagHeader}</h2>
       <ul>
         {edges.map(({ node }) => {
           const { slug } = node.fields
@@ -25,9 +27,10 @@ const Tags = ({ pageContext, data }) => {
         })}
       </ul>
       <Link to="/tags">All tags</Link>
-    </div>
+    </Layout>
   )
 }
+
 Tags.propTypes = {
   pageContext: PropTypes.shape({
     tag: PropTypes.string.isRequired,
@@ -50,6 +53,7 @@ Tags.propTypes = {
     }),
   }),
 }
+
 export default Tags
 
 export const pageQuery = graphql`

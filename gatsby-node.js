@@ -69,7 +69,7 @@ exports.createPages = async ({ graphql, actions }) => {
     throw result.errors
   }
   // Create blog posts pages.
-  const postsPath = path.resolve("src/templates/blog-post.js")
+  const postsPath = path.resolve("src/templates/post.js")
   const posts = result.data.postsRemark.edges
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
@@ -87,7 +87,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
   
   // Tag pages
-  const tagsPath = path.resolve("src/templates/tags.js")
+  const tagsPath = path.resolve("src/templates/tag-posts.js")
   // Make tag pages
   result.data.tagsGroup.group.forEach(tag => {
     createPage({

@@ -4,7 +4,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import { rhythm } from "../utils/typography"
 import "./layout.css"
 
-const Layout = ({ location, children }) => {
+const Layout = ({ children }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
