@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 // Utilities
 import kebabCase from "lodash/kebabCase"
 // Components
-import { Helmet } from "react-helmet"
+import { Helmet } from "react-helmet-async"
 import { Link, graphql } from "gatsby"
 
 const TagsPage = ({

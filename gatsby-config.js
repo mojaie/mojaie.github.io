@@ -11,7 +11,8 @@ module.exports = {
     licenseURL: `https://creativecommons.org/licenses/by/4.0/legalcode`,
     social: {
       twitter: `mojaie`,
-      github: `mojaie`
+      github: `mojaie`,
+      linkedin: `seiji-matsuoka-83802a2b`
     },
   },
   plugins: [
@@ -97,24 +98,22 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: `mojaie.github.io`,
+        short_name: `mojaie.github.io`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `content/assets/shiocombu.png`,
       },
     },
-    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-offline`,
+    `gatsby-plugin-react-helmet-async`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`,
       },
-    },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    }
   ],
 }

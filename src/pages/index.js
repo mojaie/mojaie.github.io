@@ -11,7 +11,6 @@ const BlogIndex = ({ data, location }) => {
   const isdev = process.env.NODE_ENV !== `production`
   const posts = data.allMarkdownRemark.edges
     .filter(edge => isdev || !edge.node.frontmatter.draft)
-  console.log(data)
   return (
     <Layout location={location}>
       <SEO title="All posts" />
@@ -57,7 +56,7 @@ const BlogIndex = ({ data, location }) => {
                       marginRight: rhythm(0.2),
                     }}
                   >
-                    <Link to={`tags/${kebabCase(tag)}`}>{tag}</Link>
+                    <Link to={`/tags/${kebabCase(tag)}`}>{tag}</Link>
                   </span>
                 )
               })}

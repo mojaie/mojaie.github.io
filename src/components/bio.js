@@ -21,6 +21,27 @@ const Bio = () => {
           }
         }
       }
+      github: file(absolutePath: { regex: "/github-icon.png/" }) {
+        childImageSharp {
+          fixed(width: 24, height: 24) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+      twitter: file(absolutePath: { regex: "/twitter-icon.png/" }) {
+        childImageSharp {
+          fixed(width: 24, height: 24) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
+      linkedin: file(absolutePath: { regex: "/linkedin-icon.png/" }) {
+        childImageSharp {
+          fixed(width: 24, height: 24) {
+            ...GatsbyImageSharpFixed
+          }
+        }
+      }
       site {
         siteMetadata {
           author {
@@ -30,6 +51,7 @@ const Bio = () => {
           social {
             twitter
             github
+            linkedin
           }
         }
       }
@@ -56,20 +78,46 @@ const Bio = () => {
           borderRadius: `50%`,
         }}
       />
-      <p
+      <div
         style={{
           fontSize: rhythm(0.5)
         }}
       >
         <strong>Author: {author.name}</strong><br />
         <a href={`https://twitter.com/${social.twitter}`}>
-          Twitter
+          <Image
+            fixed={data.twitter.childImageSharp.fixed}
+            alt="Twitter"
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: 0,
+              minWidth: 24
+            }}
+          />
         </a>
-        {` `}
         <a href={`https://github.com/${social.github}`}>
-          GitHub
+          <Image
+            fixed={data.github.childImageSharp.fixed}
+            alt="GitHub"
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: 0,
+              minWidth: 24
+            }}
+          />
         </a>
-      </p>
+        <a href={`https://www.linkedin.com/in/${social.linkedin}`}>
+          <Image
+            fixed={data.linkedin.childImageSharp.fixed}
+            alt="LinkedIn"
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: 0,
+              minWidth: 24
+            }}
+          />
+        </a>
+      </div>
     </div>
   )
 }

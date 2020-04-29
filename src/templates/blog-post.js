@@ -52,7 +52,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
                   marginRight: rhythm(0.2),
                 }}
               >
-                <Link to={`tags/${kebabCase(tag)}`}>{tag}</Link>
+                <Link to={`/tags/${kebabCase(tag)}`}>{tag}</Link>
               </span>
             )
           })}
