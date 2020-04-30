@@ -3,8 +3,8 @@ title: 表面プラズモン共鳴(SPR)の学習リソースまとめ
 dateCreated: 2020-03-04
 dateModified: 2020-04-28
 tags:
-  - Biointeraction
-  - Surface plasmon resonance
+  - biointeraction
+  - surface plasmon resonance
 ---
 
 表面プラズモン共鳴(SPR)に関する学習リソースのまとめです。随時更新。
@@ -19,7 +19,6 @@ tags:
 ### 文献
 
 - Determination of the refractive index increments of small molecules for correction of surface plasmon resonance data. https://dx.doi.org/10.1006/abio.2000.4726
-
 - Surface plasmon resonance based assay for the detection and characterization of promiscuous inhibitors. https://dx.doi.org/10.1021/jm700952v
 
 

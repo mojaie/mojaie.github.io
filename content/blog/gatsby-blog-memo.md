@@ -1,13 +1,18 @@
 ---
 title: Gatsbyでブログを構築した際の備忘録
 dateCreated: 2020-04-27
-dateModified: 2020-04-27
+dateModified: 2020-04-30
 tags:
   - Gatsby
   - React
   - GraphQL
-  - Static site generator
+  - static site generator
 ---
+
+Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。
+
+Gatsby  
+http://gatsbyjs.org/
 
 
 ### 導入経緯
@@ -17,21 +22,34 @@ tags:
 HUGO、MetalSmith、Gatsbyを試してみましたが、GatsbyはReactとGraphQLベースで内部の仕組みが直感的に理解しやすく、ドキュメントもかなり充実しているので、当面Gatsbyで進めていきたいと思います。
 
 
+### 前提
+
+- Node.js
+
+  GatsbyのプロジェクトはNode.jsのパッケージとして作成します。Node.jsがない場合はHomeBrewあるいはAnaconda等でインストールしておきます。
+
+
 ### 導入の流れ
 
-1. **Node.js, Gatsbyをインストールする**
+1. **Node.js, gatsby-cliをインストールする**
 
-   Node.jsはHomeBrewあるいはAnaconda等でインストールします。Gatsbyはnpmからインストールします。グローバルでもローカルでも構いません。package.jsonを生成してコマンドを書く、あるいはパスを通すなど何らかの方法でgatsbyコマンドを使えるようにしておく必要があります。
+   gatsbyコマンドをコマンドラインから使用するために、npmもしくはyarnでNode.jsのグローバルにgatsby-cliをインストールします。
+
    ```
-   npm install gatsby-cli
+   yarn install -g gatsby-cli
    ```
+
+   主要なgatsbyのコマンド(developやserveなど)は後述のスターターから作成したプロジェクトのpackage.jsonのscriptに記載されていて、ローカルでは`npm run`や`yarn`で呼び出すことができます。実質、グローバルからgatsbyコマンドを実行するのは、newコマンドでプロジェクトを作成する時のみです。
 
 1. **好きなスターター(starter)を選ぶ**
 
-   スターターというテンプレートがGitリポジトリとして公開されているので、cloneして使います。他のサイトジェネレータのようにテーマを選んで着せ替えるというよりは、最初にcloneした叩き台を元に自分で肉付けしていくというイメージです。
+   スターター(starter)と呼ばれるGatsbyプロジェクトのテンプレートがGitリポジトリとして公開されているので、`gatsby new`でcloneしてプロジェクトを作成します。当サイトはgatsby-starter-blogというスターターを元に作成しています。
+
    ```
    gatsby new gatsby-starter-blog https://github.com/gatsbyjs/gatsby-starter-blog
    ```
+
+   他のサイトジェネレータのようにテーマを選んで着せ替えるというよりは、最初にcloneした叩き台を元に自分で必要な機能を肉付けしていくというイメージです。gatsby本体やデフォルトのプラグインはnewコマンドでプロジェクトを作成した際に依存パッケージとしてインストールされます。
 
 1. **機能追加、カスタマイズ**
 
@@ -39,17 +57,23 @@ HUGO、MetalSmith、Gatsbyを試してみましたが、GatsbyはReactとGraphQL
 
 1. **記事を書く**
 
-   Markdownで記事を書きます。frontmatterが利用可能で、フォーマットはJekyllやHugoなどとほぼ同様です。gatsby-starter-blogにはプラグインgatsby-transformer-remarkがインストール済みで、remark.jsでMarkdownをパースします。他のプラグインを導入することでMarkdown以外のファイル形式も取り扱うことができます。
+   Markdownで記事を書きます。frontmatterが利用可能で、フォーマットはJekyllやHugoなどと同様です。gatsby-starter-blogの場合、package.jsonに記載されたプラグインgatsby-transformer-remarkにより、remark.jsというパッケージを使用してMarkdownをパースします。他のプラグインを導入することでMarkdown以外のファイル形式も取り扱うことができます。
 
 1. **デプロイ(GitHub Pages)**
 
-   npmのgh-pagesモジュールをインストールすることで、GitHub Pagesにコマンド１つでデプロイできます。package.jsonでdeployコマンドを作成しておくと便利です。
+   公式チュートリアルにはNetlifyやGitHub Pages等へのデプロイの例が記載されています。当サイトはGitHub Pagesでホスティングしています。GitHub Pageへのデプロイにはgh-pagesパッケージを使用します。
+
+   ```
+   yarn install gh-pages
+   ```
+
+   デプロイするリポジトリのmasterブランチを作成し、package.jsonのscriptに`"deploy": "gatsby build && gh-pages -d public -b master"`を記載しておきます。これで、`yarn deploy`によりプロジェクトのビルドとmasterへのpushが実行されます。
 
 
 ### スターター、プラグイン、テーマ
 
-- スターター(starter)はプロジェクトの骨子となるgitリポジトリ。ブログ、技術文書、物販サイトなどのテンプレートから用途に一番近いものを選んでcloneする。
-- プラグイン(plugin)は拡張機能で、npmのモジュールとして提供される。
+- スターター(starter)はプロジェクトの骨子となるgitリポジトリ。ブログ、技術文書、物販サイトなどのテンプレートから用途に一番近いものを選んで`gatsby new`する。
+- プラグイン(plugin)は拡張機能で、npmのモジュールとして提供される。Markdownパーサ、画像最適化、ルーティング、SEO、各種ブログパーツなど。
 - テーマ(theme)はプラグインの一種。srcフォルダに複数のテーマを設置して使い分けることで用途別に複数のサイトを運用可能。
 
 
@@ -68,7 +92,7 @@ HUGO、MetalSmith、Gatsbyを試してみましたが、GatsbyはReactとGraphQL
 
 ### ビルドプロセスの中身
 
-`gatsby build`した際の挙動。ホットリロードも同様のプロセスが走っているのだろうか。
+`gatsby build`した際の挙動。
 
 Gatsby Lifecycle APIs  
 https://www.gatsbyjs.org/docs/gatsby-lifecycle-apis/
