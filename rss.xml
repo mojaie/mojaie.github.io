@@ -1,4 +1,281 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 30 Apr 2020 12:06:53 GMT</lastBuildDate><item><title><![CDATA[Gatsbyでブログを構築した際の備忘録]]></title><description><![CDATA[Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。 Gatsby http://gatsbyjs.org/ 導入経緯 ブログ用の静的サイトジェネレータとしてJekyllを以前使用していましたが、機能拡張のために新しくRuby…]]></description><link>https://mojaie.github.io/gatsby-blog-memo/</link><guid isPermaLink="false">https://mojaie.github.io/gatsby-blog-memo/</guid><pubDate>Thu, 30 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 02 May 2020 13:05:54 GMT</lastBuildDate><item><title><![CDATA[化学情報とグラフ理論(1): 分子グラフモデル]]></title><description><![CDATA[化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph…]]></description><link>https://mojaie.github.io/molecular-graph/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph/</guid><pubDate>Sat, 02 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph)モデルについての解説です。&lt;/p&gt;
+&lt;h3&gt;化学のデータを扱う&lt;/h3&gt;
+&lt;p&gt;ある試薬を購入したい時(あるいは購入可能かどうか知りたい時)、我々は試薬メーカーのオンラインカタログにアクセスして目的の試薬を検索します。また、発見した化合物が既に報告されていないか確認するために、文献データベースにアクセスして、関連する文献の情報を収集します。このように、化学に携わる人々は、常に何らかの化学情報を取り扱っています。&lt;/p&gt;
+&lt;p&gt;ケモインフォマティクス(chemoinformatics, cheminformatics)あるいは化学情報学とよばれる分野では、化学に関するデータを効率よく取り扱うために、以下のような研究に取り組みます。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;化学データの解釈とモデル化&lt;/p&gt;
+&lt;p&gt;波動関数の重ね合わせで表現される分子の複雑な状態を、取り扱いやすいデータ構造に変換する。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;化学的、生化学的性質の予測&lt;/p&gt;
+&lt;p&gt;モデル化した化学データに多変量解析等の解析手法を適用して、既知のデータから未知の物理的性質および生理活性を予測する。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;データベースの設計と運用&lt;/p&gt;
+&lt;p&gt;膨大な量の化学データを効率よく記憶装置に格納し、それらの正確かつ高速な検索手法を提供する。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;化学データベース&lt;/h3&gt;
+&lt;p&gt;手軽にアクセスできる化学データベースの例としては、各国の研究機関が運営している化学情報データベースや、試薬メーカーのオンラインカタログがあります。ここでは例として、アメリカの国立衛生研究所(NIH)の機関が運営しているPubChemというデータベースを利用してみます。&lt;/p&gt;
+&lt;p&gt;PubChem&lt;br&gt;
+&lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/&quot;&gt;https://pubchem.ncbi.nlm.nih.gov/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/30a8db216715f5222133a2be2a55cac8/5a190/pubchemsearch.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 50%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAACZUlEQVQoz42SyU/TURDHf3+DGBJcSq1QaNMEkSKleECWKhgCpUBL1aINUIwWtDZRG1APejHRhO5AS5FuCLQ1SE8u8eShqGxqwAUvGNp4N8SIX+f96NXEl3zy5s2bzMz7zuNKL/hgvDcPy/Az6Abj0N+K49ztBJqsU6joCaDSNMGj6A38GxOL27U50Pq9/RPfN9PIZH5g59c2dtcfYifL/y8u8mIN3lcf4Xi+Cvv8O3hiKbjiC3DFFuCcTfE7wx1/A3ciC9neJ28xNrcIf3IZ8dQ3JF9vYPLlGri8Ng/2XAoi1xJBzhkvck49QFGnh0d2dgSFWjckei9KukYh1rlRnPUfbLVjb+ND5KodkA4lIO+fwgG9D5yo3YkCCiggLQ+1uyBodaB+IIRO0lI3GIPGNkPnMJqvT0NzcwaaGzPQkr+uP4R8jQP5bU7ISOuSnglIu/zghOQQapwQtNghpm4qSVgVJWigjlVXwjhJNFqifBFGw9UI72N3LLbM6EP15SBq+yNQ9D2ihK1ueooHhYR2KI4PGxmsfEljcX0Ly5/TWCGWPm3xvlWC+dj+/msGS+ubMN1PouriJGoHoqgjOGHHKGQGH07TNzlBzzhyfgwlhlEc7wtASV+hlM6Mim4/5NQN60jRM45y2o8Z/ZAaxqA0h1FDycp7Q+CqByKQ0JOOmkOQ0VDymof5IUj0HuxvGaZiI6QtSUJ6FZOPDeNwhwsipjfJJaY/WkQyKK2PUWOdBtdmm0UZZd9HQQK1HUzTpmtRKLrHecHrqZCUCrHp1pmD/D27qydbRFOX07Cq7j6F6s4c1LYY/gJOWADwo60PCgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;PubChem&quot;
+        title=&quot;PubChem&quot;
+        src=&quot;/static/30a8db216715f5222133a2be2a55cac8/fcda8/pubchemsearch.png&quot;
+        srcset=&quot;/static/30a8db216715f5222133a2be2a55cac8/12f09/pubchemsearch.png 148w,
+/static/30a8db216715f5222133a2be2a55cac8/e4a3f/pubchemsearch.png 295w,
+/static/30a8db216715f5222133a2be2a55cac8/fcda8/pubchemsearch.png 590w,
+/static/30a8db216715f5222133a2be2a55cac8/5a190/pubchemsearch.png 800w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;PubChemにアクセスし、検索窓に化合物名を入力して検索します(検索窓の下に表示されている検索クエリの例を試すことができます)。検索にヒットしたレコードを選択すると、化学構造や物性などの詳細なデータが表示されます。&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/d4354fc82f46bcac1e2a537336b235c2/5a190/pubchemresult.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 50.67567567567568%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAABpElEQVQoz42SuU4cQRCG52GION6BB4DAgUUCZI4cYhE59xM4gJAIAjKeAyFLXsAL6112hjl2rp4+5/ypnjVmDQZR0qe/Wt36a6qmnKWt7/j49RSfvp1hY+8Ym1+O8WH/BOufj7C8fYC13UOs7hxihfL34KiyQZTkGNxMcXXrIowzZIVCyiQheuxZmhpCV68i/6ijtUZRFLgPYnj+DCxnkEJACL6AgFISSsq5/oOCIg8uqCjlzo/Bb1xdjzAc3iLLOVjBqcBL2H94vAtihsuRj8GvCZzznxMMRy7uXA+uHyGMZkjTFEnyjPSJdAE/SjAOEgwnAS4up3BMRbOhVrI8p8cZtSdhTAmtzV+MMdSagZSaVPfa51bpXlUVSkIbmiEouq6DkQIszeFNQoQ+R2QJip7AY70KTqaiBGc0s2KeN3WLxXCsmaWhCnb4fhhjRm1wLlCVNeq6QdO0aNsOb8Wjj4NufrDBGMN4PIbnThGGAQ2coaZC9ILetGTcvMqTIUVdNTC0Q4x+/T19XZyyfv+SXCAvJGYZ73M7a61Vvyp23RZp23nrD6SO4Kqsg1tVAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;検索結果&quot;
+        title=&quot;検索結果&quot;
+        src=&quot;/static/d4354fc82f46bcac1e2a537336b235c2/fcda8/pubchemresult.png&quot;
+        srcset=&quot;/static/d4354fc82f46bcac1e2a537336b235c2/12f09/pubchemresult.png 148w,
+/static/d4354fc82f46bcac1e2a537336b235c2/e4a3f/pubchemresult.png 295w,
+/static/d4354fc82f46bcac1e2a537336b235c2/fcda8/pubchemresult.png 590w,
+/static/d4354fc82f46bcac1e2a537336b235c2/5a190/pubchemresult.png 800w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;化学データベースのレコードは、以下のような情報で構成されます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;化学式&lt;/p&gt;
+&lt;p&gt;分子がどの元素で構成され、それぞれの原子と原子の間にどのような化学結合があり、どのような位置関係になっているか。構造式、分子式、組成式など。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;物性&lt;/p&gt;
+&lt;p&gt;化合物が示す性質。実験によって得られた、あるいは計算によって予測された、沸点、融点、分配係数(水、油への溶けやすさ)、旋光度、モル質量、光学スペクトルなど。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;名前、識別子&lt;/p&gt;
+&lt;p&gt;化合物の名前、あるいは化学データベースにおいて化学物質を識別するID。歴史的経緯により広く用いられている慣用名、一定の命名規則に従ってつけられる系統名、Chemical Abstract Serviceに登録された化合物のIDであるCAS番号など。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;生理活性&lt;/p&gt;
+&lt;p&gt;化合物が生体にどのような影響を与えるか。薬効や毒性の強さ、その作用機序など。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安全性、法規制&lt;/p&gt;
+&lt;p&gt;化合物の毒性、腐食性、可燃性、環境への負荷等、化学物質が生物および社会に与える影響に関する情報。およびそれらの懸念により化学物質の所持、譲渡、使用に際して課せられる法的な制限。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;化学構造検索&lt;/h3&gt;
+&lt;p&gt;多くの化学データベースには、化学構造による検索機能が実装されています。例えばPubChemの場合、検索窓の下にあるDraw structureのアイコンから構造式エディタを開き、描画した構造式と完全に（あるいは部分的に)一致する化合物を検索することができます。&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/33b9424a86452ab67bdcafb35dccea54/70d4c/pubchemstruct.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 50%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAKCAYAAAC0VX7mAAAACXBIWXMAABYlAAAWJQFJUiTwAAACOElEQVQoz32SS08TURiGZyUCcjEUVBBMDHKHRKMxbNqdO+PGGwqKJCIs/CNu3PsbTKBgabmVcGmkoC2lzHQKhbbTCm1tjcQUFgKPZ2YsMTFhkjffOd9knnnmmyOdtzRy5XoXE65pwmGVsBpC0zS0eAwtkSAajbEjEo3FxfqfiH1kO0oqnWZmboHi6kZKa5qQrFYbNquVmdlZQpEdvvh8BNUIG4qCX94iubvH4eEB+Xz+vxz8rW63G6tg2Gw2pM5bd+m80y0MJ1mW44zN+5leUfm0uI7TI5PO/eSs6+joiAmni5u3u+kSLKmouomShg5GHC6UaIo1ZYugHCIgDFf8PlLZfePB4+NjYXpopLA3gb+xO5xU1LdTXNOMpM/wQm0LI+NOvMFt1JDC2sYm3sAqntVZ9rK/Tk30z9NBJycnRgyw6NvHJyi93EyJPsMiASy91MzImIOlwA5f/X68nxdweSNMLavsZXKnRgWQHnNvGo4JYGVdK+VCTCqqEoaCrr9lTY2iyDLfNn3iD26z7JfJ/tg/c4Y61T7uMIBV9W1I5yw3qKht5eOoA6dXwb2yztKqj0Bww4DHxPHIZDKkUmnjiJwmZea7uFcAlguOVCY0K6+1Mzo5xwePxvuZMO+mNlmSY+QyuySTCZIJzayFJMyepsXJZTPML3ooq2vh4lVhaGloo1yo3nvwjOf9wzzpG6RvYJie/iEe9g6KOszjF0Mib3j6cohHfWbV+/q69/Vb7ve8ElIdWBra+QNav2NwpOrTrAAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Draw structure&quot;
+        title=&quot;Draw structure&quot;
+        src=&quot;/static/33b9424a86452ab67bdcafb35dccea54/fcda8/pubchemstruct.png&quot;
+        srcset=&quot;/static/33b9424a86452ab67bdcafb35dccea54/12f09/pubchemstruct.png 148w,
+/static/33b9424a86452ab67bdcafb35dccea54/e4a3f/pubchemstruct.png 295w,
+/static/33b9424a86452ab67bdcafb35dccea54/fcda8/pubchemstruct.png 590w,
+/static/33b9424a86452ab67bdcafb35dccea54/efc66/pubchemstruct.png 885w,
+/static/33b9424a86452ab67bdcafb35dccea54/c83ae/pubchemstruct.png 1180w,
+/static/33b9424a86452ab67bdcafb35dccea54/70d4c/pubchemstruct.png 2548w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;化学構造の一致をコンピュータで検出することは見た目ほど単純ではありません。分子の構造は原子の数と種類だけで決まるものではなく、原子と原子の結合の仕方によって様々な形状をとるからです(下記は、C5H10の分子式を持ついくつかの分子の例)。&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/bf3e9e900687eb31b9fb1ee94fde3013/5a190/structuralisomers.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 37.83783783783784%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsSAAALEgHS3X78AAAAkUlEQVQoz6WS2wqEMAxEo7W6XvCyq4jgg7D74P9/oVOYh1CjLDhwCKRkaKYVuVcKEqPvQCV/KB5uQRmdBbMP6MhJG+jJpAwyMIMvDXT/zRsOlmEOPKuo6rmyN9YraebkoZwRS3E3UDCXcLPaGN6M7Xa1uovNQo4rWPggOvQG/FQ/pUFDw/Hqka70Yq1VzvEXkwOxOwM4rbx8WgAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;異性体&quot;
+        title=&quot;異性体&quot;
+        src=&quot;/static/bf3e9e900687eb31b9fb1ee94fde3013/fcda8/structuralisomers.png&quot;
+        srcset=&quot;/static/bf3e9e900687eb31b9fb1ee94fde3013/12f09/structuralisomers.png 148w,
+/static/bf3e9e900687eb31b9fb1ee94fde3013/e4a3f/structuralisomers.png 295w,
+/static/bf3e9e900687eb31b9fb1ee94fde3013/fcda8/structuralisomers.png 590w,
+/static/bf3e9e900687eb31b9fb1ee94fde3013/5a190/structuralisomers.png 800w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;このような環状構造や分岐構造など、物体が持つ形状の概念を数学の用語でトポロジー(topology)と呼びます。構造異性体(structural isomer)とは、ある分子と分子式が同じ(化合物を構成する元素の種類と数が同じ)であり、かつトポロジーが異なる分子のことです。上記分子は全て互いに構造異性体の関係にあります。&lt;/p&gt;
+&lt;h3&gt;分子グラフモデル&lt;/h3&gt;
+&lt;p&gt;分子のトポロジーを表現するデータ構造として、分子グラフ(molecular graph)がしばしば用いられます。ここで言うグラフとは、頂点(ノード、node)とそれらを結ぶ辺(エッジ、edge)から構成されるデータ構造のことです。&lt;/p&gt;
+&lt;p&gt;グラフ(データ構造) - Wikipedia&lt;br&gt;
+&lt;a href=&quot;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&quot;&gt;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;分子をグラフとしてみると、原子をノード(node)、結合をエッジ(edge)と置くことができます。それぞれのノードとエッジにはラベル(label)あるいは属性(attribute)などと呼ばれる情報を付与することができます。ノードに関する情報としては、元素記号(あるいは原子番号)、電荷、スピン多重度あるいは不対電子の数、質量などが挙げられます。一方、エッジに関する情報としては、結合次数が挙げられます。&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 554px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 38.513513513513516%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAA3XAAAN1wFCKJt4AAABu0lEQVQoz2NgQAP/obhqaQuY7/FkO0P+5r1g9uX/lxn/M1wWvLTrXNLZK+dtQWLXrl1jBNEH9u5lOHfiBNwcTiAGS9wH4mcKUmBB1xe7GIEGMrq+2MFw0nEvw4z/h8Fq9m7dXbRn354AMHvffiY3VQaG2WGuKA4TFYYaiHDqf1Ru4HsGnv8MjP+l/3NGMuiBbGQHic+ZOoEZ3ZccQKzGBVXwhYFB7CcHmxqI7fR6ryrQhfM9n2wPgAYHKxCz7N17sGPL5o2ZyIbsWbXM6tqWLStAbEkuiJdlgE7UAGoQPG1vxA2ScH+6I8b/18n/Lk+3d/9n/8+0Y/f2eAkGBpXVa9fYTZs2zRCoSfHkqdMzS/OzzT0sjRWv7NhpB7ehkoGBN4WBwQDd+d6Pd+hy/tzKd23bfunTZ87MbJq2jBMmp5W/mGn50sVFNy6cEoFr2I2IXS4gVoPF9Jz6NAZcYOmyZUx7V88FekiU0UVVQuP/bAYmBp1SxitbNzIxLIMqes3AwPQOEp4MtySEGaBeZgCGH6Pt650MfwpmMNy4c5tx48aNDGtWgIOKYe6yJTwvT566dPfAIXUQ/97Bw4wAWLelZeetU3gAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Molecular graph&quot;
+        title=&quot;Molecular graph&quot;
+        src=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png&quot;
+        srcset=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/12f09/molgraph.png 148w,
+/static/a0731c63484cff5a0cfde12500ad96f5/e4a3f/molgraph.png 295w,
+/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png 554w&quot;
+        sizes=&quot;(max-width: 554px) 100vw, 554px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;💡&lt;span style=&quot;font-size:90%; color:#003366&quot;&gt;有機化学における構造式と同様に、水素はしばしば省略されます。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;原子のノードを結合のエッジで接続した分子グラフは非常に単純なデータ構造ですが、特に低分子有機化合物を扱う創薬化学の分野において広く利用されています。&lt;/p&gt;
+&lt;p&gt;このモデルのグラフとしての特徴を以下に挙げます。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;無向グラフ(undirected graph)&lt;/p&gt;
+&lt;p&gt;分子グラフは一般的にエッジに向きが無い無向グラフとして表現されます。ちなみに、エッジに向きがある（一方通行の経路が存在する）グラフは有向グラフ(directed graph)と言います。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;単純グラフ(simple graph)&lt;/p&gt;
+&lt;p&gt;分子グラフは一般的にループ(self-loop、同一ノードを接続するエッジ)を持ちません。また多重辺(multi-edge、２つのノードの間に２本以上あるエッジ)を持ちません。ループと多重辺を持たないグラフを単純グラフと呼びます。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;有限グラフ(finite graph)&lt;/p&gt;
+&lt;p&gt;ノード数が無限ではないグラフを有限グラフと呼びます。ノード数が無限であるグラフは無限グラフ(infinite graph)です。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;分子グラフは分子のトポロジーの取り扱いを容易にしますが、適用範囲には限りがあります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ホウ素化合物の三中心二電子結合など、非古典的な結合の中には単純グラフでは表せない化学構造が存在します。&lt;/li&gt;
+&lt;li&gt;実際の分子は電荷や多重結合をそれぞれの原子や結合が離散的に(discrete)持っているわけではなく、複数の原子や結合にまたがる連続的な(continuous)分布として持っています。例えば芳香族性もヒュッケル則に従って単純に「ある」か「ない」かを決められるわけではなく、実際には「弱い芳香族性」を持つような化合物も数多く存在します。&lt;/li&gt;
+&lt;li&gt;経験的には、分子グラフが適用されうる範囲は主に有機低分子化合物です。有機高分子や無機化学を取り扱う場合は、用途に応じてより適切なモデルを利用する必要があります。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📗&lt;span style=&quot;font-size:90%; color:#003366&quot;&gt;化学構造式は各種スペクトル分析によって実験的に決定することが可能ですが、電荷や電子密度の連続的な分布を直接観測することは現代においても非常に困難です。有機化学者は様々な経験則や実験結果に基づいて、電子の非局在化(delocalization)という概念で化学構造式を拡張することにより、現実の分子の状態と化学反応機構の解釈を試みます。近年では分子軌道シミュレーションの発達により、経験則よりも正確に電子密度の分布を予測することができるようになりました。&lt;/span&gt;&lt;/p&gt;
+&lt;h3&gt;分子グラフの統計的特徴&lt;/h3&gt;
+&lt;p&gt;原子がとりうる結合の数(価数、valence)には限りがあるため、実用上取り扱う低分子有機化合物の分子グラフには次のような傾向があります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;ノードの次数は1-4&lt;/p&gt;
+&lt;p&gt;あるノードに接続するエッジの本数のことをそのノードの次数(degree)と呼びます。有機元素(C,H,O,N,P,S,ハロゲン)の価数は1から4の間にあるので、分子グラフのノードの次数の分布は1から4の間に集中します。遷移金属の配位や超原子価分子などで４を超えることもありますが、稀です。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ほぼ全ての分子グラフが平面グラフ&lt;/p&gt;
+&lt;p&gt;平面グラフ(planar graph)とは、平面上にグラフを配置した際にエッジが交差しないノードの配置が少なくとも一つ存在するグラフです。テトラへドランやフラーレンは立体的に見えますが、平面グラフです(下図および&lt;a href=&quot;https://en.wikipedia.org/wiki/Fullerene#/media/File:Graph_of_60-fullerene_w-nodes.svg&quot;&gt;C60のシュレーゲル図(Wikipedia)&lt;/a&gt;参照)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;その中でも外平面グラフが多い&lt;/p&gt;
+&lt;p&gt;外平面グラフ(outerplanar graph)とは、平面グラフの中でも特に全てのノードがグラフの外縁に位置するようなグラフです。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 540px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 37.16216216216216%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsSAAALEgHS3X78AAAA/0lEQVQY001Q2W7EMAjM//9eVanqQ1fazek48RHfBlw7m1aZB4SAGRi6UgoRhROIWP6QAXwINf5XANBZ6xp8pdRK927M8/zzeDjvT60mcSj5/fnB2fJWr9E796zo+34YIOeLrJSqa8sNlBPpjQ5BilMK5SQ3BFuOvaRruPPeP18vNg5fMU3QdmJwIJjblkTFKZEEQ6sqP/MxbjMhBjbA3i7q6knGmOC8CG6VvHmTa8nRxCS1lsbWadAbSlZFoxKBT+lQaDUe4vR8XmUF3/sHOlMQQLKwju1teo98omApR9hnVFtBrF5QLAT5elgleD5ZuYHVl+0USK1oxP0Vt7Tlv+FgllRuvhpsAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;planar graph&quot;
+        title=&quot;planar graph&quot;
+        src=&quot;/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png&quot;
+        srcset=&quot;/static/76dd6c0c36981af7226842556a80ba29/12f09/planar.png 148w,
+/static/76dd6c0c36981af7226842556a80ba29/e4a3f/planar.png 295w,
+/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png 540w&quot;
+        sizes=&quot;(max-width: 540px) 100vw, 540px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;ノードの次数が1-4のグラフは、比較的疎なグラフ(sparse graph)と言えます。グラフの主な実装方法としては隣接行列とマッピング（Pythonで言うところのDict）があるのですが、疎グラフは通常マッピングで実装されます。&lt;/p&gt;
+&lt;p&gt;グラフを扱う数学的な問題の中には天文学的な計算量になりうるものもありますが、扱うグラフの対象を平面グラフ、外平面グラフ等に限定すればより効率的なアルゴリズムが発見されることもあるため、この分野における重要なアプローチの一つとなっています&lt;a href=&quot;http://dx.doi.org/10.5936/csbj.201302004&quot;&gt;[Akutsu et al., 2013]&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;📗&lt;span style=&quot;font-size:90%; color:#003366&quot;&gt;次数が低く、立体障害など空間的な制約もあるので、非平面の分子グラフは極めて稀です。おそらく天然低分子としては存在せず、狙って合成する必要があります。なお、実際に非平面グラフ分子の合成報告があります&lt;a href=&quot;https://doi.org/10.1016/0040-4039(81)80077-9&quot;&gt;[Simmons et al., 1981]&lt;/a&gt;。&lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Gatsbyでブログを構築した際の備忘録]]></title><description><![CDATA[Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。 Gatsby http://gatsbyjs.org/ 導入経緯 ブログ用の静的サイトジェネレータとしてJekyllを以前使用していましたが、機能拡張のために新しくRuby…]]></description><link>https://mojaie.github.io/gatsby-blog-memo/</link><guid isPermaLink="false">https://mojaie.github.io/gatsby-blog-memo/</guid><pubDate>Thu, 30 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。&lt;/p&gt;
 &lt;p&gt;Gatsby&lt;br&gt;
 &lt;a href=&quot;http://gatsbyjs.org/&quot;&gt;http://gatsbyjs.org/&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;導入経緯&lt;/h3&gt;
