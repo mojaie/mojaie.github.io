@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 02 May 2020 13:05:54 GMT</lastBuildDate><item><title><![CDATA[化学情報とグラフ理論(1): 分子グラフモデル]]></title><description><![CDATA[化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph…]]></description><link>https://mojaie.github.io/molecular-graph/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph/</guid><pubDate>Sat, 02 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph)モデルについての解説です。&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 04 May 2020 01:09:36 GMT</lastBuildDate><item><title><![CDATA[化学情報とグラフ理論(1): 分子グラフモデル]]></title><description><![CDATA[化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph…]]></description><link>https://mojaie.github.io/molecular-graph/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph/</guid><pubDate>Sun, 03 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph)モデルについての解説です。&lt;/p&gt;
 &lt;h3&gt;化学のデータを扱う&lt;/h3&gt;
 &lt;p&gt;ある試薬を購入したい時(あるいは購入可能かどうか知りたい時)、我々は試薬メーカーのオンラインカタログにアクセスして目的の試薬を検索します。また、発見した化合物が既に報告されていないか確認するために、文献データベースにアクセスして、関連する文献の情報を収集します。このように、化学に携わる人々は、常に何らかの化学情報を取り扱っています。&lt;/p&gt;
 &lt;p&gt;ケモインフォマティクス(chemoinformatics, cheminformatics)あるいは化学情報学とよばれる分野では、化学に関するデータを効率よく取り扱うために、以下のような研究に取り組みます。&lt;/p&gt;
@@ -204,7 +204,7 @@
       /&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;💡&lt;span style=&quot;font-size:90%; color:#003366&quot;&gt;有機化学における構造式と同様に、水素はしばしば省略されます。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;💡&lt;span class=&quot;tip&quot;&gt;有機化学における構造式と同様に、水素はしばしば省略されます。&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;原子のノードを結合のエッジで接続した分子グラフは非常に単純なデータ構造ですが、特に低分子有機化合物を扱う創薬化学の分野において広く利用されています。&lt;/p&gt;
 &lt;p&gt;このモデルのグラフとしての特徴を以下に挙げます。&lt;/p&gt;
 &lt;ul&gt;
@@ -227,7 +227,7 @@
 &lt;li&gt;実際の分子は電荷や多重結合をそれぞれの原子や結合が離散的に(discrete)持っているわけではなく、複数の原子や結合にまたがる連続的な(continuous)分布として持っています。例えば芳香族性もヒュッケル則に従って単純に「ある」か「ない」かを決められるわけではなく、実際には「弱い芳香族性」を持つような化合物も数多く存在します。&lt;/li&gt;
 &lt;li&gt;経験的には、分子グラフが適用されうる範囲は主に有機低分子化合物です。有機高分子や無機化学を取り扱う場合は、用途に応じてより適切なモデルを利用する必要があります。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;📗&lt;span style=&quot;font-size:90%; color:#003366&quot;&gt;化学構造式は各種スペクトル分析によって実験的に決定することが可能ですが、電荷や電子密度の連続的な分布を直接観測することは現代においても非常に困難です。有機化学者は様々な経験則や実験結果に基づいて、電子の非局在化(delocalization)という概念で化学構造式を拡張することにより、現実の分子の状態と化学反応機構の解釈を試みます。近年では分子軌道シミュレーションの発達により、経験則よりも正確に電子密度の分布を予測することができるようになりました。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;化学構造式は各種スペクトル分析によって実験的に決定することが可能ですが、電荷や電子密度の連続的な分布を直接観測することは現代においても非常に困難です。有機化学者は経験則(有機電子論)に基づいて、化学構造式から電荷や電子密度の分布を推測し、現実の分子の相互作用および反応機構の解釈を試みます。近年では分子軌道シミュレーションを利用して手軽に電荷や電子密度の分布を予測し、反応機構のより強力な裏付けを得ることができるようになりました。&lt;/span&gt;&lt;/p&gt;
 &lt;h3&gt;分子グラフの統計的特徴&lt;/h3&gt;
 &lt;p&gt;原子がとりうる結合の数(価数、valence)には限りがあるため、実用上取り扱う低分子有機化合物の分子グラフには次のような傾向があります。&lt;/p&gt;
 &lt;ul&gt;
@@ -273,9 +273,9 @@
       /&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;ノードの次数が1-4のグラフは、比較的疎なグラフ(sparse graph)と言えます。グラフの主な実装方法としては隣接行列とマッピング（Pythonで言うところのDict）があるのですが、疎グラフは通常マッピングで実装されます。&lt;/p&gt;
+&lt;p&gt;ノードの次数が1-4のグラフは、比較的疎なグラフ(sparse graph)と言えます。グラフの実装に用いられるデータ構造としては主に隣接行列と連想配列（PythonにおけるDictなど）がありますが、疎グラフは通常連想配列で実装されます。&lt;/p&gt;
 &lt;p&gt;グラフを扱う数学的な問題の中には天文学的な計算量になりうるものもありますが、扱うグラフの対象を平面グラフ、外平面グラフ等に限定すればより効率的なアルゴリズムが発見されることもあるため、この分野における重要なアプローチの一つとなっています&lt;a href=&quot;http://dx.doi.org/10.5936/csbj.201302004&quot;&gt;[Akutsu et al., 2013]&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;📗&lt;span style=&quot;font-size:90%; color:#003366&quot;&gt;次数が低く、立体障害など空間的な制約もあるので、非平面の分子グラフは極めて稀です。おそらく天然低分子としては存在せず、狙って合成する必要があります。なお、実際に非平面グラフ分子の合成報告があります&lt;a href=&quot;https://doi.org/10.1016/0040-4039(81)80077-9&quot;&gt;[Simmons et al., 1981]&lt;/a&gt;。&lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Gatsbyでブログを構築した際の備忘録]]></title><description><![CDATA[Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。 Gatsby http://gatsbyjs.org/ 導入経緯 ブログ用の静的サイトジェネレータとしてJekyllを以前使用していましたが、機能拡張のために新しくRuby…]]></description><link>https://mojaie.github.io/gatsby-blog-memo/</link><guid isPermaLink="false">https://mojaie.github.io/gatsby-blog-memo/</guid><pubDate>Thu, 30 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。&lt;/p&gt;
+&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;次数が低く、立体障害など空間的な制約もあるので、非平面の分子グラフは極めて稀です。おそらく天然低分子としては存在せず、狙って合成する必要があります。なお、実際に非平面グラフ分子の合成報告があります&lt;a href=&quot;https://doi.org/10.1016/0040-4039(81)80077-9&quot;&gt;[Simmons et al., 1981]&lt;/a&gt;。&lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Gatsbyでブログを構築した際の備忘録]]></title><description><![CDATA[Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。 Gatsby http://gatsbyjs.org/ 導入経緯 ブログ用の静的サイトジェネレータとしてJekyllを以前使用していましたが、機能拡張のために新しくRuby…]]></description><link>https://mojaie.github.io/gatsby-blog-memo/</link><guid isPermaLink="false">https://mojaie.github.io/gatsby-blog-memo/</guid><pubDate>Thu, 30 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。&lt;/p&gt;
 &lt;p&gt;Gatsby&lt;br&gt;
 &lt;a href=&quot;http://gatsbyjs.org/&quot;&gt;http://gatsbyjs.org/&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;導入経緯&lt;/h3&gt;
