@@ -28,3 +28,12 @@ h4 {
   margin-left: 10px;
   padding-left: 10px;
 }
+
+span.note {
+  font-size: 90%;
+  color: #003366;
+}
+span.tip {
+  font-size: 90%;
+  color: #663300;
+}
