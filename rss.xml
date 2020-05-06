@@ -1,25 +1,166 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 04 May 2020 01:09:36 GMT</lastBuildDate><item><title><![CDATA[化学情報とグラフ理論(1): 分子グラフモデル]]></title><description><![CDATA[化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph…]]></description><link>https://mojaie.github.io/molecular-graph/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph/</guid><pubDate>Sun, 03 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;化学に関する情報として取り扱う学問、ケモインフォマティクス(chemoinformatics)の基礎的な概念の一つである、分子グラフ(molecular graph)モデルについての解説です。&lt;/p&gt;
-&lt;h3&gt;化学のデータを扱う&lt;/h3&gt;
-&lt;p&gt;ある試薬を購入したい時(あるいは購入可能かどうか知りたい時)、我々は試薬メーカーのオンラインカタログにアクセスして目的の試薬を検索します。また、発見した化合物が既に報告されていないか確認するために、文献データベースにアクセスして、関連する文献の情報を収集します。このように、化学に携わる人々は、常に何らかの化学情報を取り扱っています。&lt;/p&gt;
-&lt;p&gt;ケモインフォマティクス(chemoinformatics, cheminformatics)あるいは化学情報学とよばれる分野では、化学に関するデータを効率よく取り扱うために、以下のような研究に取り組みます。&lt;/p&gt;
-&lt;ol&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 06 May 2020 03:02:31 GMT</lastBuildDate><item><title><![CDATA[化学情報とグラフ理論(2): 分子グラフモデル]]></title><description><![CDATA[分子グラフモデル 分子のトポロジーを表現するデータ構造として、分子グラフ(molecular graph)がしばしば用いられます。ここで言うグラフとは、頂点(ノード、node)とそれらを結ぶ辺(エッジ、edge…]]></description><link>https://mojaie.github.io/molecular-graph-model/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph-model/</guid><pubDate>Wed, 06 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h3&gt;分子グラフモデル&lt;/h3&gt;
+&lt;p&gt;分子のトポロジーを表現するデータ構造として、分子グラフ(molecular graph)がしばしば用いられます。ここで言うグラフとは、頂点(ノード、node)とそれらを結ぶ辺(エッジ、edge)から構成されるデータ構造のことです。&lt;/p&gt;
+&lt;p&gt;グラフ(データ構造) - Wikipedia&lt;br&gt;
+&lt;a href=&quot;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&quot;&gt;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;分子をグラフとしてみると、原子をノード(node)、結合をエッジ(edge)と置くことができます。それぞれのノードとエッジにはラベル(label)あるいは属性(attribute)などと呼ばれる情報を付与することができます。ノードに関する情報としては、元素記号(あるいは原子番号)、電荷、スピン多重度あるいは不対電子の数、質量などが挙げられます。一方、エッジに関する情報としては、結合次数が挙げられます。&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 554px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 38.513513513513516%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAA3XAAAN1wFCKJt4AAABu0lEQVQoz2NgQAP/obhqaQuY7/FkO0P+5r1g9uX/lxn/M1wWvLTrXNLZK+dtQWLXrl1jBNEH9u5lOHfiBNwcTiAGS9wH4mcKUmBB1xe7GIEGMrq+2MFw0nEvw4z/h8Fq9m7dXbRn354AMHvffiY3VQaG2WGuKA4TFYYaiHDqf1Ru4HsGnv8MjP+l/3NGMuiBbGQHic+ZOoEZ3ZccQKzGBVXwhYFB7CcHmxqI7fR6ryrQhfM9n2wPgAYHKxCz7N17sGPL5o2ZyIbsWbXM6tqWLStAbEkuiJdlgE7UAGoQPG1vxA2ScH+6I8b/18n/Lk+3d/9n/8+0Y/f2eAkGBpXVa9fYTZs2zRCoSfHkqdMzS/OzzT0sjRWv7NhpB7ehkoGBN4WBwQDd+d6Pd+hy/tzKd23bfunTZ87MbJq2jBMmp5W/mGn50sVFNy6cEoFr2I2IXS4gVoPF9Jz6NAZcYOmyZUx7V88FekiU0UVVQuP/bAYmBp1SxitbNzIxLIMqes3AwPQOEp4MtySEGaBeZgCGH6Pt650MfwpmMNy4c5tx48aNDGtWgIOKYe6yJTwvT566dPfAIXUQ/97Bw4wAWLelZeetU3gAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Molecular graph&quot;
+        title=&quot;Molecular graph&quot;
+        src=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png&quot;
+        srcset=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/12f09/molgraph.png 148w,
+/static/a0731c63484cff5a0cfde12500ad96f5/e4a3f/molgraph.png 295w,
+/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png 554w&quot;
+        sizes=&quot;(max-width: 554px) 100vw, 554px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;💡&lt;span class=&quot;tip&quot;&gt;有機化学における構造式と同様に、水素はしばしば省略されます。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;原子のノードを結合のエッジで接続した分子グラフは非常に単純なデータ構造ですが、特に低分子有機化合物を扱う創薬化学の分野において広く利用されています。&lt;/p&gt;
+&lt;p&gt;このモデルのグラフとしての特徴を以下に挙げます。&lt;/p&gt;
+&lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;化学データの解釈とモデル化&lt;/p&gt;
-&lt;p&gt;波動関数の重ね合わせで表現される分子の複雑な状態を、取り扱いやすいデータ構造に変換する。&lt;/p&gt;
+&lt;p&gt;無向グラフ(undirected graph)&lt;/p&gt;
+&lt;p&gt;分子グラフは一般的にエッジに向きが無い無向グラフとして表現されます。ちなみに、エッジに向きがある（一方通行の経路が存在する）グラフは有向グラフ(directed graph)と言います。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;化学的、生化学的性質の予測&lt;/p&gt;
-&lt;p&gt;モデル化した化学データに多変量解析等の解析手法を適用して、既知のデータから未知の物理的性質および生理活性を予測する。&lt;/p&gt;
+&lt;p&gt;単純グラフ(simple graph)&lt;/p&gt;
+&lt;p&gt;分子グラフは一般的にループ(self-loop、同一ノードを接続するエッジ)を持ちません。また多重辺(multi-edge、２つのノードの間に２本以上あるエッジ)を持ちません。ループと多重辺を持たないグラフを単純グラフと呼びます。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;データベースの設計と運用&lt;/p&gt;
-&lt;p&gt;膨大な量の化学データを効率よく記憶装置に格納し、それらの正確かつ高速な検索手法を提供する。&lt;/p&gt;
+&lt;p&gt;有限グラフ(finite graph)&lt;/p&gt;
+&lt;p&gt;ノード数が無限ではないグラフを有限グラフと呼びます。ノード数が無限であるグラフは無限グラフ(infinite graph)です。&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;
+&lt;/ul&gt;
+&lt;p&gt;分子グラフは分子のトポロジーの取り扱いを容易にしますが、適用範囲には限りがあります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ホウ素化合物の三中心二電子結合など、非古典的な結合の中には単純グラフでは表せない化学構造が存在します。&lt;/li&gt;
+&lt;li&gt;実際の分子は電荷や多重結合をそれぞれの原子や結合が離散的に(discrete)持っているわけではなく、複数の原子や結合にまたがる連続的な(continuous)分布として持っています。例えば芳香族性もヒュッケル則に従って単純に「ある」か「ない」かを決められるわけではなく、実際には「弱い芳香族性」を持つような化合物も数多く存在します。&lt;/li&gt;
+&lt;li&gt;経験的には、分子グラフが適用されうる範囲は主に有機低分子化合物です。有機高分子や無機化学を取り扱う場合は、用途に応じてより適切なモデルを利用する必要があります。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;化学構造式は各種スペクトル分析によって実験的に決定することが可能ですが、電荷や電子密度の連続的な分布を直接観測することは現代においても非常に困難です。有機化学者は経験則(有機電子論)に基づいて、化学構造式から電荷や電子密度の分布を推測し、現実の分子の相互作用および反応機構の解釈を試みます。近年では分子軌道シミュレーションを利用して手軽に電荷や電子密度の分布を予測し、反応機構のより強力な裏付けを得ることができるようになりました。&lt;/span&gt;&lt;/p&gt;
+&lt;h3&gt;分子グラフの統計的特徴&lt;/h3&gt;
+&lt;p&gt;原子がとりうる結合の数(価数、valence)には限りがあるため、実用上取り扱う低分子有機化合物の分子グラフには次のような傾向があります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;ノードの次数は1-4&lt;/p&gt;
+&lt;p&gt;あるノードに接続するエッジの本数のことをそのノードの次数(degree)と呼びます。有機元素(C,H,O,N,P,S,ハロゲン)の価数は1から4の間にあるので、分子グラフのノードの次数の分布は1から4の間に集中します。遷移金属の配位や超原子価分子などで４を超えることもありますが、稀です。&lt;/p&gt;
+&lt;p&gt;ノードの次数が1-4のグラフは、ノード数が10から30程度の創薬候補化合物を想定した場合、比較的疎らなグラフ(sparse graph)と言えます。&lt;/p&gt;
+&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;ノードの次数が比較的高いグラフは密なグラフ(dense graph)です。&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ほぼ全てが平面グラフで、その中でも外平面グラフが多い&lt;/p&gt;
+&lt;p&gt;平面グラフ(planar graph)とは、平面上にグラフを配置した際にエッジが交差しないノードの配置が少なくとも一つ存在するグラフです。テトラへドランやフラーレンは立体的に見えますが、平面グラフです(下図および&lt;a href=&quot;https://en.wikipedia.org/wiki/Fullerene#/media/File:Graph_of_60-fullerene_w-nodes.svg&quot;&gt;C60のシュレーゲル図(Wikipedia)&lt;/a&gt;参照)&lt;/p&gt;
+&lt;p&gt;外平面グラフ(outerplanar graph)とは、平面グラフの中でも特に全てのノードがグラフの外縁に位置するようなグラフです。&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 540px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 37.16216216216216%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsSAAALEgHS3X78AAAA/0lEQVQY001Q2W7EMAjM//9eVanqQ1fazek48RHfBlw7m1aZB4SAGRi6UgoRhROIWP6QAXwINf5XANBZ6xp8pdRK927M8/zzeDjvT60mcSj5/fnB2fJWr9E796zo+34YIOeLrJSqa8sNlBPpjQ5BilMK5SQ3BFuOvaRruPPeP18vNg5fMU3QdmJwIJjblkTFKZEEQ6sqP/MxbjMhBjbA3i7q6knGmOC8CG6VvHmTa8nRxCS1lsbWadAbSlZFoxKBT+lQaDUe4vR8XmUF3/sHOlMQQLKwju1teo98omApR9hnVFtBrF5QLAT5elgleD5ZuYHVl+0USK1oxP0Vt7Tlv+FgllRuvhpsAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;planar graph&quot;
+        title=&quot;planar graph&quot;
+        src=&quot;/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png&quot;
+        srcset=&quot;/static/76dd6c0c36981af7226842556a80ba29/12f09/planar.png 148w,
+/static/76dd6c0c36981af7226842556a80ba29/e4a3f/planar.png 295w,
+/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png 540w&quot;
+        sizes=&quot;(max-width: 540px) 100vw, 540px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;グラフを扱う数学的な問題の中には天文学的な計算量になりうるものもありますが、扱うグラフの対象を平面グラフ、外平面グラフ等に限定すればより効率的なアルゴリズムが発見されることもあるため、この分野における重要なアプローチの一つとなっています&lt;a href=&quot;http://dx.doi.org/10.5936/csbj.201302004&quot;&gt;[Akutsu et al., 2013]&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;次数が低く、立体障害など空間的な制約もあるので、非平面の分子グラフは極めて稀です。おそらく天然低分子としては存在せず、狙って合成する必要があります。なお、実際に非平面グラフ分子の合成報告があります&lt;a href=&quot;https://doi.org/10.1016/0040-4039(81)80077-9&quot;&gt;[Simmons et al., 1981]&lt;/a&gt;。&lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;分子グラフの再構築(reconstruction)&lt;/h3&gt;
+&lt;p&gt;SMILESやSDFileに文字列で格納された分子データを利用するためには、グラフを扱いやすいデータ構造に再構築する必要があります。グラフのソフトウェア上での実装方法は大きく分けて行列とリストの2通りです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;隣接リスト (adjacency list)&lt;/p&gt;
+&lt;p&gt;それぞれのノードと隣接する(エッジで接続されている)ノードの一覧を配列に格納したものです。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;1: [2]
+2: [1, 3, 4]
+3: [2, 4]
+4: [2, 3]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;隣接するノードのリストが提供されているので、グラフ上の経路を探索するアルゴリズムが高速に行えます。一方で、あるノードとノードの間にエッジがあるかどうかを検出する操作は、隣接するノードの数に比例した時間がかかります。そのため、実用上は配列ではなく連想配列(例: PythonのDict)やセット(例: PythonのSet)を用いることで定数時間で隣接ノードの有無をチェックできるようにした実装がよく見られます。また、連想配列やセットを用いることで、ノードに連番ではない任意のインデックスを使用することが可能です。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;隣接行列 (adjacency matrix)&lt;/p&gt;
+&lt;p&gt;それぞれのノードとノードの間のエッジの有無(1か0)を正方行列に格納したものです。単純グラフの隣接行列は対角成分が0の対称行列になります。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;  1 2 3 4
+1 0 1 0 0
+2 1 0 1 1
+3 0 1 0 1
+4 0 1 1 0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ノードとノードの間にエッジがあるかどうかは定数時間で行うことができます。一方、それぞれのノードの隣接ノードのリストを得るためには、ノードの総数に比例した時間がかかります。また、分子グラフのような比較的疎らなグラフであってもノード数の二乗に比例したメモリが必要です(ただし、連想配列やセットの実装によっては多くのメモリを確保する場合もあるので、必ずしも隣接行列が非効率とは限りません)。グラフの行列表現はしばしば線形代数学的な解析手法(グラフスペクトル理論)に用いられ、これにより様々な機械学習手法でグラフを扱うことができるようになっています。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;分子グラフの利用可能な実装&lt;/h3&gt;
+&lt;p&gt;実際に分子グラフを取り扱う際には、ケモインフォマティクス用のツールキットライブラリを利用すると便利です。その中には分子グラフの実装も含まれますので、実際にコードを読むとアルゴリズムやデータ構造についての理解が深められると思います。&lt;/p&gt;
+&lt;p&gt;以下は、オープンソースで利用可能なものの例です。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://openbabel.org/wiki/Main_Page&quot;&gt;OpenBabel&lt;/a&gt; (C++)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://lifescience.opensource.epam.com/indigo/&quot;&gt;Indigo&lt;/a&gt; (C++)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://cdk.github.io/&quot;&gt;Chemistry development toolkit, CDK&lt;/a&gt; (Java)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://rdkit.org&quot;&gt;RDKit&lt;/a&gt; (Python)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://bioconductor.org/packages/release/bioc/html/ChemmineR.html&quot;&gt;ChemmineR&lt;/a&gt; (R)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/mojaie/MolecularGraph.jl&quot;&gt;MolecularGraph.jl&lt;/a&gt; (Julia)&lt;span class=&quot;tip&quot;&gt; 注) この記事の執筆者が開発中のライブラリです。&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[化学構造とグラフ理論(1): 化学のデータを取り扱う]]></title><description><![CDATA[…]]></description><link>https://mojaie.github.io/molecular-graph-intro/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph-intro/</guid><pubDate>Tue, 05 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;ある試薬を購入したい時(あるいは購入可能かどうか知りたい時)、我々は試薬メーカーのオンラインカタログにアクセスして目的の試薬を検索します。また、発見した化合物が既に報告されていないか確認するために、文献データベースにアクセスして、関連する文献の情報を収集します。このように、化学に携わる人々は、日常の業務において何らかの化学情報に関わっています。「化学構造とグラフ理論」では、化学構造を電子データとしてコンピュータで取り扱う方法、特にグラフ理論に関連した話題を取り上げます。&lt;/p&gt;
+&lt;h3&gt;化学のデータを扱う研究分野&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;ケモインフォマティクス(Chemoinformatics, Cheminformatics, 化学情報学)&lt;/p&gt;
+&lt;p&gt;化学の課題に情報学的手法で取り組む情報学の一分野です。化学データベースの構築、化学構造検索、化学データの記述法と標準化、化学構造データの可視化などが主なテーマです。歴史的にはシード/リード探索のために膨大な数の化合物を取り扱う必要があった創薬と密接な関係のある分野です。スクリーニングに用いる化合物ライブラリの設計、数理モデルに基づく生理活性や薬物動態の予測、創薬化学の基礎概念である構造活性相関(Structure activity relationship)など、創薬の実務に広く応用されています。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;計算化学 (Computational chemistry)&lt;/p&gt;
+&lt;p&gt;コンピュータの補助により物理化学の数値計算を行う理論化学の一分野です。分子軌道法による分子の電子状態および反応機構の解明、分子動力学法による相互作用のシミュレーション等に取り組みます。扱うモデルが理論化学モデル(量子、熱力学)である点でケモインフォマティクスと区別されますが、明確な境界は無くなってきています。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;ケミカルバイオロジー: 化学物質が生体に及ぼす作用を利用して生命現象を解明する研究分野です。創薬と同様に分子探索スクリーニングや情報学的手法も駆使して研究の鍵となる化学物質(プローブ)を特定します。&lt;/li&gt;
+&lt;li&gt;メタボロミクス: 分析技術の発達により検出できる化合物数が飛躍的に増加したため、統計解析や機械学習を駆使したデータマイニングが重要になってきました。&lt;/li&gt;
+&lt;li&gt;マテリアルズインフォマティクス: 分子探索の手法を応用して効率的かつ系統的な材料探索手法を確立する研究が進められています。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3&gt;化学データベース&lt;/h3&gt;
-&lt;p&gt;手軽にアクセスできる化学データベースの例としては、各国の研究機関が運営している化学情報データベースや、試薬メーカーのオンラインカタログがあります。ここでは例として、アメリカの国立衛生研究所(NIH)の機関が運営しているPubChemというデータベースを利用してみます。&lt;/p&gt;
-&lt;p&gt;PubChem&lt;br&gt;
-&lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/&quot;&gt;https://pubchem.ncbi.nlm.nih.gov/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;化学データベースの例としては、各国の研究機関が運営している医薬品・創薬候補化合物データベースや、試薬メーカーのオンラインカタログなどがあります。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://pubchem.ncbi.nlm.nih.gov/&quot;&gt;PubChem&lt;/a&gt; アメリカ国立衛生研究所(NIH)が運営、医薬候補化合物とその活性データ&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.ebi.ac.uk/chembl/&quot;&gt;ChEMBL&lt;/a&gt;: 欧州バイオインフォマティクス研究所(EBI)が運営、医薬候補化合物とその活性データ&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.drugbank.ca/&quot;&gt;DrugBank&lt;/a&gt;: 承認薬&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://zinc.docking.org/&quot;&gt;ZINC&lt;/a&gt;: 医薬候補化合物のうち入手可能な市販試薬&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.sigmaaldrich.com/japan.html&quot;&gt;シグマアルドリッチジャパン&lt;/a&gt;: 試薬メーカーのオンラインカタログ&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.tcichemicals.com/JP/ja/&quot;&gt;東京化成工業(TCI)&lt;/a&gt;: 試薬メーカーのオンラインカタログ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ここではPubChemを例に挙げます。&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
       style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
@@ -104,7 +245,7 @@
 &lt;p&gt;化合物の毒性、腐食性、可燃性、環境への負荷等、化学物質が生物および社会に与える影響に関する情報。およびそれらの懸念により化学物質の所持、譲渡、使用に際して課せられる法的な制限。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;化学構造検索&lt;/h3&gt;
+&lt;h3&gt;構造検索と分子のトポロジー&lt;/h3&gt;
 &lt;p&gt;多くの化学データベースには、化学構造による検索機能が実装されています。例えばPubChemの場合、検索窓の下にあるDraw structureのアイコンから構造式エディタを開き、描画した構造式と完全に（あるいは部分的に)一致する化合物を検索することができます。&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -169,113 +310,151 @@
       /&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;このような環状構造や分岐構造など、物体が持つ形状の概念を数学の用語でトポロジー(topology)と呼びます。構造異性体(structural isomer)とは、ある分子と分子式が同じ(化合物を構成する元素の種類と数が同じ)であり、かつトポロジーが異なる分子のことです。上記分子は全て互いに構造異性体の関係にあります。&lt;/p&gt;
-&lt;h3&gt;分子グラフモデル&lt;/h3&gt;
-&lt;p&gt;分子のトポロジーを表現するデータ構造として、分子グラフ(molecular graph)がしばしば用いられます。ここで言うグラフとは、頂点(ノード、node)とそれらを結ぶ辺(エッジ、edge)から構成されるデータ構造のことです。&lt;/p&gt;
-&lt;p&gt;グラフ(データ構造) - Wikipedia&lt;br&gt;
-&lt;a href=&quot;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&quot;&gt;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;分子をグラフとしてみると、原子をノード(node)、結合をエッジ(edge)と置くことができます。それぞれのノードとエッジにはラベル(label)あるいは属性(attribute)などと呼ばれる情報を付与することができます。ノードに関する情報としては、元素記号(あるいは原子番号)、電荷、スピン多重度あるいは不対電子の数、質量などが挙げられます。一方、エッジに関する情報としては、結合次数が挙げられます。&lt;/p&gt;
+&lt;p&gt;このような環状構造や分岐構造など、物体が持つ形状の概念を数学の用語でトポロジー(topology)と呼びます。&lt;/p&gt;
+&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;構造異性体(structural isomer)とは、ある分子と分子式が同じ(化合物を構成する元素の種類と数が同じ)であり、かつトポロジーが異なる分子のことです。上図の分子は全て互いに構造異性体の関係にあります。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;分子の構造の(部分)一致を検出する最も確実な方法は、分子のトポロジーのみを抽出したグラフというデータ構造を用いて、(部分)グラフ同型かどうかを判定することです。下図のように、2つのグラフが部分的に一致する範囲を徐々に広げながら探索するアルゴリズムを用います。&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 554px;&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 590px;&quot;
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png&quot;
+    href=&quot;/static/f558f78963774ac5e9e686279d95a6c5/0a47e/isomorph.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
   &gt;
     &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 38.513513513513516%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAA3XAAAN1wFCKJt4AAABu0lEQVQoz2NgQAP/obhqaQuY7/FkO0P+5r1g9uX/lxn/M1wWvLTrXNLZK+dtQWLXrl1jBNEH9u5lOHfiBNwcTiAGS9wH4mcKUmBB1xe7GIEGMrq+2MFw0nEvw4z/h8Fq9m7dXbRn354AMHvffiY3VQaG2WGuKA4TFYYaiHDqf1Ru4HsGnv8MjP+l/3NGMuiBbGQHic+ZOoEZ3ZccQKzGBVXwhYFB7CcHmxqI7fR6ryrQhfM9n2wPgAYHKxCz7N17sGPL5o2ZyIbsWbXM6tqWLStAbEkuiJdlgE7UAGoQPG1vxA2ScH+6I8b/18n/Lk+3d/9n/8+0Y/f2eAkGBpXVa9fYTZs2zRCoSfHkqdMzS/OzzT0sjRWv7NhpB7ehkoGBN4WBwQDd+d6Pd+hy/tzKd23bfunTZ87MbJq2jBMmp5W/mGn50sVFNy6cEoFr2I2IXS4gVoPF9Jz6NAZcYOmyZUx7V88FekiU0UVVQuP/bAYmBp1SxitbNzIxLIMqes3AwPQOEp4MtySEGaBeZgCGH6Pt650MfwpmMNy4c5tx48aNDGtWgIOKYe6yJTwvT566dPfAIXUQ/97Bw4wAWLelZeetU3gAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 53.37837837837838%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAIAAADwazoUAAAACXBIWXMAAAsSAAALEgHS3X78AAABJUlEQVQoz5VRS0/DMAzu//9ZXJDgiJA4gLZ1r65ru6zL2sSO/ZG0YysSQ+BDDrG/l50BisBQBSAMZ/H3ytLTbhJuqM5c8ANboq3nLlC4A64/MHtA8QoNpx12bzDroaMgoNrI6qkl58bpxKhTcEQESi/EVklWB0EIloSz/GpbLzITqx7LF2+P/ThBnUbyS6hGTit/BWRoGGu6ksVw+167VmKKJWnZIn/27ZZKYGd09tjXi+4GtnsfWmcEJ4I7ho65oJsL7yJRCMxO4JxSH79VvtaX2ZZCoDqoOWuTE7Fn0XshE+OWUPPkVN/b7x6mCGbrSLQM6I2Uc0dOCkY82WHN+4Uft5CN9qYLi1Ut2B7IBak03kGqnG0TGk3ODyuuc3ZWf1D+V30CRE2GMBC6TFMAAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;img
         class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;Molecular graph&quot;
-        title=&quot;Molecular graph&quot;
-        src=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png&quot;
-        srcset=&quot;/static/a0731c63484cff5a0cfde12500ad96f5/12f09/molgraph.png 148w,
-/static/a0731c63484cff5a0cfde12500ad96f5/e4a3f/molgraph.png 295w,
-/static/a0731c63484cff5a0cfde12500ad96f5/04abd/molgraph.png 554w&quot;
-        sizes=&quot;(max-width: 554px) 100vw, 554px&quot;
+        alt=&quot;部分グラフ同型性&quot;
+        title=&quot;部分グラフ同型性&quot;
+        src=&quot;/static/f558f78963774ac5e9e686279d95a6c5/fcda8/isomorph.png&quot;
+        srcset=&quot;/static/f558f78963774ac5e9e686279d95a6c5/12f09/isomorph.png 148w,
+/static/f558f78963774ac5e9e686279d95a6c5/e4a3f/isomorph.png 295w,
+/static/f558f78963774ac5e9e686279d95a6c5/fcda8/isomorph.png 590w,
+/static/f558f78963774ac5e9e686279d95a6c5/0a47e/isomorph.png 600w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
         style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;💡&lt;span class=&quot;tip&quot;&gt;有機化学における構造式と同様に、水素はしばしば省略されます。&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;原子のノードを結合のエッジで接続した分子グラフは非常に単純なデータ構造ですが、特に低分子有機化合物を扱う創薬化学の分野において広く利用されています。&lt;/p&gt;
-&lt;p&gt;このモデルのグラフとしての特徴を以下に挙げます。&lt;/p&gt;
+&lt;p&gt;情報学の研究テーマの一つであるグラフ理論では、グラフとそれに関連するアルゴリズムを取り扱います。グラフ理論には、上記の例のように分子のトポロジーの取り扱いに応用できる概念やアルゴリズムが数多く存在します。&lt;/p&gt;
+&lt;h3&gt;データファイル形式&lt;/h3&gt;
+&lt;p&gt;前述のPubChemの構造検索画面でExportの右のドロップダウンメニューを開くと、いくつかの共通データ形式のリストが表示されます。これらのデータ形式のファイルを保存することにより、描画した構造式をほかの構造式エディタや化学データベースソフトウェアなどでも利用することができます。&lt;/p&gt;
+&lt;p&gt;特によく利用されるデータ形式のうち2つを以下に挙げます。&lt;/p&gt;
+&lt;h4&gt;SMILES&lt;/h4&gt;
+&lt;p&gt;SMILESは文字列による化学構造式の表記法です。表記ルールが非常にシンプルなため、パーサの実装が容易で、かつ可読性が高いことが特徴です。&lt;/p&gt;
+&lt;p&gt;よく知られている仕様は&lt;a href=&quot;https://www.daylight.com/dayhtml/doc/theory/theory.smiles.html&quot;&gt;Daylight社が公開&lt;/a&gt;しているものです。他にも&lt;a href=&quot;http://opensmiles.org/opensmiles.html&quot;&gt;OpenSMILES&lt;/a&gt;というオープンソースの仕様があります。&lt;/p&gt;
+&lt;p&gt;慣れると簡単な構造であれば構造式エディタが無くてもSMILESで検索クエリが打てるようになります。SMILESの拡張仕様であるSMARTSを利用すれば、AND/OR条件などを含む複雑なクエリも作成可能です。&lt;/p&gt;
+&lt;p&gt;SMILESでは、分子グラフのトポロジーを以下の3種類の記法のみで表現します(逆に、その3種類のみで全て表現できるということでもあります)。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;無向グラフ(undirected graph)&lt;/p&gt;
-&lt;p&gt;分子グラフは一般的にエッジに向きが無い無向グラフとして表現されます。ちなみに、エッジに向きがある（一方通行の経路が存在する）グラフは有向グラフ(directed graph)と言います。&lt;/p&gt;
+&lt;p&gt;直鎖&lt;/p&gt;
+&lt;p&gt;SMILESの基本構造である元素記号の列は、それらが直鎖状に結合していることを表します。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;単純グラフ(simple graph)&lt;/p&gt;
-&lt;p&gt;分子グラフは一般的にループ(self-loop、同一ノードを接続するエッジ)を持ちません。また多重辺(multi-edge、２つのノードの間に２本以上あるエッジ)を持ちません。ループと多重辺を持たないグラフを単純グラフと呼びます。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;有限グラフ(finite graph)&lt;/p&gt;
-&lt;p&gt;ノード数が無限ではないグラフを有限グラフと呼びます。ノード数が無限であるグラフは無限グラフ(infinite graph)です。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;分子グラフは分子のトポロジーの取り扱いを容易にしますが、適用範囲には限りがあります。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;ホウ素化合物の三中心二電子結合など、非古典的な結合の中には単純グラフでは表せない化学構造が存在します。&lt;/li&gt;
-&lt;li&gt;実際の分子は電荷や多重結合をそれぞれの原子や結合が離散的に(discrete)持っているわけではなく、複数の原子や結合にまたがる連続的な(continuous)分布として持っています。例えば芳香族性もヒュッケル則に従って単純に「ある」か「ない」かを決められるわけではなく、実際には「弱い芳香族性」を持つような化合物も数多く存在します。&lt;/li&gt;
-&lt;li&gt;経験的には、分子グラフが適用されうる範囲は主に有機低分子化合物です。有機高分子や無機化学を取り扱う場合は、用途に応じてより適切なモデルを利用する必要があります。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;化学構造式は各種スペクトル分析によって実験的に決定することが可能ですが、電荷や電子密度の連続的な分布を直接観測することは現代においても非常に困難です。有機化学者は経験則(有機電子論)に基づいて、化学構造式から電荷や電子密度の分布を推測し、現実の分子の相互作用および反応機構の解釈を試みます。近年では分子軌道シミュレーションを利用して手軽に電荷や電子密度の分布を予測し、反応機構のより強力な裏付けを得ることができるようになりました。&lt;/span&gt;&lt;/p&gt;
-&lt;h3&gt;分子グラフの統計的特徴&lt;/h3&gt;
-&lt;p&gt;原子がとりうる結合の数(価数、valence)には限りがあるため、実用上取り扱う低分子有機化合物の分子グラフには次のような傾向があります。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;ノードの次数は1-4&lt;/p&gt;
-&lt;p&gt;あるノードに接続するエッジの本数のことをそのノードの次数(degree)と呼びます。有機元素(C,H,O,N,P,S,ハロゲン)の価数は1から4の間にあるので、分子グラフのノードの次数の分布は1から4の間に集中します。遷移金属の配位や超原子価分子などで４を超えることもありますが、稀です。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;ほぼ全ての分子グラフが平面グラフ&lt;/p&gt;
-&lt;p&gt;平面グラフ(planar graph)とは、平面上にグラフを配置した際にエッジが交差しないノードの配置が少なくとも一つ存在するグラフです。テトラへドランやフラーレンは立体的に見えますが、平面グラフです(下図および&lt;a href=&quot;https://en.wikipedia.org/wiki/Fullerene#/media/File:Graph_of_60-fullerene_w-nodes.svg&quot;&gt;C60のシュレーゲル図(Wikipedia)&lt;/a&gt;参照)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;その中でも外平面グラフが多い&lt;/p&gt;
-&lt;p&gt;外平面グラフ(outerplanar graph)とは、平面グラフの中でも特に全てのノードがグラフの外縁に位置するようなグラフです。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;分岐&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;(&lt;/code&gt;と&lt;code class=&quot;language-text&quot;&gt;)&lt;/code&gt;で囲まれた部分が分岐です。同じ原子から２つ以上の分岐がある場合は括弧を続けて並べます。&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
-      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 540px;&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 450px;&quot;
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png&quot;
+    href=&quot;/static/a693370f22042ac78e8107f0a96d1c11/fc2a6/smilesbranch.png&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
   &gt;
     &lt;span
     class=&quot;gatsby-resp-image-background-image&quot;
-    style=&quot;padding-bottom: 37.16216216216216%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAHCAIAAACHqfpvAAAACXBIWXMAAAsSAAALEgHS3X78AAAA/0lEQVQY001Q2W7EMAjM//9eVanqQ1fazek48RHfBlw7m1aZB4SAGRi6UgoRhROIWP6QAXwINf5XANBZ6xp8pdRK927M8/zzeDjvT60mcSj5/fnB2fJWr9E796zo+34YIOeLrJSqa8sNlBPpjQ5BilMK5SQ3BFuOvaRruPPeP18vNg5fMU3QdmJwIJjblkTFKZEEQ6sqP/MxbjMhBjbA3i7q6knGmOC8CG6VvHmTa8nRxCS1lsbWadAbSlZFoxKBT+lQaDUe4vR8XmUF3/sHOlMQQLKwju1teo98omApR9hnVFtBrF5QLAT5elgleD5ZuYHVl+0USK1oxP0Vt7Tlv+FgllRuvhpsAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    style=&quot;padding-bottom: 44.5945945945946%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAAAiUlEQVQoz62RUQuDMAyEq9vcdBW7Te3cGANf/P//0AvcQyprh+LBB6Fpw+VqTKg8Um/WGfTgATqzkyrwWvmmATd9UIDrj4GytgXZn4FfMGlHnms+uXLL2qv1D5FhNbgDR4LwT8rNUfWyhMvdPzIqyerN/IQPGOg6Jcl/JG7ZsKQmNpGd1gWUcncGSwMDhhTxDd0AAAAASUVORK5CYII=&apos;); background-size: cover; display: block;&quot;
   &gt;&lt;/span&gt;
   &lt;img
         class=&quot;gatsby-resp-image-image&quot;
-        alt=&quot;planar graph&quot;
-        title=&quot;planar graph&quot;
-        src=&quot;/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png&quot;
-        srcset=&quot;/static/76dd6c0c36981af7226842556a80ba29/12f09/planar.png 148w,
-/static/76dd6c0c36981af7226842556a80ba29/e4a3f/planar.png 295w,
-/static/76dd6c0c36981af7226842556a80ba29/07484/planar.png 540w&quot;
-        sizes=&quot;(max-width: 540px) 100vw, 540px&quot;
+        alt=&quot;branch&quot;
+        title=&quot;branch&quot;
+        src=&quot;/static/a693370f22042ac78e8107f0a96d1c11/fc2a6/smilesbranch.png&quot;
+        srcset=&quot;/static/a693370f22042ac78e8107f0a96d1c11/12f09/smilesbranch.png 148w,
+/static/a693370f22042ac78e8107f0a96d1c11/e4a3f/smilesbranch.png 295w,
+/static/a693370f22042ac78e8107f0a96d1c11/fc2a6/smilesbranch.png 450w&quot;
+        sizes=&quot;(max-width: 450px) 100vw, 450px&quot;
         style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;ノードの次数が1-4のグラフは、比較的疎なグラフ(sparse graph)と言えます。グラフの実装に用いられるデータ構造としては主に隣接行列と連想配列（PythonにおけるDictなど）がありますが、疎グラフは通常連想配列で実装されます。&lt;/p&gt;
-&lt;p&gt;グラフを扱う数学的な問題の中には天文学的な計算量になりうるものもありますが、扱うグラフの対象を平面グラフ、外平面グラフ等に限定すればより効率的なアルゴリズムが発見されることもあるため、この分野における重要なアプローチの一つとなっています&lt;a href=&quot;http://dx.doi.org/10.5936/csbj.201302004&quot;&gt;[Akutsu et al., 2013]&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;次数が低く、立体障害など空間的な制約もあるので、非平面の分子グラフは極めて稀です。おそらく天然低分子としては存在せず、狙って合成する必要があります。なお、実際に非平面グラフ分子の合成報告があります&lt;a href=&quot;https://doi.org/10.1016/0040-4039(81)80077-9&quot;&gt;[Simmons et al., 1981]&lt;/a&gt;。&lt;/span&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Gatsbyでブログを構築した際の備忘録]]></title><description><![CDATA[Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。 Gatsby http://gatsbyjs.org/ 導入経緯 ブログ用の静的サイトジェネレータとしてJekyllを以前使用していましたが、機能拡張のために新しくRuby…]]></description><link>https://mojaie.github.io/gatsby-blog-memo/</link><guid isPermaLink="false">https://mojaie.github.io/gatsby-blog-memo/</guid><pubDate>Thu, 30 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;環&lt;/p&gt;
+&lt;p&gt;環の接合部分を数字のラベルで表します。縮合環ではそれぞれの接合部分を異なる数字で表します。&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto;  max-width: 450px;&quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/9d866ae488e68ef1bf12e503ef745824/fc2a6/smilesring.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 44.5945945945946%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsSAAALEgHS3X78AAAAoElEQVQoz7WR2w6DMAxDy3WgbqMU2K3wsv3/P+JIRoqq0b2wSEdqieNgMOaYakC1XQpw4tmDADI+r3cMLFjADTzBA7xAL82WjQ8NxeRNQffFrOJSKcfZrYIWyqaSZzHLd95OG/rIcNbCkjECNxtGT0WeosguFhb64/6oLPoptflnSdyRESZGuCb00ruTUc1ctGFPPIU2EfUMBpo5zoipXQEo9AVKXKEs8gAAAABJRU5ErkJggg==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;ring&quot;
+        title=&quot;ring&quot;
+        src=&quot;/static/9d866ae488e68ef1bf12e503ef745824/fc2a6/smilesring.png&quot;
+        srcset=&quot;/static/9d866ae488e68ef1bf12e503ef745824/12f09/smilesring.png 148w,
+/static/9d866ae488e68ef1bf12e503ef745824/e4a3f/smilesring.png 295w,
+/static/9d866ae488e68ef1bf12e503ef745824/fc2a6/smilesring.png 450w&quot;
+        sizes=&quot;(max-width: 450px) 100vw, 450px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;MDL Molfile&lt;/h4&gt;
+&lt;p&gt;Chemical table file (CT file)というデータ形式の一種です。Molfileに化合物名や物性などのフィールドを付与してフラットファイルデータベースにしたものがSDfile(拡張子.sdf、しばしばSDF形式と呼ばれる)で、試薬カタログ等の化合物データベースのデファクトスタンダードとなっています。&lt;/p&gt;
+&lt;p&gt;仕様の概要については&lt;a href=&quot;https://en.wikipedia.org/wiki/Chemical_table_file&quot;&gt;[Chemical table file - Wikipedia]&lt;/a&gt;参照、詳細な仕様については&lt;a href=&quot;https://www.3ds.com/ja/products-services/biovia/&quot;&gt;BIOVIAのサイト&lt;/a&gt;からダウンロードできます(要登録)。&lt;/p&gt;
+&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;かつてMolecular Design Limited (MDL)という企業が作成したデータ形式ですが、仕様が公開され広く普及しています。いくつかバージョンが存在し、特にV2000というバージョンが多くのソフトウェアで利用可能です。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Chemical table fileという名の通り、原子、結合、プロパティそれぞれの一覧表(ブロック)から構成されているため、パーサの実装は極めて容易です。また、原子のテーブルには座標の情報が格納されているので、2次元、3次元空間に描画された化学構造式の見た目の印象を保持することができるのが特徴です。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset: linenumber 0&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt; 
+  MJ201100                      
+
+  6  6  0  0  0  0  0  0  0  0999 V2000
+   -2.9241   -0.2910    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6385   -0.7035    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6385   -1.5286    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9241   -1.9411    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2096   -1.5286    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2096   -0.7035    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  1  1  0  0  0  0
+M  END&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space: normal; width: auto; left: 0;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;1-3行目: ヘッダーブロック。ファイルを生成したソフトウェアの情報などが記載される&lt;/li&gt;
+&lt;li&gt;4行目: カウント行。原子のレコード数、結合のレコード数、…の順&lt;/li&gt;
+&lt;li&gt;5-10行目: 原子ブロック。x座標、y座標、z座標、元素記号、…の順&lt;/li&gt;
+&lt;li&gt;11-16行目: 結合ブロック。原子1のインデックス、原子2のインデックス、結合次数、…の順。&lt;/li&gt;
+&lt;li&gt;プロパティブロック(電荷、ラジカル、同位体など)がある場合、結合テーブルの下に記載される&lt;/li&gt;
+&lt;li&gt;17行目: 終端行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Molfileでは、結合ブロックにおいて結合の両端の原子のインデックス(その原子が原子ブロックの上から数えて何行目にあるか）を記述することで分子のトポロジーを表現します。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Gatsbyでブログを構築した際の備忘録]]></title><description><![CDATA[Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。 Gatsby http://gatsbyjs.org/ 導入経緯 ブログ用の静的サイトジェネレータとしてJekyllを以前使用していましたが、機能拡張のために新しくRuby…]]></description><link>https://mojaie.github.io/gatsby-blog-memo/</link><guid isPermaLink="false">https://mojaie.github.io/gatsby-blog-memo/</guid><pubDate>Thu, 30 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Gatsbyでこのサイト(mojaie.github.io)を構築した際の備忘録です。&lt;/p&gt;
 &lt;p&gt;Gatsby&lt;br&gt;
 &lt;a href=&quot;http://gatsbyjs.org/&quot;&gt;http://gatsbyjs.org/&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;導入経緯&lt;/h3&gt;
