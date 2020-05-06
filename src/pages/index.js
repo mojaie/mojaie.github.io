@@ -95,7 +95,7 @@ export const pageQuery = graphql`
     allMarkdownRemark(sort: { fields: [frontmatter___dateModified], order: DESC }) {
       edges {
         node {
-          excerpt
+          excerpt(truncate: true)
           fields {
             slug
           }
