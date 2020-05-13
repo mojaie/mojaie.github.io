@@ -1,4 +1,188 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 06 May 2020 03:02:31 GMT</lastBuildDate><item><title><![CDATA[化学情報とグラフ理論(2): 分子グラフモデル]]></title><description><![CDATA[分子グラフモデル 分子のトポロジーを表現するデータ構造として、分子グラフ(molecular graph)がしばしば用いられます。ここで言うグラフとは、頂点(ノード、node)とそれらを結ぶ辺(エッジ、edge…]]></description><link>https://mojaie.github.io/molecular-graph-model/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph-model/</guid><pubDate>Wed, 06 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h3&gt;分子グラフモデル&lt;/h3&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[mojaie.github.io]]></title><description><![CDATA[ケモインフォ関連]]></description><link>https://mojaie.github.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 13 May 2020 13:25:48 GMT</lastBuildDate><item><title><![CDATA[C/C++のライブラリをJuliaのパッケージとして登録する(Julia 1.3以降)]]></title><description><![CDATA[C/C++のライブラリを公開リポジトリに登録してJuliaのパッケージとして使用する方法です。BinaryBuilder.jlで設定ファイルを作成し、Yggdrasilを通じてJuliaBinaryWrappersにパッケージ登録します(Julia 1.…]]></description><link>https://mojaie.github.io/julia-package-binary/</link><guid isPermaLink="false">https://mojaie.github.io/julia-package-binary/</guid><pubDate>Wed, 13 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;C/C++のライブラリを公開リポジトリに登録してJuliaのパッケージとして使用する方法です。BinaryBuilder.jlで設定ファイルを作成し、Yggdrasilを通じてJuliaBinaryWrappersにパッケージ登録します(Julia 1.3以降)。&lt;/p&gt;
+&lt;h3&gt;おおまかな流れ&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;C/C++ライブラリの準備&lt;/li&gt;
+&lt;li&gt;(Dockerがない場合)Dockerをインストール&lt;/li&gt;
+&lt;li&gt;BinaryBuilder.jlのインストール&lt;/li&gt;
+&lt;li&gt;build_tarballs.jlの作成&lt;/li&gt;
+&lt;li&gt;jllパッケージの動作確認&lt;/li&gt;
+&lt;li&gt;Yggdrasilにプルリクエストを送る&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Juliaのバイナリパッケージの管理はYggdrasilとJuliaBinaryWrappersが担っています。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Yggdrasil &lt;a href=&quot;https://github.com/JuliaPackaging/Yggdrasil&quot;&gt;https://github.com/JuliaPackaging/Yggdrasil&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;JuliaBinaryWrappers &lt;a href=&quot;https://github.com/JuliaBinaryWrappers&quot;&gt;https://github.com/JuliaBinaryWrappers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Yggdrasilはビルド設定ファイル(build_tarballs.jl)を管理しています。build_tarballs.jlにはバイナリパッケージのビルドに必要な資源やビルド方法の情報が記載されています。Yggdrasilにこの設定ファイルのプルリクエストを送りマージされると、自動的にWindows、Mac OSX, Linuxなど各プラットフォームに対応したビルドレシピが生成され、JuliaBinaryWrappersのリポジトリにjllパッケージとして登録されます。Juliaのデフォルトのパッケージ管理システム(Pkg.jl)は環境に応じて必要なビルドレシピを選択してバイナリをビルドするので、jllパッケージは通常のJuliaパッケージと同様に扱うことができます。&lt;/p&gt;
+&lt;h3&gt;C/C++ライブラリの準備&lt;/h3&gt;
+&lt;p&gt;Juliaパッケージにするライブラリのソースコードを入手し、ビルドできることを確認しておきます。&lt;/p&gt;
+&lt;p&gt;Cライブラリの場合は、Juliaから&lt;code class=&quot;language-text&quot;&gt;ccall&lt;/code&gt;関数で直接Cの関数を呼び出すことができます。C++は直接サポートされていないので、&lt;a href=&quot;https://github.com/JuliaInterop/Cxx.jl&quot;&gt;Cxx.jl&lt;/a&gt;もしくは&lt;a href=&quot;https://github.com/JuliaInterop/CxxWrap.jl&quot;&gt;CxxWrap.jl&lt;/a&gt;などのパッケージを利用するか、&lt;code class=&quot;language-text&quot;&gt;extern &amp;quot;C&amp;quot;&lt;/code&gt;でラッパーを作成して関数を&lt;code class=&quot;language-text&quot;&gt;ccall&lt;/code&gt;で呼び出せるようにしておきます。&lt;/p&gt;
+&lt;p&gt;Cxx.jlはマクロで直接JuliaのスクリプトにC++のコードが書けるので大変使いやすいですが、LLVM周りのアップデートが進まず、現状ではJulia本体のアップデートに追いついていません。&lt;/p&gt;
+&lt;h3&gt;Dockerのインストール&lt;/h3&gt;
+&lt;p&gt;BinaryBuilder.jlはDocker上でクロスコンパイラの環境を構築し、各プラットフォームでのソースビルドをシミュレートします。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.docker.com/&quot;&gt;https://www.docker.com/&lt;/a&gt; から最新版のDockerを入手してインストールします。Mac OS Xの場合はDocker Desktopの.dmgファイルをダウンロードしてインストールし、起動しておきます(メニューバーにDockerのアイコンが表示され、クリックすると”Docker desktop is running”と表示されることを確認します)。&lt;/p&gt;
+&lt;h3&gt;BinaryBuilder.jlのインストール&lt;/h3&gt;
+&lt;p&gt;JuliaのREPLを起動し、Pkgでインストールします。デフォルト環境で構いません。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;(v1.3) pkg&amp;gt; add BinaryBuilder&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;BinaryBuilderをインポートして&lt;code class=&quot;language-text&quot;&gt;run_wizard&lt;/code&gt;を実行すると、ビルドレシピを作成するウィザードが立ち上がります。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;julia&quot;&gt;&lt;pre class=&quot;language-julia&quot;&gt;&lt;code class=&quot;language-julia&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;using&lt;/span&gt; BinaryBuilder
+BinaryBuilder&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;run_wizard&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;o      `.
+o*o      \&amp;#39;-_               00000000: 01111111  .
+ \\      \;&amp;quot;&amp;quot;.     ,;.--*  00000001: 01000101  E
+  \\     ,\&amp;#39;&amp;#39;--.--&amp;#39;/       00000003: 01001100  L
+  :=\--&amp;lt;&amp;#39; `&amp;quot;&amp;quot;  _   |       00000003: 01000110  F
+  ||\\     `&amp;quot; / &amp;#39;&amp;#39;--       00000004: 00000010  .
+  `/_\\,-|    |            00000005: 00000001  .
+      \\/     L
+       \\ ,&amp;#39;   \
+     _/ L&amp;#39;   `  \          Join us in the #binarybuilder channel on the
+    /  /    /   /          community slack: https://julialang.slack.com
+   /  /    |    \
+  &amp;quot;_&amp;#39;&amp;#39;--_-&amp;#39;&amp;#39;---__=;        https://github.com/JuliaPackaging/BinaryBuilder.jl
+
+Welcome to the BinaryBuilder wizard.  We&amp;#39;ll get you set up in no time.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;build_tarballs.jlの作成&lt;/h3&gt;
+&lt;p&gt;BinaryBuilderのウィザードにしたがって、レシピファイル(build_tarballs.jl)を作成します。&lt;/p&gt;
+&lt;p&gt;まずビルドを行うプラットフォームを選択します。パッケージを公開する場合は全てのプラットフォームで利用できることが好ましいので、All Supported Platformsを選択します。ただし、全てのプラットフォームの環境をダウンロードするのにはかなりの時間を要します。時間が無い場合は、とりあえずSelect by Operating Systemを選択して自分の使用しているOSの環境を選択します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;  # Step 1: Select your platforms
+
+Make a platform selection
+&amp;gt; All Supported Platforms
+Select by Operating System
+Fully Custom Platform Choice&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Select operating systems
+[press: d=done, a=all, n=none]
+ &amp;gt; [ ] FreeBSD
+   [ ] Linux
+   [ ] MacOS
+   [ ] Windows&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次に、ソースコードのgitリポジトリのURLを入力します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# Step 2a: Obtain the source code
+
+Please enter a URL (git repository or compressed archive) containing the source code to build:
+&amp;gt; https://github.com/user/mylibrary.git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ビルドするコードのブランチ、コミットもしくはタグを入力します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;You have selected a git repository. Please enter a branch, commit or tag to use.
+Please note that for reproducability, the exact commit will be recorded, 
+so updates to the remote resource will not be used automatically; 
+you will have to manually update the recorded commit.
+&amp;gt; v1.0.0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;追加で必要なリソースがあるかどうか聞いてきます。なければNで次に進みます。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Would you like to download additional sources?  [y/N]: &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;他に依存するバイナリがあるかどうか聞いてきます。なければNで次に進みます。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# Step 2b: Obtain binary dependencies (if any)
+
+Do you require any (binary) dependencies?  [y/N]: &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;プロジェクト名を入力します。パッケージ名は[名前]_jll.jlになります。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Enter a name for this project.  This will be used for filenames:
+&amp;gt; mylibrary&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ビルドしたコードのバージョンを入力します。セマンティックバージョニング(例: v1.0.0)である必要がありますが、プレリリースやビルドメタデータがあるとエラーになるようです(例: v1.0.0-alpha.1, v1.0.0+2019.03)。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Enter a version number for this project:
+&amp;gt; v1.0.0&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;コンパイラの設定をカスタマイズするかどうか聞かれます。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Do you want to customize the set of compilers? [y/N]: &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Linux環境のサンドボックスでテストビルドを行います。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# Step 3: Build for Linux(:x86_64, libc=:glibc)
+
+You will now be dropped into the cross-compilation environment.
+Please compile the package. Your initial compilation target is x86_64-linux-gnu
+The $prefix environment variable contains the target directory.
+Once you are done, exit by typing `exit` or `^D`
+
+You have the following contents in your working directory:
+- mylibrary
+Hints:
+- mylibrary/CMakeLists.txt
+
+This file is likely input to CMake. The recommended options for CMake are
+
+cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release
+
+followed by `make` and `make install`. Since the prefix environment
+variable is set already, this will automatically perform the installation
+into the correct directory.
+
+
+mount: mounting overlay on /workspace/srcdir failed: Invalid argument
+sandbox:${WORKSPACE}/srcdir # &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;language-text&quot;&gt;${WORKSPACE}/srcdir&lt;/code&gt;というディレクトリの下にソースコードのディレクトリがあるという設定になっています。ソースコードのルートディレクトリにMakefile等がある場合は、例えば下記のようなコマンドになります。ウィザードの説明文にあるように、&lt;code class=&quot;language-text&quot;&gt;-DCMAKE_INSTALL_PREFIX&lt;/code&gt;、&lt;code class=&quot;language-text&quot;&gt;-DCMAKE_TOOLCHAIN_FILE&lt;/code&gt;、&lt;code class=&quot;language-text&quot;&gt;-DCMAKE_BUILD_TYPE&lt;/code&gt;の3つのオプションを付与します。それ以外にライブラリ特有のオプションがあれば付与します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;cd mylibrary
+cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release
+make -j${nproc}
+make install&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;無事ビルドが成功したら、exitコマンドでログアウトします。&lt;/p&gt;
+&lt;p&gt;サンドボックスで打ったコマンドの履歴が表示されます(最初の行の&lt;code class=&quot;language-text&quot;&gt;cd $WORKSPACE/srcdir&lt;/code&gt;は自動的に追加されます)。コマンドの打ち間違いなどがあった場合は、ここでyを選択してスクリプトを修正します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;			Build complete
+
+Your build script was:
+
+	cd $WORKSPACE/srcdir
+	cd $WORKSPACE/srcdir/mylibrary
+	cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release
+	make -j${nproc}
+	make install
+	exit
+	
+Would you like to edit this script now? [y/N]: &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ビルドしたライブラリの名前を入力します。何もなければ生成されたライブラリファイルの名前と同じでいいと思います。複数のライブラリをビルドした場合はそれぞれに名前を付けます。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# Step 4: Select build products
+
+The build has produced only one build artifact:
+
+lib/libmylibrary.so.1.4.0
+
+Please provide a unique variable name for each build artifact:
+lib/libmylibrary.so.1.4.0:
+&amp;gt; libmylibrary&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Step1で複数のプラットフォームを指定した場合は、ここで他の仮想環境のインストールとテストビルドが行われます。ダウンロードにかなり時間がかかります。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;# Step 5: Generalize the build script
+
+We will now attempt to use the same script to build for other operating systems.
+This will help iron out any issues with the cross compiler.
+Your next build target will be x86_64-w64-mingw32
+Press any key to continue...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;最後にデプロイの方法を選択します。このままYggdrasilにプルリクエストを送るか、生成したbuild_tarballs.jlのファイルを一旦ローカルに保存する(あるいは標準出力してコピペ)かを選べます。詳しくは後述しますが、build_tarballs.jlの修正やパッケージの動作確認のために、一旦ファイルを出力することをお勧めします。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;			# Step 7: Deployment
+
+How should we deploy this build recipe?
+ &amp;gt; Prepare a pull request against the community buildtree, Yggdrasil
+   Write to a local file
+   Print to stdout&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Write to a local fileを選択し、ファイル名を入力します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Enter path to build_tarballs.jl to write to:
+&amp;gt; build_tar.jl&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ファイルを書き出し、終了します。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;Wizard Complete. Press any key to exit...&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;なお、build_tarballs.jlは大変シンプルなスクリプトなので、ここまでに長いウィザードで設定してきた項目がbuild_tarballs.jlのどこに記載されているかは簡単に理解できます。細かい変更については、再度ウィザードを起動するよりも、出力したbuild_tarballs.jlを編集した方が速い場合もあると思います。&lt;/p&gt;
+&lt;h3&gt;jllパッケージの動作確認&lt;/h3&gt;
+&lt;p&gt;いずれかの環境でビルドに問題がある場合は、下記のようにbuild_tarballs.jlをコマンドラインから実行することで、個々のプラットフォームについてビルドを検証することができます。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;julia --color=yes build_tarballs.jl x86_64-apple-darwin14 --debug --verbose&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;juliaコマンドのオプション&lt;code class=&quot;language-text&quot;&gt;--color=yes&lt;/code&gt;でビルドログがカラー出力されて見やすくなります。&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;build_tarballs.jl&lt;/code&gt;の次の引数でプラットフォーム名をコンマ区切りで複数指定できます。省略すると全ての利用可能なプラットフォームでビルドを試みます(ダウンロードに時間がかかります)。&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;--debug&lt;/code&gt;、&lt;code class=&quot;language-text&quot;&gt;--verbose&lt;/code&gt;オプションを付けるとビルドの詳細なログが出力されます。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;生成されるjllパッケージの挙動については、ローカルでテストを完結する方法は現状ありません。&lt;code class=&quot;language-text&quot;&gt;--deploy&lt;/code&gt;オプションで自分のGitHubに一旦デプロイしてテストすることが可能です。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;julia --color=yes build_tarballs.jl x86_64-apple-darwin14 --debug --verbose --deploy=&amp;quot;myrepo/mylibrary_jll.jl&amp;quot;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GitHubのログイン情報を聞かれるので、入力するとリポジトリが作成されます。これで、Pkg.addによりjllパッケージをインストールできるようになります。&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;(v1.3) pkg&amp;gt; add https://github.com/myrepo/mylibrary_jll.jl.git&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;using mylibrary_jll
+
+ccall((:myfunction, libmylibrary), Ptr{Cvoid}, ())&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Yggdrasilにプルリクエストを送る&lt;/h3&gt;
+&lt;p&gt;Yggdrasilにプルリクエストを送るには以下の2つの方法があります。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;BinaryBuilderのウィザードに従って自動でプルリクエストを送る&lt;/p&gt;
+&lt;p&gt;ウィザードのStep 7で一番上の選択肢を選ぶことで、プルリクエストの作成に進みます。初めてパッケージを登録する際などは便利ですが、build_tarballs.jlの細かい修正はできません。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Yggdrasilをフォークしてbuild_tarballs.jlを設置し、手動でプルリクエストを送る&lt;/p&gt;
+&lt;p&gt;バージョンアップ時の軽微な修正や、build_tarballs.jlの詳細な編集が必要な場合は手動でプルリクエストを送ります。ソースコードの内容によっては、各プラットフォームでのビルド時にbuild_tarballs.jlを編集するよう警告が出る場合があるので、その場合は手動での編集が必要になります(例えば、std::stringを使っているコードの互換性を保持するため、platformsに&lt;code class=&quot;language-text&quot;&gt;expand_cxxstring_abis&lt;/code&gt;を適用することを勧められるケースなど)。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;どちらの場合も、リポジトリのメンテナーによるレビューが行われます。&lt;/p&gt;</content:encoded></item><item><title><![CDATA[化学情報とグラフ理論(2): 分子グラフモデル]]></title><description><![CDATA[分子グラフモデル 分子のトポロジーを表現するデータ構造として、分子グラフ(molecular graph)がしばしば用いられます。ここで言うグラフとは、頂点(ノード、node)とそれらを結ぶ辺(エッジ、edge…]]></description><link>https://mojaie.github.io/molecular-graph-model/</link><guid isPermaLink="false">https://mojaie.github.io/molecular-graph-model/</guid><pubDate>Wed, 06 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h3&gt;分子グラフモデル&lt;/h3&gt;
 &lt;p&gt;分子のトポロジーを表現するデータ構造として、分子グラフ(molecular graph)がしばしば用いられます。ここで言うグラフとは、頂点(ノード、node)とそれらを結ぶ辺(エッジ、edge)から構成されるデータ構造のことです。&lt;/p&gt;
 &lt;p&gt;グラフ(データ構造) - Wikipedia&lt;br&gt;
 &lt;a href=&quot;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&quot;&gt;https://ja.wikipedia.org/wiki/%E3%82%B0%E3%83%A9%E3%83%95_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0)&lt;/a&gt;&lt;/p&gt;
@@ -49,6 +233,7 @@
 &lt;p&gt;ノード数が無限ではないグラフを有限グラフと呼びます。ノード数が無限であるグラフは無限グラフ(infinite graph)です。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;💡&lt;span class=&quot;tip&quot;&gt;それぞれの分子グラフは隣接するノードを辿ることで任意のノードに到達することのできる連結グラフ(connected graph)です。しかし、実際の化合物データは水和水や金属カチオンを含む塩など、複数の分子の混合物の場合もあるので、その場合は非連結グラフ(disconnected graph)となります(イオン結合や水素結合は通常分子グラフのエッジとはみなされません)。&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;分子グラフは分子のトポロジーの取り扱いを容易にしますが、適用範囲には限りがあります。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ホウ素化合物の三中心二電子結合など、非古典的な結合の中には単純グラフでは表せない化学構造が存在します。&lt;/li&gt;
@@ -63,7 +248,7 @@
 &lt;p&gt;ノードの次数は1-4&lt;/p&gt;
 &lt;p&gt;あるノードに接続するエッジの本数のことをそのノードの次数(degree)と呼びます。有機元素(C,H,O,N,P,S,ハロゲン)の価数は1から4の間にあるので、分子グラフのノードの次数の分布は1から4の間に集中します。遷移金属の配位や超原子価分子などで４を超えることもありますが、稀です。&lt;/p&gt;
 &lt;p&gt;ノードの次数が1-4のグラフは、ノード数が10から30程度の創薬候補化合物を想定した場合、比較的疎らなグラフ(sparse graph)と言えます。&lt;/p&gt;
-&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;ノードの次数が比較的高いグラフは密なグラフ(dense graph)です。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;💡&lt;span class=&quot;tip&quot;&gt;ノードの次数が比較的高いグラフは密なグラフ(dense graph)です。&lt;/span&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;ほぼ全てが平面グラフで、その中でも外平面グラフが多い&lt;/p&gt;
@@ -311,7 +496,7 @@
   &lt;/a&gt;
     &lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;このような環状構造や分岐構造など、物体が持つ形状の概念を数学の用語でトポロジー(topology)と呼びます。&lt;/p&gt;
-&lt;p&gt;📗&lt;span class=&quot;note&quot;&gt;構造異性体(structural isomer)とは、ある分子と分子式が同じ(化合物を構成する元素の種類と数が同じ)であり、かつトポロジーが異なる分子のことです。上図の分子は全て互いに構造異性体の関係にあります。&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;💡&lt;span class=&quot;tip&quot;&gt;構造異性体(structural isomer)とは、ある分子と分子式が同じ(化合物を構成する元素の種類と数が同じ)であり、かつトポロジーが異なる分子のことです。上図の分子は全て互いに構造異性体の関係にあります。&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;分子の構造の(部分)一致を検出する最も確実な方法は、分子のトポロジーのみを抽出したグラフというデータ構造を用いて、(部分)グラフ同型かどうかを判定することです。下図のように、2つのグラフが部分的に一致する範囲を徐々に広げながら探索するアルゴリズムを用います。&lt;/p&gt;
 &lt;p&gt;&lt;span
       class=&quot;gatsby-resp-image-wrapper&quot;
@@ -348,9 +533,8 @@
 &lt;p&gt;前述のPubChemの構造検索画面でExportの右のドロップダウンメニューを開くと、いくつかの共通データ形式のリストが表示されます。これらのデータ形式のファイルを保存することにより、描画した構造式をほかの構造式エディタや化学データベースソフトウェアなどでも利用することができます。&lt;/p&gt;
 &lt;p&gt;特によく利用されるデータ形式のうち2つを以下に挙げます。&lt;/p&gt;
 &lt;h4&gt;SMILES&lt;/h4&gt;
-&lt;p&gt;SMILESは文字列による化学構造式の表記法です。表記ルールが非常にシンプルなため、パーサの実装が容易で、かつ可読性が高いことが特徴です。&lt;/p&gt;
+&lt;p&gt;SMILESは文字列による化学構造式の表記法です。表記ルールが非常にシンプルなため、パーサの実装が容易で、かつ可読性が高いことが特徴です。SMILESに慣れると簡単な構造であれば構造式エディタが無くても検索クエリが打てるようになります。SMILESの拡張仕様であるSMARTSを利用すれば、AND/OR条件などを含む複雑なクエリも作成可能です。&lt;/p&gt;
 &lt;p&gt;よく知られている仕様は&lt;a href=&quot;https://www.daylight.com/dayhtml/doc/theory/theory.smiles.html&quot;&gt;Daylight社が公開&lt;/a&gt;しているものです。他にも&lt;a href=&quot;http://opensmiles.org/opensmiles.html&quot;&gt;OpenSMILES&lt;/a&gt;というオープンソースの仕様があります。&lt;/p&gt;
-&lt;p&gt;慣れると簡単な構造であれば構造式エディタが無くてもSMILESで検索クエリが打てるようになります。SMILESの拡張仕様であるSMARTSを利用すれば、AND/OR条件などを含む複雑なクエリも作成可能です。&lt;/p&gt;
 &lt;p&gt;SMILESでは、分子グラフのトポロジーを以下の3種類の記法のみで表現します(逆に、その3種類のみで全て表現できるということでもあります)。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
