@@ -19,11 +19,13 @@ a:hover {
 }
 
 h3 {
+  margin-top: 3em;
   border-left: 8px double #00cc99;
   padding-left: 10px;
 }
 
 h4 {
+  margin-top: 3em;
   border-left: 5px solid #9999ff;
   margin-left: 10px;
   padding-left: 10px;
@@ -42,9 +44,12 @@ span.tip {
 .gatsby-highlight {
   background-color: #fdf6e3;
   border-radius: 0.3em;
-  margin: 0.5em 0;
-  padding: 1em;
+  margin-bottom: 1.8rem;
   overflow: auto;
+}
+
+pre[class*="language-"] {
+  padding: 0 1em;
 }
 
 .gatsby-highlight pre[class*="language-"].line-numbers {
