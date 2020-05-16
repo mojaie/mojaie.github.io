@@ -3,9 +3,9 @@ module.exports = {
     title: `mojaie.github.io`,
     author: {
       name: `Seiji Matsuoka`,
-      summary: `chem|bio生乾きエンジニア`,
+      summary: `Cheminformatics, Biointeraction and Laboratory automation`,
     },
-    description: `ケモインフォ関連`,
+    description: `Cheminformatics, Biointeraction and Laboratory automation`,
     siteUrl: `https://mojaie.github.io/`,
     license: `CC BY 4.0`,
     licenseURL: `https://creativecommons.org/licenses/by/4.0/legalcode`,

@@ -1,6 +1,8 @@
+// import url from "url"
 import React from "react"
 import { Link, graphql } from "gatsby"
 import kebabCase from "lodash/kebabCase"
+// import { Helmet } from "react-helmet-async"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -8,10 +10,59 @@ import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 
 
+/*
+const TwitterShareButton = ({ title, url, twitter }) => {
+  return (
+    <span
+      style={{
+        marginRight: rhythm(1 / 2),
+        minWidth: 24
+      }}
+    >
+      <a
+        className="twitter-share-button"
+        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+        data-text={title}
+        data-url={url}
+        data-via={twitter}
+        data-show-count="false"
+      >Tweet</a>
+      <Helmet>
+        <script
+          src="https://platform.twitter.com/widgets.js"
+          charset="utf-8"
+        />
+      </Helmet>
+    </span>
+  )
+}
+
+const FacebookShareButton = ({ url }) => {
+  return (
+    <iframe
+      src={`https://www.facebook.com/plugins/share_button.php?href=${encodeURIComponent(url)}&layout=button&size=small&width=69&height=20&appId`}
+      title="Facebook"
+      width="69"
+      height="20"
+      style={{
+        marginRight: rhythm(1 / 2),
+        minWidth: 24,
+        border: `none`,
+        overflow: `hidden`
+      }}
+      scrolling="no"
+      frameBorder="0"
+      allow="encrypted-media"
+    ></iframe>
+  )
+}
+
+*/
+
+
 const BlogPostTemplate = ({ data, pageContext }) => {
   const post = data.markdownRemark
-  const { previous, next } = pageContext
-
+  // const postLink = url.resolve(data.site.siteMetadata.siteUrl, post.fields.slug)
   return (
     <Layout>
       <SEO
@@ -69,56 +120,37 @@ const BlogPostTemplate = ({ data, pageContext }) => {
           <Bio />
         </footer>
       </article>
-
-      <nav>
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
-      </nav>
     </Layout>
   )
 }
 
 export default BlogPostTemplate
 
+
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
     site {
       siteMetadata {
         title
+        siteUrl
         author {
           name
           summary
         }
         license
         licenseURL
+        social {
+          twitter
+        }
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       excerpt(pruneLength: 160)
       html
+      fields{
+        slug
+      }
       frontmatter {
         title
         dateCreated(formatString: "MMMM DD, YYYY")

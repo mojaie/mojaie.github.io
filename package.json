@@ -54,7 +54,7 @@
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve": "gatsby build && gatsby serve",
-    "deploy": "gatsby build && gh-pages -d public -b master",
+    "deploy": "gh-pages -d public -b master",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   }
 }

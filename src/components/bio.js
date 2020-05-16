@@ -4,7 +4,24 @@ import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
-import SocialIcon from "./social-icon"
+
+
+const SocialIcon = ({ href, fixed, alt }) => {
+  return (
+    <a href={href}>
+      <Image
+        fixed={fixed}
+        alt={alt}
+        style={{
+          marginRight: rhythm(1 / 2),
+          marginBottom: 0,
+          minWidth: 24
+        }}
+      />
+    </a>
+  )
+}
+
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
