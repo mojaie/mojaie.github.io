@@ -1,8 +1,9 @@
 // import url from "url"
 import React from "react"
+import url from "url"
 import { Link, graphql } from "gatsby"
 import kebabCase from "lodash/kebabCase"
-// import { Helmet } from "react-helmet-async"
+import { Helmet } from "react-helmet-async"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -10,7 +11,6 @@ import SEO from "../components/seo"
 import { rhythm, scale } from "../utils/typography"
 
 
-/*
 const TwitterShareButton = ({ title, url, twitter }) => {
   return (
     <span
@@ -37,6 +37,8 @@ const TwitterShareButton = ({ title, url, twitter }) => {
   )
 }
 
+
+/*
 const FacebookShareButton = ({ url }) => {
   return (
     <iframe
@@ -62,7 +64,7 @@ const FacebookShareButton = ({ url }) => {
 
 const BlogPostTemplate = ({ data, pageContext }) => {
   const post = data.markdownRemark
-  // const postLink = url.resolve(data.site.siteMetadata.siteUrl, post.fields.slug)
+  const postLink = url.resolve(data.site.siteMetadata.siteUrl, post.fields.slug)
   return (
     <Layout>
       <SEO
@@ -111,6 +113,23 @@ const BlogPostTemplate = ({ data, pageContext }) => {
           </div>
         </header>
         <section dangerouslySetInnerHTML={{ __html: post.html }} />
+        <div
+          style={{
+            overflow: `hidden`
+          }}
+        >
+          <div
+            style={{
+              float: `right`
+            }}
+          >
+            <TwitterShareButton
+              title={post.frontmatter.title}
+              url={postLink}
+              twitter={data.site.siteMetadata.social.twitter}
+            />
+          </div>
+        </div>
         <hr
           style={{
             marginBottom: rhythm(1),
