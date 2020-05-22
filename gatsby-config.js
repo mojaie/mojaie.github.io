@@ -67,20 +67,19 @@ module.exports = {
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
               return allMarkdownRemark.edges
-                .filter(edge => !edge.node.frontmatter.draft)
                 .map(edge => {
                   return Object.assign({}, edge.node.frontmatter, {
                     description: edge.node.excerpt,
                     date: edge.node.frontmatter.dateModified,
                     url: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                    guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                    custom_elements: [{ "content:encoded": edge.node.html }],
+                    guid: site.siteMetadata.siteUrl + edge.node.fields.slug
                   })
                 })
             },
             query: `{
               allMarkdownRemark(
-                sort: { order: DESC, fields: [frontmatter___dateModified] },
+                filter: {frontmatter: {draft: {ne: true}}}
+                sort: { order: DESC, fields: [frontmatter___dateModified] }
               ) {
                 edges {
                   node {
@@ -90,7 +89,6 @@ module.exports = {
                     frontmatter {
                       title
                       dateModified
-                      draft
                     }
                   }
                 }
@@ -112,6 +110,27 @@ module.exports = {
         display: `minimal-ui`,
         icon: `content/assets/shiocombu.png`,
       },
+    },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        exclude: [`/tags/*`],
+        query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+          allSitePage(
+            filter: {context: {draft: {ne: true}}}
+          ) {
+            nodes {
+              path
+            }
+          }
+        }`
+      }
     },
     `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet-async`,

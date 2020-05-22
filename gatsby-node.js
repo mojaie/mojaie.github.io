@@ -52,6 +52,7 @@ exports.createPages = async ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                draft
               }
             }
           }
@@ -80,6 +81,7 @@ exports.createPages = async ({ graphql, actions }) => {
       component: postsPath,
       context: {
         slug: post.node.fields.slug,
+        draft: post.node.frontmatter.draft,
         previous,
         next,
       },
