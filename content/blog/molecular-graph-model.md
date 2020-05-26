@@ -1,8 +1,9 @@
 ---
-title: "化学情報とグラフ理論(2): 分子グラフモデル"
+title: "化学構造とグラフ理論(2): 分子グラフモデル"
 dateCreated: 2020-05-03
 dateModified: 2020-05-06
 tags:
+  - 化学構造とグラフ理論
   - chemoinformatics
   - molecular graph
 ---

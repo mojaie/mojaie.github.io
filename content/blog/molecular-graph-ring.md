@@ -1,8 +1,9 @@
 ---
-title: "化学情報とグラフ理論(3): 環式化合物のトポロジー"
+title: "化学構造とグラフ理論(3): 環式化合物のトポロジー"
 dateCreated: 2020-05-06
 dateModified: 2020-05-07
 tags:
+  - 化学構造とグラフ理論
   - chemoinformatics
   - molecular graph
 draft: true

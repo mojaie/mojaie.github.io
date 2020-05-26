@@ -1,9 +1,10 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2020-05-19
+dateModified: 2020-05-26
 tags:
-  - memo
+  - Mac OS X
+  - environment setup
 draft: true
 ---
 

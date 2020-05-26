@@ -3,6 +3,8 @@ title: Gatsbyでブログを構築した際の備忘録
 dateCreated: 2020-04-27
 dateModified: 2020-04-30
 tags:
+  - JavaScript
+  - Node.js
   - Gatsby
   - React
   - GraphQL

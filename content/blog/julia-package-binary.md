@@ -1,12 +1,14 @@
 ---
 title: C/C++のライブラリをJuliaのパッケージとして登録する(Julia 1.3以降)
 dateCreated: 2020-05-12
-dateModified: 2020-05-13
+dateModified: 2020-05-25
 tags:
   - Julia
   - C
   - C++
   - Docker
+  - package manager
+  - package development
 ---
 
 C/C++のライブラリを公開リポジトリに登録してJuliaのパッケージとして使用する方法です。BinaryBuilder.jlで設定ファイルを作成し、Yggdrasilを通じてJuliaBinaryWrappersにパッケージ登録します(Julia 1.3以降)。
@@ -26,8 +28,7 @@ Juliaのバイナリパッケージの管理はYggdrasilとJuliaBinaryWrappers�
 - Yggdrasil https://github.com/JuliaPackaging/Yggdrasil
 - JuliaBinaryWrappers https://github.com/JuliaBinaryWrappers
 
-Yggdrasilはビルド設定ファイル(build\_tarballs.jl)を管理しています。build\_tarballs.jlにはバイナリパッケージのビルドに必要な資源やビルド方法の情報が記載されています。Yggdrasilにこの設定ファイルのプルリクエストを送りマージされると、自動的にWindows、Mac OSX, Linuxなど各プラットフォームに対応したビルドレシピが生成され、JuliaBinaryWrappersのリポジトリにjllパッケージとして登録されます。Juliaのデフォルトのパッケージ管理システム(Pkg.jl)は環境に応じて必要なビルドレシピを選択してバイナリをビルドするので、jllパッケージは通常のJuliaパッケージと同様に扱うことができます。
-
+Yggdrasilはビルド設定ファイル(build\_tarballs.jl)を管理しています。build\_tarballs.jlにはバイナリパッケージのビルドに必要な資源やビルド方法の情報が記載されています。Yggdrasilにこの設定ファイルのプルリクエストを送りマージされると、自動的にWindows、Mac OSX, Linuxなど各プラットフォームに対応したビルドレシピが生成され、JuliaBinaryWrappersのリポジトリにjllパッケージとして登録されます。jllパッケージは各環境に合わせてJuliaのパッケージとしてビルドされ、Juliaのデフォルトのパッケージ管理システム(Pkg.jl)で管理することができます。
 
 ### C/C++ライブラリの準備
 
@@ -42,7 +43,7 @@ Cxx.jlはマクロで直接JuliaのスクリプトにC++のコードが書ける
 
 BinaryBuilder.jlはDocker上でクロスコンパイラの環境を構築し、各プラットフォームでのソースビルドをシミュレートします。
 
-https://www.docker.com/ から最新版のDockerを入手してインストールします。Mac OS Xの場合はDocker Desktopの.dmgファイルをダウンロードしてインストールし、起動しておきます(メニューバーにDockerのアイコンが表示され、クリックすると"Docker desktop is running"と表示されることを確認します)。
+Mac OS Xの場合は[https://www.docker.com/](https://www.docker.com/)から最新版のDocker Desktopを入手します。Docker Desktopの.dmgファイルをダウンロードしてインストールし、起動しておきます(メニューバーにDockerのアイコンが表示され、クリックすると"Docker desktop is running"と表示されることを確認します)。
 
 
 ### BinaryBuilder.jlのインストール
@@ -310,4 +311,4 @@ Yggdrasilにプルリクエストを送るには以下の2つの方法があり�
 
    バージョンアップ時の軽微な修正や、build\_tarballs.jlの詳細な編集が必要な場合は手動でプルリクエストを送ります。ソースコードの内容によっては、各プラットフォームでのビルド時にbuild\_tarballs.jlを編集するよう警告が出る場合があるので、その場合は手動での編集が必要になります(例えば、std::stringを使っているコードの互換性を保持するため、platformsに`expand_cxxstring_abis`を適用することを勧められるケースなど)。
 
-どちらの場合も、リポジトリのメンテナーによるレビューが行われます。
+どちらの場合も、プルリクエストを送ると自動的にCIのジョブが走り、各プラットフォーム環境でのビルドのテストが実施されます。その後、リポジトリのメンテナーによるレビューが行われ、問題が解決されるとYggdrasilにマージされます。Yggdrasilの次回のcronジョブでJuliaBinaryWrappersにjllパッケージが登録されます。

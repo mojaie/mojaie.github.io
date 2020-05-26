@@ -4,6 +4,8 @@ dateCreated: 2020-02-24
 dateModified: 2020-04-29
 tags:
   - Julia
+  - package manager
+  - package development
 ---
 
 Juliaでパッケージを作成する方法です。
