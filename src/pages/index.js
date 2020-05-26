@@ -92,7 +92,10 @@ export const pageQuery = graphql`
         licenseURL
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___dateModified], order: DESC }) {
+    allMarkdownRemark(
+      filter: { frontmatter: { draft: { eq: false } } }
+      sort: { fields: [frontmatter___dateModified], order: DESC }
+    ) {
       edges {
         node {
           excerpt(truncate: true)

@@ -22,7 +22,9 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         draft: {
           type: "Boolean",
-          resolve: source => source.draft == null ? false : source.draft
+          resolve: source => (
+            source.draft == null || process.env.NODE_ENV !== `production`
+          ) ? false : source.draft
         },
         tags: "[String!]",
         description: "String"
@@ -34,14 +36,11 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-
-  const filterQuery = process.env.NODE_ENV === `production` ?
-    `filter: { frontmatter: { draft: { eq: false } } }` : ""
   const result = await graphql(
     `
       {
         postsRemark: allMarkdownRemark(
-          ${filterQuery}
+          filter: { frontmatter: { draft: { eq: false } } }
           sort: { fields: [frontmatter___dateModified], order: DESC }
           limit: 1000
         ) {
@@ -57,7 +56,10 @@ exports.createPages = async ({ graphql, actions }) => {
             }
           }
         }
-        tagsGroup: allMarkdownRemark(limit: 2000) {
+        tagsGroup: allMarkdownRemark(
+          filter: { frontmatter: { draft: { eq: false } } }
+          limit: 2000
+        ) {
           group(field: frontmatter___tags) {
             fieldValue
           }
