@@ -4,6 +4,7 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions
+  const isDev = process.env.NODE_ENV !== "production"
   const typeDefs = [
     `type MarkdownRemark implements Node {
       frontmatter: Frontmatter
@@ -22,9 +23,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
         },
         draft: {
           type: "Boolean",
-          resolve: source => (
-            source.draft == null || process.env.NODE_ENV !== `production`
-          ) ? false : source.draft
+          resolve: source => (source.draft == null || isDev) ? false : source.draft
         },
         tags: "[String!]",
         description: "String"

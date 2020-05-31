@@ -3,7 +3,6 @@ title: "化学構造とグラフ理論(3): 環式化合物のトポロジー"
 dateCreated: 2020-05-06
 dateModified: 2020-05-07
 tags:
-  - 化学構造とグラフ理論
   - chemoinformatics
   - molecular graph
 draft: true
@@ -76,3 +75,6 @@ https://en.wikipedia.org/wiki/Biconnected_component
 
 
 ### 縮合環のデュアルグラフ
+
+
+[[化学構造とグラフ理論 目次]](../molecular-graph-toc)

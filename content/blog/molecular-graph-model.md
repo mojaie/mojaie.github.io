@@ -3,10 +3,10 @@ title: "化学構造とグラフ理論(2): 分子グラフモデル"
 dateCreated: 2020-05-03
 dateModified: 2020-05-06
 tags:
-  - 化学構造とグラフ理論
   - chemoinformatics
   - molecular graph
 ---
+
 
 ### 分子グラフモデル
 
@@ -119,3 +119,6 @@ SMILESやSDFileに文字列で格納された分子データを利用するた�
 - [RDKit](https://rdkit.org) (Python)
 - [ChemmineR](https://bioconductor.org/packages/release/bioc/html/ChemmineR.html) (R)
 - [MolecularGraph.jl](https://github.com/mojaie/MolecularGraph.jl) (Julia)<span class="tip"> 注) この記事の執筆者が開発中のライブラリです。</span>
+
+
+[[化学構造とグラフ理論 目次]](../molecular-graph-toc)

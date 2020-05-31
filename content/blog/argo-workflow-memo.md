@@ -228,3 +228,15 @@ Webで管理
 ```shell-session
 $ argo server
 ```
+
+
+<!--
+docker run --rm mainwfjl:local julia src/test.jl
+docker ps
+docker images
+docker build -t mainwfjl:local .
+kubectl describe pod hello-world-kgxxb
+
+docker system prune -all
+docker volumes prune
+-->
