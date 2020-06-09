@@ -50,6 +50,7 @@ span.tip {
 
 pre[class*="language-"] {
   padding: 0 1em;
+  font-variant: none;  /* disable ligatures */
 }
 
 .gatsby-highlight pre[class*="language-"].line-numbers {

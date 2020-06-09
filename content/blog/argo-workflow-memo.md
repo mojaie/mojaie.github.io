@@ -1,20 +1,23 @@
 ---
-title: Argoの環境構築
+title: Argoの環境構築(Mac OS X)
 dateCreated: 2020-05-19
-dateModified: 2020-05-26
+dateModified: 2020-06-09
 tags:
   - Argo
   - Docker
   - Kubernetes
   - environment setup
+  - Mac OS X
 ---
 
 ### Dockerのインストール
 
-Macの場合Docker desktopをインストールしてデーモンを起動しておきます。
+Docker desktopをインストールしてデーモンを起動しておきます。
 
 
 ### Minikubeのインストール
+
+(2020.06.05追記) Docker desktopにkubernetesが含まれるので、minikubeをインストールしなくても、Docker desktopのPreferences->Kubernetes->Enable Kubernetesにチェックを入れるとkubernetesが使えます。その場合、以下スキップして「Argoのインストール」に進みます。
 
 下記を参考にMinikubeをインストールします。HomeBrewを使うと楽です。  
 https://minikube.sigs.k8s.io/docs/start/  
@@ -138,7 +141,7 @@ deployment.apps/workflow-controller created
 defaultネームスペースでadminを設定します。
 
 ```shell-session
-$ kubectl create rolebinding default-admin --clusterrole=admin --serviceaccount=default:default
+$ kubectl create rolebinding default-admin --clusterrole=admin --serviceaccount=argo:default -n argo
 ```
 
 ArgoのexampleのページにあるworkflowのYAMLファイル例(hello-world.yaml)をカレントフォルダに置きます。
@@ -165,13 +168,19 @@ spec:
 ワークフローをサブミット
 
 ```shell-session
-$ argo submit hello-world.yaml
+$ argo submit -n argo hello-world.yaml
 ```
+
+あるいはWeb上のリソースから直接submitできます。
+```shell-session
+$ argo submit -n argo https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml
+```
+
 
 実施中のジョブ一覧を確認
 
 ```shell-session
-$ argo list
+$ argo list -n argo
 NAME                STATUS      AGE   DURATION   PRIORITY
 hello-world-wzvfd   Succeeded   38s   8s         0
 ```
@@ -179,7 +188,7 @@ hello-world-wzvfd   Succeeded   38s   8s         0
 実施中のジョブの状態を確認
 
 ```shell-session
-$ argo get hello-world-wzvfd
+$ argo get -n argo hello-world-wzvfd
 Name:                hello-world-wzvfd
 Namespace:           default
 ServiceAccount:      default
@@ -198,7 +207,7 @@ STEP                  TEMPLATE  PODNAME            DURATION  MESSAGE
 結果を確認
 
 ```shell-session
-$ argo logs hello-world-wzvfd 
+$ argo logs -n argo hello-world-wzvfd 
 hello-world-wzvfd:  _____________ 
 hello-world-wzvfd: < hello world >
 hello-world-wzvfd:  ------------- 
@@ -218,7 +227,7 @@ hello-world-wzvfd:           \____\______/
 ジョブの削除
 
 ```shell-session
-$ argo delete hello-world-wzvfd
+$ argo delete -n argo hello-world-wzvfd
 Workflow 'hello-world-wzvfd' deleted
 ```
 
@@ -226,7 +235,7 @@ Workflow 'hello-world-wzvfd' deleted
 Webで管理
 
 ```shell-session
-$ argo server
+$ argo -n argo server
 ```
 
 
@@ -240,3 +249,117 @@ kubectl describe pod hello-world-kgxxb
 docker system prune -all
 docker volumes prune
 -->
+
+
+### Minioのインストール
+
+
+(2020.06.09時点)公式チュートリアルの最新版がまだサイトに反映されていません。以下PR参照  
+https://github.com/argoproj/argo/pull/3099/files
+
+ワークフローの各ステップの結果を一時的に保存するために、S3互換のオブジェクトストレージが必要です。マニュアルに従ってhelmからMinioをインストールします。
+
+```shell-session
+$ brew install helm
+$ helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+$ helm repo update
+$ helm install argo-artifacts stable/minio \
+  -n argo \
+  --set service.type=LoadBalancer \
+  --set defaultBucket.enabled=true \
+  --set defaultBucket.name=my-bucket \
+  --set persistence.enabled=false \
+  --set fullnameOverride=argo-artifacts \
+
+  NAME: argo-artifacts
+  LAST DEPLOYED: Tue Jun  9 11:58:41 2020
+  NAMESPACE: argo
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  NOTES:
+  Minio can be accessed via port 9000 on an external IP address. Get the service external IP address by:
+  kubectl get svc --namespace argo -l app=argo-artifacts
+
+  Note that the public IP may take a couple of minutes to be available.
+
+  You can now access Minio server on http://<External-IP>:9000. Follow the below steps to connect to Minio server with mc client:
+
+    1. Download the Minio mc client - https://docs.minio.io/docs/minio-client-quickstart-guide
+
+    2. mc config host add argo-artifacts-local http://<External-IP>:9000 AKIAIOSFODNN7EXAMPLE wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY S3v4
+
+    3. mc ls argo-artifacts-local
+
+  Alternately, you can use your browser or the Minio SDK to access the server - https://docs.minio.io/categories/17
+
+```
+
+argo-artifactのサービスのIPとPORTを確認します。
+
+```shell-session
+$ kubectl get service argo-artifacts -o wide -n argo
+NAME             TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+argo-artifacts   LoadBalancer   10.105.220.48   localhost     9000:32283/TCP   94s
+```
+
+minioのWebインターフェースにアクセスすると、デフォルトバケット(my-bucket)が作成されています。
+
+argo/workflow-controller-configmapを編集します。公式チュートリアルの記述に従い、configmapに以下を追記します。
+
+
+```
+data:
+  artifactRepository: |
+    s3:
+      bucket: my-bucket
+      endpoint: argo-artifacts:9000
+      insecure: true
+      # accessKeySecret and secretKeySecret are secret selectors.
+      # It references the k8s secret named 'argo-artifacts'
+      # which was created during the minio helm install. The keys,
+      # 'accesskey' and 'secretkey', inside that secret are where the
+      # actual minio credentials are stored.
+      accessKeySecret:
+        name: argo-artifacts
+        key: accesskey
+      secretKeySecret:
+        name: argo-artifacts
+        key: secretkey
+```
+
+あるいは、上記を追記したconfigmapのyamlファイルを作っておいてapplyします。その場合、元のconfigmapに記載されているオブジェクト固有情報のフィールド(`creationTimestamp`, `resourceVersion`, `uid`)は消しておきます。
+
+```shell-session
+kubectl apply -n argo -f workflow-controller-configmap.yaml
+```
+
+
+チュートリアルのartifact-passing.yamlを実行します。
+
+```shell-session
+$ argo submit -n argo https://raw.githubusercontent.com/argoproj/argo/master/examples/artifact-passing.yaml
+
+Name:                artifact-passing-58v85
+Namespace:           argo
+ServiceAccount:      default
+Status:              Pending
+Created:             Tue Jun 09 20:37:56 +0900 (now)
+
+$ argo get -n argo artifact-passing-58v85
+Name:                artifact-passing-58v85
+Namespace:           argo
+ServiceAccount:      default
+Status:              Succeeded
+Conditions:          
+ Completed           True
+Created:             Tue Jun 09 20:37:56 +0900 (23 seconds ago)
+Started:             Tue Jun 09 20:37:56 +0900 (23 seconds ago)
+Finished:            Tue Jun 09 20:38:14 +0900 (5 seconds ago)
+Duration:            18 seconds
+
+STEP                       TEMPLATE          PODNAME                            DURATION  MESSAGE
+ ✔ artifact-passing-58v85  artifact-example                                                 
+ ├---✔ generate-artifact   whalesay          artifact-passing-58v85-1826744750  7s          
+ └---✔ consume-artifact    print-message     artifact-passing-58v85-2028663838  8s   
+```

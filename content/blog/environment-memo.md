@@ -87,6 +87,28 @@ poetry run jupyter contrib nbextension install --user
 ```
 
 
+以下、condaからのマイグレーションTODO
+
+```
+conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？
+conda install vega -c conda-forge
+conda install scikit-learn
+
+
+# Python開発
+conda install sphinx
+# sphinxcontrib-napoleonはビルトインになった
+conda install sphinx_rtd_theme
+conda install twine -c conda-forge
+conda install wheel -c conda-forge
+
+
+# Networkx2対応python-louvain
+pip install git+https://github.com/taynaud/python-louvain.git@networkx2
+
+```
+
+
 ### Julia
 
 .zshrcでパスを通す。
@@ -122,85 +144,6 @@ cmakeはmacにデフォルトでインストールされていない。C++ビル
 brew install cmake
 brew install icu4c
 ```
-
-
-以下、condaからのマイグレーションTODO
-
-```
-conda install flake8
-conda install jupyter
-conda install jupyter_contrib_nbextensions -c conda-forge
-conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？
-conda install vega -c conda-forge
-conda install scikit-learn
-conda install ghostscript  # MacTeX必須
-
-# chorus依存
-conda install networkx
-conda install matplotlib
-conda install cython
-conda install numexpr
-conda install pyyaml
-
-# flashflood依存
-conda install xlsxwriter
-
-# Node.js
-conda install nodejs -c conda-forge  # forgeの方が新しい
-npm install eslint -g
-
-# 開発依存
-conda install sphinx
-# sphinxcontrib-napoleonはビルトインになった
-conda install sphinx_rtd_theme
-conda install twine -c conda-forge
-conda install wheel -c conda-forge
-
-# devをデプロイする場合
-pip install git+https://github.com/mojaie/chorus.git@dev
-pip install git+https://github.com/mojaie/flashflood.git@dev
-pip install git+https://github.com/mojaie/flashflood-workflow.git@dev
-# kiwiii
-npm install mojaie/kiwiii#dev
-
-# pandasはrdkit等で入る
-# tornado, pandocその他いろいろはjupyterで入る
-
-conda install  julia -c conda-forge
-# condaはアップデートが遅いのでdmgをインストールしてpath通した方がいいかも
-```
-
-その他マイグレーションTODO
-
-```
-# Networkx2対応python-louvain
-pip install git+https://github.com/taynaud/python-louvain.git@networkx2
-
-conda upgrade -n root conda
-conda install -n root conda-build
-
-# conda skeleton pypi sphinxcontrib-httpdomain
-# conda build sphinxcontrib-httpdomain
-# conda install --use-local sphinxcontrib-httpdomain
-
-# 後片付け
-conda build purge
-conda clean --all
-
-# サーバ用デーモン
-pip install supervisor  # Python3未対応
-echo_supervisord_conf > $HOMEBREW/etc/supervisord.conf
-```
-
-#### Supervisorメモ
-
-- supervisord.confの中身を編集
-- supervisordで起動
-- 停止はソケットごと削除
-- supervisorctl statusでステータス確認
-- supervisorctl start <daemon>
-- supervisorctl stop <daemon>
-- supervisorctl restart <daemon>
 
 
 
@@ -240,6 +183,8 @@ ln -s ~/Dropbox/workspace/atom_settings/init.coffee
 
 - MacTeX公式からBasicTeX.pkgをダウンロードしてインストール
 - /Library/TeX/texbinにパスを通す
+- TODO: brew cask install mactex
+  - ghostscriptもこれで入るらしい
 
 ```
 sudo tlmgr update --self --all  # なんかエラー出る
@@ -267,3 +212,19 @@ brew install homebrew/science/pymol
 ### その他
 
 - TODO: gromacsとかpsi4のdocker
+
+
+
+
+### KNIME
+
+Install new software -> KNIME Python integrationを入れる
+
+poetry newでknimeのワークスペースにpython環境を作る
+
+```
+poetry add numpy
+poetry add pandas
+```
+
+KNIMEの環境設定で.venv内のpythonのパスを通す
