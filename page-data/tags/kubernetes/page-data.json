@@ -1,1 +1,1 @@
-{"componentChunkName":"component---src-templates-tag-posts-js","path":"/tags/kubernetes/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/argo-workflow-memo/"},"frontmatter":{"title":"Argoの環境構築(Mac OS X)"}}}]}},"pageContext":{"tag":"Kubernetes"}}}
+{"componentChunkName":"component---src-templates-tag-posts-js","path":"/tags/kubernetes/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/argo-workflow-memo/"},"frontmatter":{"title":"Argoの環境構築(MacOS)"}}}]}},"pageContext":{"tag":"Kubernetes"}}}
