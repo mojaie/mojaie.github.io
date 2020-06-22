@@ -3,7 +3,7 @@ title: 作業環境構築メモ
 dateCreated: 2020-05-19
 dateModified: 2020-05-26
 tags:
-  - Mac OS X
+  - macOS
   - environment setup
 draft: true
 ---
@@ -138,11 +138,10 @@ yarn global add eslint
 
 ### C/C++
 
-cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須(icu4cも?)。
+cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須。
 
 ```
 brew install cmake
-brew install icu4c
 ```
 
 

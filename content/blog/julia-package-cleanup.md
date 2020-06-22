@@ -3,7 +3,7 @@ title: 不要なJuliaのパッケージを削除して空き容量を確保す�
 dateCreated: 2020-05-31
 dateModified: 2020-05-31
 tags:
-  - Julia
+  - Julialang
   - package manager
   - environment setup
 ---

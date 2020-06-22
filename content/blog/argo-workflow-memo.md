@@ -1,5 +1,5 @@
 ---
-title: Argoの環境構築(Mac OS X)
+title: Argoの環境構築(MacOS)
 dateCreated: 2020-05-19
 dateModified: 2020-06-09
 tags:
@@ -7,7 +7,7 @@ tags:
   - Docker
   - Kubernetes
   - environment setup
-  - Mac OS X
+  - macOS
 ---
 
 ### Dockerのインストール
