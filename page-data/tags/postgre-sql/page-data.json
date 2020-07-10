@@ -1,0 +1,1 @@
+{"componentChunkName":"component---src-templates-tag-posts-js","path":"/tags/postgre-sql/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/genie-rest-api/"},"frontmatter":{"title":"GenieとPostgreSQLでREST APIサーバを構築"}}}]}},"pageContext":{"tag":"PostgreSQL"}}}
