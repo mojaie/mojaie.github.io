@@ -152,9 +152,9 @@ brew install cmake
 
 ```
 cd .atom
-ln -s ~/Dropbox/workspace/atom_settings/config.cson
-ln -s ~/Dropbox/workspace/atom_settings/styles.less
-ln -s ~/Dropbox/workspace/atom_settings/init.coffee
+ln -s $LOCAL/atom_settings/config.cson
+ln -s $LOCAL/atom_settings/styles.less
+ln -s $LOCAL/atom_settings/init.coffee
 ```
 
 #### パッケージ
