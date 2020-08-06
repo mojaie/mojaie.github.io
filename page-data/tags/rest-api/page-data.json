@@ -1,0 +1,1 @@
+{"componentChunkName":"component---src-templates-tag-posts-js","path":"/tags/rest-api/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/postgrest-memo/"},"frontmatter":{"title":"PostgRESTメモ"}}}]}},"pageContext":{"tag":"REST API"}}}
