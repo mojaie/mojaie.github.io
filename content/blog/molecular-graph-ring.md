@@ -56,8 +56,9 @@ draft: true
 
 articulation pointとbridge
 
-biconnected component スピロ以上
-2-edge connected component 縮合以上
+weak dualのmultiedge connected component 架橋
+biconnected component(=weak dualのconnected component) 縮合以上
+2-edge connected component スピロ以上
 
 
 ### Bemis-Murcko scaffold

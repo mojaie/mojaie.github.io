@@ -81,9 +81,19 @@ poetry config virtualenvs.in-project true
 NbextensionとJupyTextをいれる
 
 ```
+# pyproject.tomlの作成
+poetry new projectname
+poetry add jupyter
 poetry add jupytext
 poetry add jupyter_contrib_nbextensions
+
+# 既にpyproject.tomlがある場合
+poetry install
+```
+
+```
 poetry run jupyter contrib nbextension install --user
+# これでWebUIからnbextensionを設定できるので、ExecuteTimeを入れる
 ```
 
 
@@ -124,6 +134,8 @@ Jupyterのカーネルが登録されているか確認
 ```
 jupyter kernelspec list
 ```
+
+
 
 
 ### Node.js
