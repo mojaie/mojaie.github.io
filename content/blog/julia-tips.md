@@ -3,7 +3,7 @@ title: Juliaの開発Tips
 dateCreated: 2020-06-23
 dateModified: 2020-08-03
 tags:
-  - Julialang
+  - Julia
 ---
 
 

@@ -1,12 +1,12 @@
 ---
 title: Squidでプロキシサーバを構築する
 dateCreated: 2020-07-11
-dateModified: 2020-07-11
+dateModified: 2020-08-15
 tags:
   - Squid
   - Ubuntu
   - Chrome
-  - network
+  - remote
   - environment setup
 ---
 
@@ -40,7 +40,7 @@ $ sudo vi /etc/squid/squid.conf
 acl localnet src 172.16.0.0/12
 ```
 
-aclの行に接続を許可するホストがコメントアウトされている。
+aclの行に接続を許可するホストがコメントアウトされている場合はコメントアウトを外します。
 同じネットワークに属するコンピュータからのアクセスを受付けるため、acl localnetの行のうち該当する行のコメントアウトをはずす。
 
 ```
@@ -49,17 +49,25 @@ http_access allow localnet
 
 上記のコメントアウトをはずして、localnetという名前で定義されたホストのHTTPアクセスを許可する。
 
+confファイルを編集し終わったら、一旦squidを再起動します。
+
+```shell-session
+$ systemctl reload squid
+```
+
 以上。デフォルトのポートは3128なので、クライアントから-xオプションを指定したcurlで通信ができているかどうか確認する(プロキシサーバのホストが172.27.1.2の場合)。
 
-```
 (クライアント側)
+
+```shell-session
 $ curl https://google.com/ -x http://172.27.1.2:3128
 ```
 
 HTTPSリクエストの場合、CONNECTメソッドでトンネリングができているかどうかヘッダを見て確認。サーバ側のログは以下の場所にある。
 
-```
 (サーバ側)
+
+```shell-session
 $ sudo less /var/log/squid/access.log
 ```
 

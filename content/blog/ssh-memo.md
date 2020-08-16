@@ -1,9 +1,10 @@
 ---
-title: SSHメモ
+title: Ubuntu16.04でのSSH設定メモ
 dateCreated: 2020-07-10
-dateModified: 2020-07-10
+dateModified: 2020-08-16
 tags:
   - SSH
+  - remote
   - environment setup
 ---
 

@@ -7,7 +7,7 @@ tags:
   - molecular graph
   - molecular descriptor
   - C
-  - Julialang
+  - Julia
 ---
 
 ### InChIについて

@@ -3,7 +3,7 @@ title: Juliaでパッケージを作成して公開する
 dateCreated: 2020-02-24
 dateModified: 2020-04-29
 tags:
-  - Julialang
+  - Julia
   - package manager
   - package development
 ---

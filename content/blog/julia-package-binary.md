@@ -3,7 +3,7 @@ title: C/C++のライブラリをJuliaのパッケージとして登録する(Ju
 dateCreated: 2020-05-12
 dateModified: 2020-05-25
 tags:
-  - Julialang
+  - Julia
   - C
   - C++
   - Docker

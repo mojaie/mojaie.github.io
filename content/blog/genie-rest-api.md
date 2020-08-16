@@ -3,7 +3,7 @@ title: GenieとPostgreSQLでREST APIサーバを構築
 dateCreated: 2020-07-09
 dateModified: 2020-07-09
 tags:
-  - Julialang
+  - Julia
   - PostgreSQL
 ---
 
