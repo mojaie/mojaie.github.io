@@ -35,27 +35,13 @@ tags:
 - StuffIt Expander
 
 
-#### Homebrew
-
-```
-mkdir .homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C .homebrew
-brew update
-brew doctor
-```
-
-brew doctorでxcodeがなければインストールするか聞かれるので入れる。XQuartzはcaskで入れる。
-
-```
-brew cask install xquartz
-```
-
 
 ### 開発環境
 
 
 #### localenv
 
-localenvをcloneする
+localenvをcloneする。初回git使用時にコマンドラインツールのインストールを促されるのでインストールする。
 
 ```
 cd ~/Workspace
@@ -99,6 +85,20 @@ ln -s ~/Workspace/localenv/atom_settings/init.coffee
 - seti-ui アイコンが良い
 - predawn-syntax 見やすい
 
+
+#### Homebrew
+
+```
+mkdir .homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C .homebrew
+brew update
+brew doctor
+```
+
+XQuartzが必要であればcaskで入れる。
+
+```
+brew cask install xquartz
+```
 
 
 #### Python
