@@ -1,7 +1,7 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2020-08-09
+dateModified: 2020-10-19
 tags:
   - macOS
   - environment setup
@@ -13,22 +13,24 @@ tags:
 
 #### 公式サイトからダウンロード
 
+- Google Chrome
 - Sophos (自宅のみ)
 - Symantec (職場のみ)
-- Tutanota (自宅のみ)
-- Zoom
-- Google Chrome
 - Box
+  - Dropbox (Boxに移行)
 - Google Drive (自宅のみ)
-- Dropbox (自宅のみ)
 - Atom
 - Sourcetree
-- Mendeley Desktop
+- Zotero
+  - Mendeley Desktop (Zoteroに移行)
+- Tutanota (自宅のみ)
 - InkScape
 - Docker
 - Knime
+- Marvin
 - Tabula
 - Julia最新版
+- Zoom
 
 
 #### App storeからダウンロード
@@ -136,24 +138,13 @@ Jupyter notebookを使うプロジェクトを新規作成する場合
 poetry new projectname
 poetry add jupyter
 poetry add jupytext
-poetry add jupyter_contrib_nbextensions
 ```
-
-poetry installだけでなく、Nbextensionの有効化が必要
-
-```
-poetry run jupyter contrib nbextension install --user
-```
-
-これでWebUIからnbextensionを設定できるので、ExecuteTime等を入れる
 
 
 #### その他旧conda時代のPython環境
 
 ```
 conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？
-conda install vega -c conda-forge
-conda install scikit-learn
 
 # Python開発
 conda install sphinx
@@ -259,13 +250,16 @@ brew install homebrew/science/pymol
 
 ### KNIME
 
-Install new software -> KNIME Python integrationを入れる
 
-poetry newでknimeのワークスペースにpython環境を作る
+poetry newでknimeのワークスペースにpython環境を作る。numpyとpandasは必須
 
 ```
 poetry add numpy
 poetry add pandas
 ```
 
-KNIMEの環境設定で.venv内のpythonのパスを通す
+Install KNIME Extensions...で下記拡張をインストール
+
+- KNIME Python Integration
+
+Preferences->KNIME->Pythonという項目ができているので、Python3のところに.venv内のpythonのパスを設定する(browseからpythonを選択するとエイリアスではなく参照元が設定されてしまうので、.venv内のpythonのパスを手打ちする)
