@@ -13,12 +13,14 @@ tags:
 
 #### 公式サイトからダウンロード
 
-- Sophos
-- Tutanota
+- Sophos (自宅のみ)
+- Symantec (職場のみ)
+- Tutanota (自宅のみ)
 - Zoom
 - Google Chrome
+- Box
 - Google Drive (自宅のみ)
-- Dropbox
+- Dropbox (自宅のみ)
 - Atom
 - Sourcetree
 - Mendeley Desktop
@@ -68,9 +70,9 @@ ln -s ~/Workspace/localenv/atom_settings/init.coffee
 
 パッケージのインストール
 
-- langage-julia
-- langage-latex
-- langage-restructuredtext
+- language-julia
+- language-latex
+- language-restructuredtext(不要？)
 - latex
 - linter
 - linter-eslint
@@ -78,7 +80,7 @@ ln -s ~/Workspace/localenv/atom_settings/init.coffee
 - linter-htmlhint
 - show-ideographic-space
 - split-diff
-- rst-preview-pandoc
+- rst-preview-pandoc(不要？)
 
 テーマのインストール
 
