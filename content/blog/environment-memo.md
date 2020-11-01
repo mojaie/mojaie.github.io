@@ -262,4 +262,16 @@ Install KNIME Extensions...で下記拡張をインストール
 
 - KNIME Python Integration
 
-Preferences->KNIME->Pythonという項目ができているので、Python3のところに.venv内のpythonのパスを設定する(browseからpythonを選択するとエイリアスではなく参照元が設定されてしまうので、.venv内のpythonのパスを手打ちする)
+  Preferences->KNIME->Pythonという項目ができているので、Python3のところに.venv内のpythonのパスを設定する(browseからpythonを選択するとエイリアスではなく参照元が設定されてしまうので、.venv内のpythonのパスを手打ちする)
+
+- KNIME Report Designer
+
+  レポート自動化
+
+- ケモインフォのやつ
+
+- HCS tools
+- KNIME Image Processing
+- KNIME Image Processing - Python Extensions
+
+  プレート統計、ヒートマップなど。まだ使うか微妙
