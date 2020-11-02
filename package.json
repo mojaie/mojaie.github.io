@@ -26,18 +26,18 @@
     "gatsby-source-filesystem": "^2.3.1",
     "gatsby-transformer-remark": "^2.8.7",
     "gatsby-transformer-sharp": "^2.5.1",
-    "katex": "^0.11.1",
+    "katex": "^0.12.0",
     "lodash": "^4.17.15",
     "prismjs": "^1.20.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-helmet-async": "^1.0.6",
     "react-typography": "^0.16.19",
     "typography": "^0.16.19"
   },
   "devDependencies": {
-    "gh-pages": "^2.2.0",
-    "prettier": "2.0.5"
+    "gh-pages": "^3.1.0",
+    "prettier": "2.1.2"
   },
   "homepage": "https://github.com/mojaie/mojaie.github.io",
   "keywords": [

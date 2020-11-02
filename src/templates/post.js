@@ -64,11 +64,15 @@ const FacebookShareButton = ({ url }) => {
 
 const BlogPostTemplate = ({ data, pageContext }) => {
   const post = data.markdownRemark
-  const postLink = url.resolve(data.site.siteMetadata.siteUrl, post.fields.slug)
+  const metadata = data.site.siteMetadata
+  const postLink = url.resolve(metadata.siteUrl, post.fields.slug)
+  const imagepath = data.file === null ? undefined : url.resolve(
+    metadata.siteUrl, data.file.childImageSharp.fixed.src)
   return (
     <Layout>
       <SEO
         title={post.frontmatter.title}
+        imagepath={imagepath}
         description={post.frontmatter.description || post.excerpt}
       />
       <article>
@@ -126,7 +130,7 @@ const BlogPostTemplate = ({ data, pageContext }) => {
             <TwitterShareButton
               title={post.frontmatter.title}
               url={postLink}
-              twitter={data.site.siteMetadata.social.twitter}
+              twitter={metadata.social.twitter}
             />
           </div>
         </div>
@@ -147,7 +151,7 @@ export default BlogPostTemplate
 
 
 export const pageQuery = graphql`
-  query BlogPostBySlug($slug: String!) {
+  query BlogPostBySlug($slug: String!, $image: String) {
     site {
       siteMetadata {
         title
@@ -176,6 +180,13 @@ export const pageQuery = graphql`
         dateModified(formatString: "MMMM DD, YYYY")
         tags
         description
+      }
+    }
+    file(relativePath: { eq: $image }) {
+      childImageSharp {
+        fixed {
+          src
+        }
       }
     }
   }

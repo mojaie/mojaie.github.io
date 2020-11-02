@@ -5,6 +5,7 @@ dateModified: 2020-11-01
 tags:
   - KNIME
   - workflow automation
+image: knime-input-widget/many_configs.png
 ---
 
 

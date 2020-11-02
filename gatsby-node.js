@@ -26,6 +26,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
           resolve: source => (source.draft == null || isDev) ? false : source.draft
         },
         tags: "[String!]",
+        image: "String",
         description: "String"
       },
     })
@@ -50,6 +51,7 @@ exports.createPages = async ({ graphql, actions }) => {
               }
               frontmatter {
                 title
+                image
                 draft
               }
             }
@@ -83,6 +85,7 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         slug: post.node.fields.slug,
         draft: post.node.frontmatter.draft,
+        image: post.node.frontmatter.image,
         previous,
         next,
       },

@@ -6,7 +6,7 @@ module.exports = {
       summary: `Cheminformatics, Biointeraction and Laboratory automation`,
     },
     description: `Cheminformatics, Biointeraction and Laboratory automation`,
-    siteUrl: `https://mojaie.github.io/`,
+    siteUrl: `https://mojaie.github.io`,
     license: `CC BY 4.0`,
     licenseURL: `https://creativecommons.org/licenses/by/4.0/legalcode`,
     social: {
