@@ -5,6 +5,7 @@ dateModified: 2020-05-05
 tags:
   - chemoinformatics
   - molecular graph
+image: molecular-graph/structuralisomers.png
 ---
 
 

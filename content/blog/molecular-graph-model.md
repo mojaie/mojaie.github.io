@@ -5,6 +5,7 @@ dateModified: 2020-05-06
 tags:
   - chemoinformatics
   - molecular graph
+image: molecular-graph/planer.png
 ---
 
 
