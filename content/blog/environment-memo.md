@@ -90,13 +90,6 @@ ln -s ~/Workspace/localenv/atom_settings/init.coffee
 - predawn-syntax 見やすい
 
 
-#### VSCodium(移行検討中)
-
-Extensionを入れる
-
-- Julia
-
-
 #### Homebrew
 
 ```
@@ -110,6 +103,19 @@ XQuartzが必要であればcaskで入れる。
 ```
 brew cask install xquartz
 ```
+
+VSCodium
+
+```
+brew cask install vscodium
+```
+
+
+#### VSCodium(Atomから移行検討中)
+
+Extensionを入れる
+
+- Julia
 
 
 #### Python
