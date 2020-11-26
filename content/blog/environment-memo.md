@@ -176,7 +176,13 @@ add Plots
 Jupyterのカーネルが登録されているか確認
 
 ```
-jupyter kernelspec list
+poetry run jupyter kernelspec list
+```
+
+カーネルが入ってないことがある?一旦プレコンパイルが必要?(要確認)
+
+```
+using IJulia
 ```
 
 
@@ -267,6 +273,10 @@ Install KNIME Extensions...で下記拡張をインストール
 - KNIME Report Designer
 
   レポート自動化
+
+- KNIME Data Generation
+
+  データ生成(連番など)
 
 - ケモインフォのやつ
 
