@@ -90,6 +90,13 @@ ln -s ~/Workspace/localenv/atom_settings/init.coffee
 - predawn-syntax 見やすい
 
 
+#### VSCodium(移行検討中)
+
+Extensionを入れる
+
+- Julia
+
+
 #### Homebrew
 
 ```
