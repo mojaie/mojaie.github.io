@@ -72,6 +72,13 @@ brew update
 brew doctor</code></pre></div>
 <p>XQuartzが必要であればcaskで入れる。</p>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">brew cask install xquartz</code></pre></div>
+<p>VSCodium</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">brew cask install vscodium</code></pre></div>
+<h4>VSCodium(Atomから移行検討中)</h4>
+<p>Extensionを入れる</p>
+<ul>
+<li>Julia</li>
+</ul>
 <h4>Python</h4>
 <ul>
 <li>pyenvとPoetryを使う(Poetry単独だと2.7系のシステムPythonを使おうとする)</li>
@@ -124,7 +131,9 @@ add BinaryBuilder
 add PackageCompiler
 add Plots</code></pre></div>
 <p>Jupyterのカーネルが登録されているか確認</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">jupyter kernelspec list</code></pre></div>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry run jupyter kernelspec list</code></pre></div>
+<p>カーネルが入ってないことがある?一旦プレコンパイルが必要?(要確認)</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">using IJulia</code></pre></div>
 <h4>TODO: カスタムデフォルトsysimageからの起動</h4>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">cd $LOCAL
 create_sysimage(:Plots, sysimage_path=&quot;sysimage/sys_plots.dylib&quot;, precompile_execution_file=&quot;script/precompile_plots.jl&quot;)</code></pre></div>
@@ -178,6 +187,10 @@ poetry add pandas</code></pre></div>
 <li>
 <p>KNIME Report Designer</p>
 <p>レポート自動化</p>
+</li>
+<li>
+<p>KNIME Data Generation</p>
+<p>データ生成(連番など)</p>
 </li>
 <li>ケモインフォのやつ</li>
 <li>HCS tools</li>
