@@ -298,3 +298,14 @@ Install KNIME Extensions...で下記拡張をインストール
 - KNIME Image Processing - Python Extensions
 
   プレート統計、ヒートマップなど。まだ使うか微妙
+
+
+#### KNIME (Windows編)
+
+基本的には上記そのままインストール可能
+
+- Pythonはminicondaをインストーラでインストールして、minicondaルートを指定
+- conda installで必要なライブラリをインストール
+- Plotlyはorcaにパスを通す必要あり
+  - conda install -c plotly plotly-orca
+  - Windowsの環境変数でminicondaのルートを指定
