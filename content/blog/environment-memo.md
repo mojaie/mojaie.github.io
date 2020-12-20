@@ -299,6 +299,10 @@ Install KNIME Extensions...で下記拡張をインストール
 
   プレート統計、ヒートマップなど。まだ使うか微妙
 
+- Streaming Execution
+
+  ストリーミング(非同期実行)ができるようになる。
+
 
 #### KNIME (Windows編)
 
@@ -309,3 +313,17 @@ Install KNIME Extensions...で下記拡張をインストール
 - Plotlyはorcaにパスを通す必要あり
   - conda install -c plotly plotly-orca
   - Windowsの環境変数でminicondaのルートを指定
+
+
+
+### Selenium
+
+```
+poetry add selenium
+```
+
+chromedriver-binaryはchromeのバージョンに合わせる必要がある
+
+```
+poetry add chromedriver-binary＠87.0.4280.88.0
+```
