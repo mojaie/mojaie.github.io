@@ -291,6 +291,10 @@ Install KNIME Extensions...で下記拡張をインストール
 
   データ生成(連番など)
 
+- KNIME Testing Framework UI
+
+  テスト用ノード
+
 - ケモインフォのやつ
 
 - HCS tools
