@@ -61,6 +61,9 @@ ln -s ~/Workspace/localenv/.zshrc
 
 #### Atom
 
+TODO: VSCodiumへの移行が終われば廃止
+
+
 設定ファイルの共有
 
 ```
@@ -111,11 +114,12 @@ brew cask install vscodium
 ```
 
 
-#### VSCodium(Atomから移行検討中)
+#### VSCodium
 
 Extensionを入れる
 
 - Julia
+- Zenkaku (マーケットプレイスから手動)
 
 
 #### Python
