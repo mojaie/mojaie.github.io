@@ -101,20 +101,24 @@ brew update
 brew doctor
 ```
 
-XQuartzが必要であればcaskで入れる。
+- XQuartzが必要であればcaskで入れる。
+- cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須。
+- OpenSSLも何かと必要(MacOSデフォルトはLibreSSL)
+- rsyncはbrewだと3.0系
 
 ```
 brew cask install xquartz
-```
-
-VSCodium
-
-```
-brew cask install vscodium
+brew install cmake
+brew install openssl
+brew install rsync
 ```
 
 
 #### VSCodium
+
+```
+brew cask install vscodium
+```
 
 Extensionを入れる
 
@@ -219,20 +223,6 @@ brew install node
 npm install -g yarn
 yarn global add eslint
 ```
-
-
-
-### C/C++
-
-cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須。
-OpenSSLも何かと必要(MacOSデフォルトはLibreSSL)
-
-
-```
-brew install cmake
-brew install openssl
-```
-
 
 
 ### LaTeX

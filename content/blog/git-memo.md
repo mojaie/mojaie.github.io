@@ -23,11 +23,11 @@ https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues
 ブランチしない場合はこれだけ  
 Source Treeを使う場合はstagingに関するコマンドなどはあまり考えなくても大丈夫
 
-commit
-push
-fetch
-merge
-pull (fetch -> marge)
+- commit
+- push
+- fetch
+- merge
+- pull (fetch -> marge)
 
 
 ### 他のブランチの変更を現在のブランチに適用
