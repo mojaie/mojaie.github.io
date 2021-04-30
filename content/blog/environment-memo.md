@@ -17,12 +17,10 @@ tags:
 - Sophos (自宅のみ)
 - Symantec (職場のみ)
 - Box
-  - Dropbox (Boxに移行)
 - Google Drive (自宅のみ)
 - Atom
 - Sourcetree
 - Zotero
-  - Mendeley Desktop (Zoteroに移行)
 - Tutanota (自宅のみ)
 - InkScape
 - Docker
@@ -111,6 +109,8 @@ brew cask install xquartz
 brew install cmake
 brew install openssl
 brew install rsync
+brew install pirj/homebrew-noclamshell/noclamshell
+brew services start noclamshell
 ```
 
 
