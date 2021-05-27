@@ -1,7 +1,7 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2020-10-19
+dateModified: 2021-05-05
 tags:
   - macOS
   - environment setup
@@ -26,20 +26,34 @@ tags:
 - Docker
 - Knime
 - Marvin
+- DeepL
 - Tabula
 - Julia最新版
 - Zoom
+- WebEX
+- Microsoft Office
 
 
 #### App storeからダウンロード
 
 - Taurine
 - StuffIt Expander
+- Microsoft Remote Desktop
+
+
+#### アプリケーション設定
+
+- Sourcetree
+
+GitHubのOAuth情報をキーチェインに登録するため以下のコマンドを打つ
+
+```
+git config --global credential.helper osxkeychain
+```
 
 
 
 ### 開発環境
-
 
 #### localenv
 
@@ -51,44 +65,11 @@ git clone https://github.com/mojaie/localenv.git
 ```
 
 .zshrcのシンボリックリンクを作成
+
 ```
 cd ~
 ln -s ~/Workspace/localenv/.zshrc
 ```
-
-
-#### Atom
-
-TODO: VSCodiumへの移行が終われば廃止
-
-
-設定ファイルの共有
-
-```
-cd ~/.atom
-ln -s ~/Workspace/localenv/atom_settings/config.cson
-ln -s ~/Workspace/localenv/atom_settings/styles.less
-ln -s ~/Workspace/localenv/atom_settings/init.coffee
-```
-
-パッケージのインストール
-
-- language-julia
-- language-latex
-- language-restructuredtext(不要？)
-- latex
-- linter
-- linter-eslint
-- linter-flake8
-- linter-htmlhint
-- show-ideographic-space
-- split-diff
-- rst-preview-pandoc(不要？)
-
-テーマのインストール
-
-- seti-ui アイコンが良い
-- predawn-syntax 見やすい
 
 
 #### Homebrew
@@ -102,10 +83,11 @@ brew doctor
 - XQuartzが必要であればcaskで入れる。
 - cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須。
 - OpenSSLも何かと必要(MacOSデフォルトはLibreSSL)
-- rsyncはbrewだと3.0系
+- rsyncはmacデフォルトにもあるがbrewで3.0系を入れる
+- noclamshellでクラムシェルモードを無効化
 
 ```
-brew cask install xquartz
+# brew cask install xquartz
 brew install cmake
 brew install openssl
 brew install rsync
@@ -162,23 +144,6 @@ poetry add jupytext
 ```
 
 
-#### その他旧conda時代のPython環境
-
-```
-conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？
-
-# Python開発
-conda install sphinx
-# sphinxcontrib-napoleonはビルトインになった
-conda install sphinx_rtd_theme
-conda install twine -c conda-forge
-conda install wheel -c conda-forge
-
-# Networkx2対応python-louvain
-pip install git+https://github.com/taynaud/python-louvain.git@networkx2
-```
-
-
 
 ### Julia
 
@@ -189,9 +154,11 @@ pip install git+https://github.com/taynaud/python-louvain.git@networkx2
 ```
 add IJulia
 add Revise
-add BinaryBuilder
-add PackageCompiler
-add Plots
+
+# add BinaryBuilder
+# add PackageCompiler
+# add Plots
+# add MassInstallAction
 ```
 
 Jupyterのカーネルが登録されているか確認
@@ -225,27 +192,9 @@ yarn global add eslint
 ```
 
 
-### LaTeX
-
-- MacTeX公式からBasicTeX.pkgをダウンロードしてインストール
-- /Library/TeX/texbinにパスを通す
-- TODO: brew cask install mactex
-  - ghostscriptもこれで入るらしい
-
-```
-sudo tlmgr update --self --all  # なんかエラー出る
-sudo tlmgr install latexmk    # pdf出力 デフォルトで入ってない
-sudo tlmgr install achemso    # ACSのフォーマット
-sudo tlmgr install mhchem     # achemso必須
-sudo tlmgr install chemgreek  # achemso必須
-sudo tlmgr install mciteplus  # achemso必須
-```
-
-
-
 ### PyMol
 
-- TODO: ラボォ氏のテキストを参考に構築
+- TODO: ラボォ氏のテキストを参考に構築、もしくはDocker
 
 ```
 brew install homebrew/dupes/tcl-tk --enable-threads --with-x11  # for PyMol
@@ -324,4 +273,76 @@ chromedriver-binaryはchromeのバージョンに合わせる必要がある
 
 ```
 poetry add chromedriver-binary＠87.0.4280.88.0
+```
+
+
+
+### Legacy
+
+#### Atom
+
+VSCodiumへ移行済み。以下2019年以前の設定。
+
+設定ファイルの共有
+
+```
+cd ~/.atom
+ln -s ~/Workspace/localenv/atom_settings/config.cson
+ln -s ~/Workspace/localenv/atom_settings/styles.less
+ln -s ~/Workspace/localenv/atom_settings/init.coffee
+```
+
+パッケージのインストール
+
+- language-julia
+- language-latex
+- language-restructuredtext(不要？)
+- latex
+- linter
+- linter-eslint
+- linter-flake8
+- linter-htmlhint
+- show-ideographic-space
+- split-diff
+- rst-preview-pandoc(不要？)
+
+テーマのインストール
+
+- seti-ui アイコンが良い
+- predawn-syntax 見やすい
+
+
+#### その他旧conda時代のPython環境
+
+condaは使わない。RDKitはDocker使用。
+
+```
+conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？
+
+# Python開発
+conda install sphinx
+# sphinxcontrib-napoleonはビルトインになった
+conda install sphinx_rtd_theme
+conda install twine -c conda-forge
+conda install wheel -c conda-forge
+
+# Networkx2対応python-louvain
+pip install git+https://github.com/taynaud/python-louvain.git@networkx2
+```
+
+
+### LaTeX
+
+- MacTeX公式からBasicTeX.pkgをダウンロードしてインストール
+- /Library/TeX/texbinにパスを通す
+- TODO: brew cask install mactex
+  - ghostscriptもこれで入るらしい
+
+```
+sudo tlmgr update --self --all  # なんかエラー出る
+sudo tlmgr install latexmk    # pdf出力 デフォルトで入ってない
+sudo tlmgr install achemso    # ACSのフォーマット
+sudo tlmgr install mhchem     # achemso必須
+sudo tlmgr install chemgreek  # achemso必須
+sudo tlmgr install mciteplus  # achemso必須
 ```
