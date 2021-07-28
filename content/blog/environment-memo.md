@@ -83,6 +83,7 @@ brew doctor
 - XQuartzが必要であればcaskで入れる。
 - cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須。
 - OpenSSLも何かと必要(MacOSデフォルトはLibreSSL)
+  - 実験ノートのタイプスタンプにも使うので最新版を入れてbrew linkしておく
 - rsyncはmacデフォルトにもあるがbrewで3.0系を入れる
 - noclamshellでクラムシェルモードを無効化
 
@@ -90,6 +91,7 @@ brew doctor
 # brew cask install xquartz
 brew install cmake
 brew install openssl
+brew link openssl --force
 brew install rsync
 brew install pirj/homebrew-noclamshell/noclamshell
 brew services start noclamshell
@@ -106,6 +108,7 @@ Extensionを入れる
 
 - Julia
 - Zenkaku (マーケットプレイスから手動)
+- Markdown PDF (マーケットプレイスから手動)
 
 
 #### Python
