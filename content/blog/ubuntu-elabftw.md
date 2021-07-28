@@ -7,7 +7,7 @@ tags:
   - remote
   - Ubuntu
   - Docker
-  - ELN
+  - electronic lab notebook
   - environment setup
 ---
 
@@ -418,6 +418,16 @@ https://www.smtp2go.com/blog/email-delivery-errors-mean/
 普通に自分のアドレスにしたらテストメールを受信できました。
 
 
+別のエラー
+
+```
+FastCGI sent in stderr: "PHP message: [2021-06-22T10:51:20.150601+09:00] elabftw.ERROR:  [{"userid":1},{"exception":"[object] (Swift_TransportException(code: 0): Connection could not be established with host mail.smtp2go.com :stream_socket_client(): SSL operation failed with code 1. OpenSSL Error messages:\nerror:1408F10B:SSL routines:ssl3_get_record:wrong version number at /elabftw/vendor/swiftmailer/swiftmailer/lib/classes/Swift/Transport/StreamBuffer.php:261)"}] []"
+```
+
+- smtp2goデフォルトは2525だが、SMTP Port 465である必要がある
+https://github.com/elabftw/elabftw/issues/2384
+
+
 
 ### elabFTWを使ってみての所感
 
@@ -428,3 +438,7 @@ elabFTWの使い勝手としては(他のELNを使ったことはありません
 デフォルトはHTMLエディタですが、ユーザ設定でMarkdown直書きも選択できます。ただ、こちらも日本語変換の改行キー押下をイベントとして認識し勝手にリストをオートフィルするなど、日本語環境が未整備です(私はAtomでMarkdownを書いてからWebエディタにペーストしています)。
 
 実験ノート記事の他にデータベースという記事形式があり、どちらも同様の方法で記事作成が可能なのですが、実験ノートが実験事実の証明を目的としているのに対し、データベースは情報共有を目的としているようです。試薬の購入情報や文献調査を共有するのにも良さそうです。
+
+(7/29追記)日本語環境がダメすぎてメジャーアップグレードのDB移行が難航したので採用には至りませんでした。
+
+[オープンソースでミニマルな電子実験ノート(ELN)を実装する](../minimal-eln)

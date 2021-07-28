@@ -222,6 +222,8 @@ poetry add pandas
 
 Install KNIME Extensions...で下記拡張をインストール
 
+#### 必須
+
 - KNIME Python Integration
 
   Preferences->KNIME->Pythonという項目ができているので、Python3のところに.venv内のpythonのパスを設定する(browseからpythonを選択するとエイリアスではなく参照元が設定されてしまうので、.venv内のpythonのパスを手打ちする)
@@ -233,6 +235,9 @@ Install KNIME Extensions...で下記拡張をインストール
 - KNIME Data Generation
 
   データ生成(連番など)
+
+
+#### 評価中
 
 - KNIME Testing Framework UI
 
@@ -251,15 +256,16 @@ Install KNIME Extensions...で下記拡張をインストール
   ストリーミング(非同期実行)ができるようになる。
 
 
-#### KNIME (Windows編)
+#### Windows編
 
 基本的には上記そのままインストール可能
 
 - Pythonはminicondaをインストーラでインストールして、minicondaルートを指定
 - conda installで必要なライブラリをインストール
-- Plotlyはorcaにパスを通す必要あり
-  - conda install -c plotly plotly-orca
-  - Windowsの環境変数でminicondaのルートを指定
+  - Plotlyはorcaにパスを通す必要あり
+    - conda install -c plotly plotly-orca
+    - Windowsの環境変数でminicondaのルートを指定
+  - conda install seaborn
 
 
 
