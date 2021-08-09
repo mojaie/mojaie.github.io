@@ -48,13 +48,19 @@ brew doctor</code></pre></div>
 <ul>
 <li>XQuartzが必要であればcaskで入れる。</li>
 <li>cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須。</li>
-<li>OpenSSLも何かと必要(MacOSデフォルトはLibreSSL)</li>
+<li>
+<p>OpenSSLも何かと必要(MacOSデフォルトはLibreSSL)</p>
+<ul>
+<li>実験ノートのタイプスタンプにも使うので最新版を入れてbrew linkしておく</li>
+</ul>
+</li>
 <li>rsyncはmacデフォルトにもあるがbrewで3.0系を入れる</li>
 <li>noclamshellでクラムシェルモードを無効化</li>
 </ul>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text"># brew cask install xquartz
 brew install cmake
 brew install openssl
+brew link openssl --force
 brew install rsync
 brew install pirj/homebrew-noclamshell/noclamshell
 brew services start noclamshell</code></pre></div>
@@ -64,6 +70,7 @@ brew services start noclamshell</code></pre></div>
 <ul>
 <li>Julia</li>
 <li>Zenkaku (マーケットプレイスから手動)</li>
+<li>Markdown PDF (マーケットプレイスから手動)</li>
 </ul>
 <h4>Python</h4>
 <ul>
@@ -133,6 +140,7 @@ brew install homebrew/science/pymol</code></pre></div>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry add numpy
 poetry add pandas</code></pre></div>
 <p>Install KNIME Extensions…で下記拡張をインストール</p>
+<h4>必須</h4>
 <ul>
 <li>
 <p>KNIME Python Integration</p>
@@ -146,6 +154,9 @@ poetry add pandas</code></pre></div>
 <p>KNIME Data Generation</p>
 <p>データ生成(連番など)</p>
 </li>
+</ul>
+<h4>評価中</h4>
+<ul>
 <li>
 <p>KNIME Testing Framework UI</p>
 <p>テスト用ノード</p>
@@ -162,16 +173,17 @@ poetry add pandas</code></pre></div>
 <p>ストリーミング(非同期実行)ができるようになる。</p>
 </li>
 </ul>
-<h4>KNIME (Windows編)</h4>
+<h4>Windows編</h4>
 <p>基本的には上記そのままインストール可能</p>
 <ul>
 <li>Pythonはminicondaをインストーラでインストールして、minicondaルートを指定</li>
-<li>conda installで必要なライブラリをインストール</li>
 <li>
-<p>Plotlyはorcaにパスを通す必要あり</p>
+<p>conda installで必要なライブラリをインストール</p>
 <ul>
+<li>Plotlyはorcaにパスを通す必要あり</li>
 <li>conda install -c plotly plotly-orca</li>
 <li>Windowsの環境変数でminicondaのルートを指定</li>
+<li>conda install seaborn</li>
 </ul>
 </li>
 </ul>
