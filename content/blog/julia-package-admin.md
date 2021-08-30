@@ -36,7 +36,7 @@ using DocumenterTools
 DocumenterTools.genkeys(user="username", repo="NicePackage.jl")
 ```
 
-最初に表示される公開鍵は、リポジトリ設定のDeploy Keyに登録する。次に表示される秘密鍵は、リポジトリ設定のSecretにDOCUMENTER_KEYという名前で登録する。TagBotも公式ドキュメントではDOCUMENTER_KEYを使って自動デプロイする設定になっている。
+最初に表示される公開鍵は、リポジトリ設定のDeploy Keyに登録する。次に表示される秘密鍵は、リポジトリ設定のSecretにDOCUMENTER\_KEYという名前で登録する。TagBotも公式ドキュメントではDOCUMENTER\_KEYを使って自動デプロイする設定になっている。
 
 
 TagBotがエラーでタグを作成できなかった時、手動でワークフローをトリガーして修正できるのはデフォルトで3日間である。それ以上時間が経ってしまった時は、TagBot.ymlのonのところに以下のようにlookbackの記述を入れると、手動で実行する際にコミットを遡れる期間を指定できるようになる。
