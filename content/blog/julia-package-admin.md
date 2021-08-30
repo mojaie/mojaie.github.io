@@ -1,7 +1,7 @@
 ---
 title: Juliaパッケージ管理メモ
 dateCreated: 2020-02-24
-dateModified: 2021-01-31
+dateModified: 2021-08-30
 tags:
   - Julia
   - package manager
@@ -11,16 +11,52 @@ tags:
 Juliaのパッケージ管理のメモです。
 
 
-### MassInstallAction
-
-参照: [MassInstallActionでJuliaパッケージのCI環境を整備する](../julia-package-action)
-
-
 ### JuliaRegistratorのインストール
 
-JuliaRegistratorはGitHub appsで、下記ページからインストールできます。パッケージの更新(新規作成またはバージョンアップ)をレジストリに知らせるツールです。
+JuliaRegistratorはGitHub appsで、下記サイトからインストールする。パッケージの更新(新規作成またはバージョンアップ)を公式レジストリに知らせるツール。
 
 https://github.com/JuliaRegistries/Registrator.jl
+
+
+### GitHub Workflow
+
+プロジェクトページの.github/workflowsに作成する(作成される?)
+Personal access tokenを使ってGitHubにアクセスしている場合はScopeでWorkflowにチェックを入れておかないと、.github/workflowsにpushできない
+
+- TagBot: 新しいバージョンをRegistratorで登録すると、自動的にリリースタグを作成してくれる。Registrator経由で公式リポジトリに新しいパッケージが登録された際に、JuliaTagBotが当該パッケージのリポジトリにissueを書き込みTagBotをトリガーする。
+- Documenter: ドキュメントを自動生成する。通常masterへのコミットやバージョンアップでトリガーされるようになっている。
+- CompatHelper: 定期的に公式リポジトリを確認しに行って、当該パッケージに互換性の問題が生じていたら知らせてくれる。
+- CI: プルリクエストが作成された時に自動的にテストしてカバレッジなどを教えてくれる。
+
+
+デプロイキーはDocumenterのものを使い回すと楽。DocumenterToolsがSSHキーを生成してくれる。
+
+```
+using DocumenterTools
+DocumenterTools.genkeys(user="username", repo="NicePackage.jl")
+```
+
+最初に表示される公開鍵は、リポジトリ設定のDeploy Keyに登録する。次に表示される秘密鍵は、リポジトリ設定のSecretにDOCUMENTER_KEYという名前で登録する。TagBotも公式ドキュメントではDOCUMENTER_KEYを使って自動デプロイする設定になっている。
+
+
+TagBotがエラーでタグを作成できなかった時、手動でワークフローをトリガーして修正できるのはデフォルトで3日間である。それ以上時間が経ってしまった時は、TagBot.ymlのonのところに以下のようにlookbackの記述を入れると、手動で実行する際にコミットを遡れる期間を指定できるようになる。
+
+```
+on:
+  issue_comment:
+    types:
+      - created
+  workflow_dispatch:
+    inputs:
+      lookback:
+```
+
+
+### MassInstallAction
+
+JuliaのCI周辺は動きが激しく(Travisが突然商用になったり)、デプロイ環境が安定しないので、時々有志の環境整備ツールが供給される。ありがたや。
+
+参照: [MassInstallActionでJuliaパッケージのCI環境を整備する](../julia-package-action)
 
 
 ### パッケージの登録、バージョンアップ
