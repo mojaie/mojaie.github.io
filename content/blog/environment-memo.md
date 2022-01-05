@@ -18,20 +18,17 @@ tags:
 - Symantec (職場のみ)
 - Box
 - Google Drive (自宅のみ)
-- Atom
 - Sourcetree
 - Zotero
-- Tutanota (自宅のみ)
 - InkScape
-- Docker
-- Knime
-- Marvin
+- KNIME
 - DeepL
 - Tabula
-- Julia最新版
+- Julia
 - Zoom
 - WebEX
 - Microsoft Office
+- VSCode
 
 
 #### App storeからダウンロード
@@ -45,7 +42,7 @@ tags:
 
 - Sourcetree
 
-GitHubのOAuth情報をキーチェインに登録するため以下のコマンドを打つ
+GitHubのOAuth情報をキーチェーンに登録するため以下のコマンドを打つ
 
 ```
 git config --global credential.helper osxkeychain
@@ -98,17 +95,15 @@ brew services start noclamshell
 ```
 
 
-#### VSCodium
-
-```
-brew cask install vscodium
-```
+#### VSCode
 
 Extensionを入れる
 
+- Japanese Language Pack
 - Julia
-- Zenkaku (マーケットプレイスから手動)
-- Markdown PDF (マーケットプレイスから手動)
+- Markdown PDF
+- Render Line Endings
+- zenkaku
 
 
 #### Python
@@ -239,6 +234,10 @@ Install KNIME Extensions...で下記拡張をインストール
 
   データ生成(連番など)
 
+- KNIME HCS Tools
+
+  Z-score, RZ-score
+
 
 #### 評価中
 
@@ -248,7 +247,6 @@ Install KNIME Extensions...で下記拡張をインストール
 
 - ケモインフォのやつ
 
-- HCS tools
 - KNIME Image Processing
 - KNIME Image Processing - Python Extensions
 
