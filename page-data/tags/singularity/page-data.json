@@ -1,0 +1,1 @@
+{"componentChunkName":"component---src-templates-tag-posts-js","path":"/tags/singularity/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/singularity-memo/"},"frontmatter":{"title":"Singularityインストールメモ"}}}]}},"pageContext":{"tag":"Singularity"}},"staticQueryHashes":["401191528"]}
