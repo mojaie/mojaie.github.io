@@ -1,7 +1,7 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2021-05-05
+dateModified: 2022-01-05
 tags:
   - macOS
   - environment setup
