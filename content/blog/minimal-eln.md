@@ -1,13 +1,15 @@
 ---
 title: オープンソースでミニマルな電子実験ノート(ELN)を実装する
 dateCreated: 2021-07-29
-dateModified: 2021-08-09
+dateModified: 2022-03-14
 tags:
   - electronic lab notebook
   - VSCode
   - trusted timestamping
+  - openssl
 ---
 
+(2022/03/14更新) : タイムスタンプ情報の抽出方法が間違っていたので修正しました。
 
 ### 要点
 
@@ -19,10 +21,10 @@ tags:
 
 ### 環境
 
-- MacOS 11.5
-- VSCode 1.59.0
+- MacOS 11.6.2
+- VSCode 1.63.2
   - Markdown PDF 1.4.4
-- OpenSSL 1.1.1h
+- OpenSSL 1.1.1l
 
 
 ### どうしてこうなった...
@@ -73,11 +75,13 @@ Markdown PDFプラグインをインストールします(VSCodiumの場合はMa
    証明書チェーン  
    https://pki.pca.dfn.de/dfn-ca-global-g2/pub/cacert/chain.txt
 
-1. 実験ノートPDFを元に、タイムスタンプのリクエストファイル(.tsq)を生成します。実質PDFのsha512ハッシュファイルです。
+1. 実験ノートPDFを元に、タイムスタンプのリクエストファイル(.tsq)を生成します。
 
    ```
-   openssl ts -query -data "210707_nice_experiment_1.pdf" -no_nonce -sha512 -cert -out "210707_nice_experiment_1.tsq"
+   openssl ts -query -data "210707_nice_experiment_1.pdf" -sha512 -cert -out "210707_nice_experiment_1.tsq"
    ```
+
+   オプションの`-sha512`はハッシュアルゴリズムをデフォルトのSHA-1からSHA-512に変更しています。
 
 1. タイムスタンプ認証局にタイムスタンプ発行リクエストを送信して、レスポンスファイル(.tsr)を受信します。
 
@@ -85,28 +89,51 @@ Markdown PDFプラグインをインストールします(VSCodiumの場合はMa
    curl -H "Content-Type: application/timestamp-query" --data-binary '@210707_nice_experiment_1.tsq' http://zeitstempel.dfn.de/ > "210707_nice_experiment_1.tsr"
    ```
 
-1. リクエストとレスポンスを照合して、有効なタイムスタンプが付与されたかどうかを確認します。CAfileオプションの値はルート認証局のCAファイルの場所で、MacOSのデフォルトは多分`/private/etc/ssl/cert.pem`です。untrustedオプションの値はTSAから取得した証明書チェーンの場所になります。
+1. リクエスト(以下の例では元のPDF)とレスポンスを照合して、有効なタイムスタンプが付与されたかどうかを確認します。CAfileオプションの値はルート認証局のCAファイルの場所で、MacOSのデフォルトは多分`/private/etc/ssl/cert.pem`です。untrustedオプションの値はTSAから取得した証明書チェーンの場所になります。
 
    ```
-   openssl ts -verify -in "210707_nice_experiment_1.tsr" -queryfile "210707_nice_experiment_1.tsq" -CAfile /private/etc/ssl/cert.pem -untrusted ./sign-verify/chain.txt
+   openssl ts -verify -data "210707_nice_experiment_1.pdf" -in "210707_nice_experiment_1.tsr" -CAfile /private/etc/ssl/cert.pem -untrusted ./sign-verify/chain.txt
    ```
 
    OKと表示されれば有効なタイムスタンプが付与されています。
 
 1. タイムスタンプの中身を確認する
 
+   `-reply`オプションでタイムスタンプの中身を確認します。
+
+   ```
+   openssl ts -reply -in "210707_nice_experiment_1.tsr" -text -token_out
+   ```
+
    レスポンスファイルの中身を解析すると、タイムスタンプの発行日時が確認できます。
 
-   ```
-   openssl asn1parse -in "210707_nice_experiment_1.tsr" -inform DER
+   ```shell-session
+   % openssl asn1parse -in "210707_nice_experiment_1.tsr" -inform DER
+   Version: 1
+   Policy OID: 1.3.6.1.4.1.22177.300.22.1
+   Hash Algorithm: sha1
+   Message data:
+      0000 - 84 54 ba b0 e6 f2 89 48-cd f1 b4 f2 86 ec 2e 22   .T.....H......."
+      0010 - a4 b3 85 e9                                       ....
+   Serial number: 0xB2AFAF0BA0D221A085D370F3CE611B89B30EEF4D
+   Time stamp: Feb  8 07:36:49 2022 GMT
+   Accuracy: unspecified
+   Ordering: no
+   Nonce: 0x9AB67B1A32BBE5E5
+   TSA: unspecified
+   Extensions:
    ```
 
-   signingTimeという項目を検索すると発行日時を見つけることができます。
+   余談ですが、レスポンスファイルはDERという形式になっていて、`openssl asn1parse`でレスポンスファイルを解析することができます。レスポンスにはタイムスタンプ情報の他、TSAおよび認証局の証明書情報などが含まれます。
 
+   ```shell
+   openssl asn1parse -in "210707_nice_experiment_1.tsr" -inform DER > "parsed.txt"
    ```
-   5959:d=8  hl=2 l=   9 prim: OBJECT            :signingTime
-   5970:d=8  hl=2 l=  15 cons: SET               
-   5972:d=9  hl=2 l=  13 prim: UTCTIME           :210708080021Z
+
+   上記のタイムスタンプ情報は`id-smime-ct-TSTInfo`というフィールドに、HEXエンコードされたDER形式のテキストとして格納されています。このテキストを下記のように解析すると、`openssl ts -reply`で得られるタイムスタンプ情報の元となるデータが得られます。
+
+   ```shell
+   echo '[id-smime-ct-TSTInfoの値]' | xxd -r -p - | openssl asn1parse -inform DER
    ```
 
 

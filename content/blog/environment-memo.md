@@ -48,6 +48,7 @@ GitHubのOAuth情報をキーチェーンに登録するため以下のコマン
 git config --global credential.helper osxkeychain
 ```
 
+高容量ファイルがDiffされると重くなるので、SourceTreeのDiff設定で*.xml, *.svg, *.json, *.yaml, *.knimeあたりを無視するようにする。
 
 
 ### 開発環境
@@ -119,9 +120,6 @@ pyenv global [listで確認したバージョン]
 
 # .zshrcでパスを通す
 echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
-
-# flake8はAtomで使うのでglobalインストール
-pip install flake8
 
 # poetry
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
@@ -210,14 +208,6 @@ brew install homebrew/science/pymol
 
 ### KNIME
 
-
-poetry newでknimeのワークスペースにpython環境を作る。numpyとpandasは必須
-
-```
-poetry add numpy
-poetry add pandas
-```
-
 Install KNIME Extensions...で下記拡張をインストール
 
 #### 必須
@@ -234,18 +224,19 @@ Install KNIME Extensions...で下記拡張をインストール
 
   データ生成(連番など)
 
-- KNIME HCS Tools
+- KNIME Base Chemistry Types & Nodes
 
-  Z-score, RZ-score
-
+  SDFile読み書きなど
 
 #### 評価中
 
 - KNIME Testing Framework UI
 
   テスト用ノード
+  
+- KNIME HCS Tools
 
-- ケモインフォのやつ
+  Z-score, RZ-score 不要かも
 
 - KNIME Image Processing
 - KNIME Image Processing - Python Extensions
