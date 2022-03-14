@@ -30,6 +30,7 @@
 </ul>
 <p>GitHubのOAuth情報をキーチェーンに登録するため以下のコマンドを打つ</p>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">git config --global credential.helper osxkeychain</code></pre></div>
+<p>高容量ファイルがDiffされると重くなるので、SourceTreeのDiff設定で*.xml, *.svg, *.json, *.yaml, *.knimeあたりを無視するようにする。</p>
 <h3>開発環境</h3>
 <h4>localenv</h4>
 <p>localenvをcloneする。初回git使用時にコマンドラインツールのインストールを促されるのでインストールする。</p>
@@ -83,9 +84,6 @@ pyenv global [listで確認したバージョン]
 # .zshrcでパスを通す
 echo -e &#39;if command -v pyenv 1&gt;/dev/null 2&gt;&amp;1; then\n  eval &quot;$(pyenv init -)&quot;\nfi&#39; &gt;&gt; ~/.zshrc
 
-# flake8はAtomで使うのでglobalインストール
-pip install flake8
-
 # poetry
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 # poetryにパスを通す
@@ -134,9 +132,6 @@ brew install homebrew/science/pymol</code></pre></div>
 <li>TODO: gromacsとかpsi4のdocker</li>
 </ul>
 <h3>KNIME</h3>
-<p>poetry newでknimeのワークスペースにpython環境を作る。numpyとpandasは必須</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry add numpy
-poetry add pandas</code></pre></div>
 <p>Install KNIME Extensions…で下記拡張をインストール</p>
 <h4>必須</h4>
 <ul>
@@ -153,8 +148,8 @@ poetry add pandas</code></pre></div>
 <p>データ生成(連番など)</p>
 </li>
 <li>
-<p>KNIME HCS Tools</p>
-<p>Z-score, RZ-score</p>
+<p>KNIME Base Chemistry Types &#x26; Nodes</p>
+<p>SDFile読み書きなど</p>
 </li>
 </ul>
 <h4>評価中</h4>
@@ -163,7 +158,10 @@ poetry add pandas</code></pre></div>
 <p>KNIME Testing Framework UI</p>
 <p>テスト用ノード</p>
 </li>
-<li>ケモインフォのやつ</li>
+<li>
+<p>KNIME HCS Tools</p>
+<p>Z-score, RZ-score 不要かも</p>
+</li>
 <li>KNIME Image Processing</li>
 <li>
 <p>KNIME Image Processing - Python Extensions</p>
