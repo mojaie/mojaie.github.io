@@ -127,17 +127,35 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 # Node風にローカルでパッケージを管理
 poetry config virtualenvs.in-project true
 
-# それぞれのプロジェクトでpyproject.tomlをinstantiateする
+# プロジェクトを新規作成する場合
+poetry new [project名]
+
+# 既にpyproject.tomlがある場合は、instantiateする
 poetry install
 ```
 
-Jupyter notebookを使うプロジェクトを新規作成する場合
+
+以下、現状のローカル環境の構成:
 
 ```
-poetry new projectname
+poetry add numpy
+poetry add pandas
+poetry add scipy
+poetry add scikit-learn
+
 poetry add jupyter
 poetry add jupytext
-```
+
+poetry add seaborn
+poetry add plotly
+poetry add kaleido  # plotly用
+
+poetry add python-dotenv
+poetry add PyYAML
+poetry add simplejson
+poetry add xlsxwriter
+poetry add selenium
+poetry add chromedriver-binary-auto  # Selenium用。自動で適切なバージョンのChrome driverが入る
 
 
 
@@ -230,6 +248,10 @@ Install KNIME Extensions...で下記拡張をインストール
 
 #### 評価中
 
+- KNIME Python Integration (Labs)
+- KNIME Modern UI Preview
+- KNIME Plotly
+
 - KNIME Testing Framework UI
 
   テスト用ノード
@@ -258,20 +280,6 @@ Install KNIME Extensions...で下記拡張をインストール
     - conda install -c plotly plotly-orca
     - Windowsの環境変数でminicondaのルートを指定
   - conda install seaborn
-
-
-
-### Selenium
-
-```
-poetry add selenium
-```
-
-chromedriver-binaryはchromeのバージョンに合わせる必要がある
-
-```
-poetry add chromedriver-binary＠87.0.4280.88.0
-```
 
 
 
