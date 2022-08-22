@@ -90,163 +90,182 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 # Node風にローカルでパッケージを管理
 poetry config virtualenvs.in-project true
 
-# それぞれのプロジェクトでpyproject.tomlをinstantiateする
+# プロジェクトを新規作成する場合
+poetry new [project名]
+
+# 既にpyproject.tomlがある場合は、instantiateする
 poetry install</code></pre></div>
-<p>Jupyter notebookを使うプロジェクトを新規作成する場合</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry new projectname
+<p>以下、現状のローカル環境の構成:</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry add numpy
+poetry add pandas
+poetry add scipy
+poetry add scikit-learn
+
 poetry add jupyter
-poetry add jupytext</code></pre></div>
-<h3>Julia</h3>
-<ul>
-<li>Mac版公式アプリケーションをダウンロードしてインストール</li>
-<li>実行可能バイナリにパスを通す(localenvの.zshrcに記載済み)</li>
-<li>デフォルトプロジェクトに必要なライブラリをインストール</li>
-</ul>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">add IJulia
-add Revise
+poetry add jupytext
 
-# add BinaryBuilder
-# add PackageCompiler
-# add Plots
-# add MassInstallAction</code></pre></div>
-<p>Jupyterのカーネルが登録されているか確認</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry run jupyter kernelspec list</code></pre></div>
-<p>カーネルが入ってないことがある?一旦プレコンパイルが必要?(要確認)</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">using IJulia</code></pre></div>
-<h4>TODO: カスタムデフォルトsysimageからの起動</h4>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">cd $LOCAL
-create_sysimage(:Plots, sysimage_path=&quot;sysimage/sys_plots.dylib&quot;, precompile_execution_file=&quot;script/precompile_plots.jl&quot;)</code></pre></div>
-<h3>Node.js</h3>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">brew install node
+poetry add seaborn
+poetry add plotly
+poetry add kaleido  # plotly用
+
+poetry add python-dotenv
+poetry add PyYAML
+poetry add simplejson
+poetry add xlsxwriter
+poetry add selenium
+poetry add chromedriver-binary-auto  # Selenium用。自動で適切なバージョンのChrome driverが入る
+
+
+
+### Julia
+
+- Mac版公式アプリケーションをダウンロードしてインストール
+- 実行可能バイナリにパスを通す(localenvの.zshrcに記載済み)
+- デフォルトプロジェクトに必要なライブラリをインストール</code></pre></div>
+<p>add IJulia
+add Revise</p>
+<h1>add BinaryBuilder</h1>
+<h1>add PackageCompiler</h1>
+<h1>add Plots</h1>
+<h1>add MassInstallAction</h1>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">Jupyterのカーネルが登録されているか確認</code></pre></div>
+<p>poetry run jupyter kernelspec list</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">カーネルが入ってないことがある?一旦プレコンパイルが必要?(要確認)</code></pre></div>
+<p>using IJulia</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">#### TODO: カスタムデフォルトsysimageからの起動</code></pre></div>
+<p>cd $LOCAL
+create<em>sysimage(:Plots, sysimage</em>path=“sysimage/sys<em>plots.dylib”, precompile</em>execution<em>file=“script/precompile</em>plots.jl”)</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">### Node.js</code></pre></div>
+<p>brew install node
 npm install -g yarn
-yarn global add eslint</code></pre></div>
-<h3>PyMol</h3>
-<ul>
-<li>TODO: ラボォ氏のテキストを参考に構築、もしくはDocker</li>
-</ul>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">brew install homebrew/dupes/tcl-tk --enable-threads --with-x11  # for PyMol
-brew install python --with-brewed-tk  # for PyMol
-brew install homebrew/science/pymol</code></pre></div>
-<h3>その他</h3>
-<ul>
-<li>TODO: gromacsとかpsi4のdocker</li>
-</ul>
-<h3>KNIME</h3>
-<p>Install KNIME Extensions…で下記拡張をインストール</p>
-<h4>必須</h4>
-<ul>
-<li>
-<p>KNIME Python Integration</p>
-<p>Preferences->KNIME->Pythonという項目ができているので、Python3のところに.venv内のpythonのパスを設定する(browseからpythonを選択するとエイリアスではなく参照元が設定されてしまうので、.venv内のpythonのパスを手打ちする)</p>
-</li>
-<li>
-<p>KNIME Report Designer</p>
-<p>レポート自動化</p>
-</li>
-<li>
-<p>KNIME Data Generation</p>
-<p>データ生成(連番など)</p>
-</li>
-<li>
-<p>KNIME Base Chemistry Types &#x26; Nodes</p>
-<p>SDFile読み書きなど</p>
-</li>
-</ul>
-<h4>評価中</h4>
-<ul>
-<li>
-<p>KNIME Testing Framework UI</p>
-<p>テスト用ノード</p>
-</li>
-<li>
-<p>KNIME HCS Tools</p>
-<p>Z-score, RZ-score 不要かも</p>
-</li>
-<li>KNIME Image Processing</li>
-<li>
-<p>KNIME Image Processing - Python Extensions</p>
-<p>プレート統計、ヒートマップなど。まだ使うか微妙</p>
-</li>
-<li>
-<p>Streaming Execution</p>
-<p>ストリーミング(非同期実行)ができるようになる。</p>
-</li>
-</ul>
-<h4>Windows編</h4>
-<p>基本的には上記そのままインストール可能</p>
-<ul>
-<li>Pythonはminicondaをインストーラでインストールして、minicondaルートを指定</li>
-<li>
-<p>conda installで必要なライブラリをインストール</p>
-<ul>
-<li>Plotlyはorcaにパスを通す必要あり</li>
-<li>conda install -c plotly plotly-orca</li>
-<li>Windowsの環境変数でminicondaのルートを指定</li>
-<li>conda install seaborn</li>
-</ul>
-</li>
-</ul>
-<h3>Selenium</h3>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry add selenium</code></pre></div>
-<p>chromedriver-binaryはchromeのバージョンに合わせる必要がある</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">poetry add chromedriver-binary＠87.0.4280.88.0</code></pre></div>
-<h3>Legacy</h3>
-<h4>Atom</h4>
-<p>VSCodiumへ移行済み。以下2019年以前の設定。</p>
-<p>設定ファイルの共有</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">cd ~/.atom
-ln -s ~/Workspace/localenv/atom_settings/config.cson
-ln -s ~/Workspace/localenv/atom_settings/styles.less
-ln -s ~/Workspace/localenv/atom_settings/init.coffee</code></pre></div>
-<p>パッケージのインストール</p>
-<ul>
-<li>language-julia</li>
-<li>language-latex</li>
-<li>language-restructuredtext(不要？)</li>
-<li>latex</li>
-<li>linter</li>
-<li>linter-eslint</li>
-<li>linter-flake8</li>
-<li>linter-htmlhint</li>
-<li>show-ideographic-space</li>
-<li>split-diff</li>
-<li>rst-preview-pandoc(不要？)</li>
-</ul>
-<p>テーマのインストール</p>
-<ul>
-<li>seti-ui アイコンが良い</li>
-<li>predawn-syntax 見やすい</li>
-</ul>
-<h4>その他旧conda時代のPython環境</h4>
-<p>condaは使わない。RDKitはDocker使用。</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？
+yarn global add eslint</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">### PyMol
 
-# Python開発
-conda install sphinx
-# sphinxcontrib-napoleonはビルトインになった
-conda install sphinx_rtd_theme
+- TODO: ラボォ氏のテキストを参考に構築、もしくはDocker</code></pre></div>
+<p>brew install homebrew/dupes/tcl-tk —enable-threads —with-x11  # for PyMol
+brew install python —with-brewed-tk  # for PyMol
+brew install homebrew/science/pymol</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">### その他
+
+- TODO: gromacsとかpsi4のdocker
+
+
+
+### KNIME
+
+Install KNIME Extensions...で下記拡張をインストール
+
+#### 必須
+
+- KNIME Python Integration
+
+  Preferences-&gt;KNIME-&gt;Pythonという項目ができているので、Python3のところに.venv内のpythonのパスを設定する(browseからpythonを選択するとエイリアスではなく参照元が設定されてしまうので、.venv内のpythonのパスを手打ちする)
+
+- KNIME Report Designer
+
+  レポート自動化
+
+- KNIME Data Generation
+
+  データ生成(連番など)
+
+- KNIME Base Chemistry Types &amp; Nodes
+
+  SDFile読み書きなど
+
+#### 評価中
+
+- KNIME Python Integration (Labs)
+- KNIME Modern UI Preview
+- KNIME Plotly
+
+- KNIME Testing Framework UI
+
+  テスト用ノード
+  
+- KNIME HCS Tools
+
+  Z-score, RZ-score 不要かも
+
+- KNIME Image Processing
+- KNIME Image Processing - Python Extensions
+
+  プレート統計、ヒートマップなど。まだ使うか微妙
+
+- Streaming Execution
+
+  ストリーミング(非同期実行)ができるようになる。
+
+
+#### Windows編
+
+基本的には上記そのままインストール可能
+
+- Pythonはminicondaをインストーラでインストールして、minicondaルートを指定
+- conda installで必要なライブラリをインストール
+  - Plotlyはorcaにパスを通す必要あり
+    - conda install -c plotly plotly-orca
+    - Windowsの環境変数でminicondaのルートを指定
+  - conda install seaborn
+
+
+
+### Legacy
+
+#### Atom
+
+VSCodiumへ移行済み。以下2019年以前の設定。
+
+設定ファイルの共有</code></pre></div>
+<p>cd ~/.atom
+ln -s ~/Workspace/localenv/atom<em>settings/config.cson
+ln -s ~/Workspace/localenv/atom</em>settings/styles.less
+ln -s ~/Workspace/localenv/atom_settings/init.coffee</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">パッケージのインストール
+
+- language-julia
+- language-latex
+- language-restructuredtext(不要？)
+- latex
+- linter
+- linter-eslint
+- linter-flake8
+- linter-htmlhint
+- show-ideographic-space
+- split-diff
+- rst-preview-pandoc(不要？)
+
+テーマのインストール
+
+- seti-ui アイコンが良い
+- predawn-syntax 見やすい
+
+
+#### その他旧conda時代のPython環境
+
+condaは使わない。RDKitはDocker使用。</code></pre></div>
+<p>conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？</p>
+<h1>Python開発</h1>
+<p>conda install sphinx</p>
+<h1>sphinxcontrib-napoleonはビルトインになった</h1>
+<p>conda install sphinx<em>rtd</em>theme
 conda install twine -c conda-forge
-conda install wheel -c conda-forge
+conda install wheel -c conda-forge</p>
+<h1>Networkx2対応python-louvain</h1>
+<p>pip install git+<a href="https://github.com/taynaud/python-louvain.git@networkx2">https://github.com/taynaud/python-louvain.git@networkx2</a></p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">### LaTeX
 
-# Networkx2対応python-louvain
-pip install git+https://github.com/taynaud/python-louvain.git@networkx2</code></pre></div>
-<h3>LaTeX</h3>
-<ul>
-<li>MacTeX公式からBasicTeX.pkgをダウンロードしてインストール</li>
-<li>/Library/TeX/texbinにパスを通す</li>
-<li>
-<p>TODO: brew cask install mactex</p>
-<ul>
-<li>ghostscriptもこれで入るらしい</li>
-</ul>
-</li>
-</ul>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">sudo tlmgr update --self --all  # なんかエラー出る
+- MacTeX公式からBasicTeX.pkgをダウンロードしてインストール
+- /Library/TeX/texbinにパスを通す
+- TODO: brew cask install mactex
+  - ghostscriptもこれで入るらしい</code></pre></div>
+<p>sudo tlmgr update —self —all  # なんかエラー出る
 sudo tlmgr install latexmk    # pdf出力 デフォルトで入ってない
 sudo tlmgr install achemso    # ACSのフォーマット
 sudo tlmgr install mhchem     # achemso必須
 sudo tlmgr install chemgreek  # achemso必須
-sudo tlmgr install mciteplus  # achemso必須</code></pre></div></section><div style="overflow:hidden"><div style="float:right"><span style="margin-right:0.9rem;min-width:24px"><a class="twitter-share-button" href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-text="作業環境構築メモ" data-url="https://mojaie.github.io/environment-memo/" data-via="mojaie" data-show-count="false">Tweet</a></span></div></div><hr style="margin-bottom:1.8rem"/><footer><div style="display:flex"><div class=" gatsby-image-wrapper" style="position:relative;overflow:hidden;display:inline-block;width:50px;height:50px;margin-right:0.9rem;margin-bottom:0;min-width:50px;border-radius:100%"><img aria-hidden="true" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAACJ0lEQVQ4y41Tx6piQRS8n+ZviD/gN7gSF4IiYkDdKWZFVEQxBwRFRRQDBjCBYWFOiNk3Na+l5z7H92Z60XSqc+pU12E+vhmPx+Pvw/v9zt4yb5Hk0WKxKBaLfr8/FAolk8nRaISIuKJx34Bvtxvmer1uMpkMBsN8Pu92u4PBAFG8Xu/pdKK8mBeqJOdkMrHb7cPhMBKJbLdbzCRis9l0Op1vaD8+BxbL5dLhcOCdRqPJ5/Nut3u/3+P8crlgjsfj1WqVlMawizwejwqFgs/ngzO2sVgsGo3idTabpeXMZjOfz/cHTBJi1mq1UqnUarWCKgnabreVSmWj0aAJ1uu1x+N5gglys9no9XqRSASFA4EAUQVjOp0i3Hg8pmAU9SUzmMjlcplMBmH7/b5Op0skElQFsCAJCLjVapEqnmCBQMDlcq/XK9aFQkEoFEIkUKB4AiM1Iy6t4jc4k8kEg0HCE7+CzBAZalMwYPfPgRMUDObkinnxI2xgNBorlQoi0mz0ttfrUbWe/0xiY7Hb7SAPkmNtNptRHhbn8xn2gm0AsFgskPDVYQQMP3I4HFItAkH2cDgMb6rVapfLhW06nWa3B8NmtVqtSqUSm0sqlYJPO50OhJRIJGxjv2kMalISHj8sFovBGYrCrblcjpj0p8ag16hQpVKhMZHTZrOBfLlc/iLYDy0NP/B4vFqthvXhcIDtYSeq0bdgMpAQPQSqhAjMg1/8d+b/Gb8A4KQ/V818qF8AAAAASUVORK5CYII=" alt="Seiji Matsuoka" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition-delay:500ms;border-radius:50%"/><noscript><picture><source srcset="/static/521edab7b833ea681ff34e56bdce2fe0/8ba1e/shiocombu.png 1x,
+sudo tlmgr install mciteplus  # achemso必須</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text"></code></pre></div></section><div style="overflow:hidden"><div style="float:right"><span style="margin-right:0.9rem;min-width:24px"><a class="twitter-share-button" href="https://twitter.com/share?ref_src=twsrc%5Etfw" data-text="作業環境構築メモ" data-url="https://mojaie.github.io/environment-memo/" data-via="mojaie" data-show-count="false">Tweet</a></span></div></div><hr style="margin-bottom:1.8rem"/><footer><div style="display:flex"><div class=" gatsby-image-wrapper" style="position:relative;overflow:hidden;display:inline-block;width:50px;height:50px;margin-right:0.9rem;margin-bottom:0;min-width:50px;border-radius:100%"><img aria-hidden="true" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAACJ0lEQVQ4y41Tx6piQRS8n+ZviD/gN7gSF4IiYkDdKWZFVEQxBwRFRRQDBjCBYWFOiNk3Na+l5z7H92Z60XSqc+pU12E+vhmPx+Pvw/v9zt4yb5Hk0WKxKBaLfr8/FAolk8nRaISIuKJx34Bvtxvmer1uMpkMBsN8Pu92u4PBAFG8Xu/pdKK8mBeqJOdkMrHb7cPhMBKJbLdbzCRis9l0Op1vaD8+BxbL5dLhcOCdRqPJ5/Nut3u/3+P8crlgjsfj1WqVlMawizwejwqFgs/ngzO2sVgsGo3idTabpeXMZjOfz/cHTBJi1mq1UqnUarWCKgnabreVSmWj0aAJ1uu1x+N5gglys9no9XqRSASFA4EAUQVjOp0i3Hg8pmAU9SUzmMjlcplMBmH7/b5Op0skElQFsCAJCLjVapEqnmCBQMDlcq/XK9aFQkEoFEIkUKB4AiM1Iy6t4jc4k8kEg0HCE7+CzBAZalMwYPfPgRMUDObkinnxI2xgNBorlQoi0mz0ttfrUbWe/0xiY7Hb7SAPkmNtNptRHhbn8xn2gm0AsFgskPDVYQQMP3I4HFItAkH2cDgMb6rVapfLhW06nWa3B8NmtVqtSqUSm0sqlYJPO50OhJRIJGxjv2kMalISHj8sFovBGYrCrblcjpj0p8ag16hQpVKhMZHTZrOBfLlc/iLYDy0NP/B4vFqthvXhcIDtYSeq0bdgMpAQPQSqhAjMg1/8d+b/Gb8A4KQ/V818qF8AAAAASUVORK5CYII=" alt="Seiji Matsuoka" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;transition-delay:500ms;border-radius:50%"/><noscript><picture><source srcset="/static/521edab7b833ea681ff34e56bdce2fe0/8ba1e/shiocombu.png 1x,
 /static/521edab7b833ea681ff34e56bdce2fe0/f937a/shiocombu.png 1.5x,
 /static/521edab7b833ea681ff34e56bdce2fe0/71eb7/shiocombu.png 2x" /><img loading="lazy" width="50" height="50" srcset="/static/521edab7b833ea681ff34e56bdce2fe0/8ba1e/shiocombu.png 1x,
 /static/521edab7b833ea681ff34e56bdce2fe0/f937a/shiocombu.png 1.5x,
