@@ -1,7 +1,7 @@
 ---
 title: オープンソースでミニマルな電子実験ノート(ELN)を実装する
 dateCreated: 2021-07-29
-dateModified: 2022-03-14
+dateModified: 2022-08-23
 tags:
   - electronic lab notebook
   - VSCode
@@ -10,6 +10,7 @@ tags:
 ---
 
 (2022/03/14更新) : タイムスタンプ情報の抽出方法が間違っていたので修正しました。
+(2022/08/23更新) : タイムスタンプの有効期限について追記しました。
 
 ### 要点
 
@@ -21,10 +22,10 @@ tags:
 
 ### 環境
 
-- MacOS 11.6.2
-- VSCode 1.63.2
+- MacOS 12.5.1
+- VSCode 1.70.1
   - Markdown PDF 1.4.4
-- OpenSSL 1.1.1l
+- OpenSSL 1.1.1q
 
 
 ### どうしてこうなった...
@@ -76,6 +77,9 @@ Markdown PDFプラグインをインストールします(VSCodiumの場合はMa
    https://pki.pca.dfn.de/dfn-ca-global-g2/pub/cacert/chain.txt
 
 1. 実験ノートPDFを元に、タイムスタンプのリクエストファイル(.tsq)を生成します。
+
+   OpenSSLマニュアル openssl ts  
+   https://www.openssl.org/docs/man1.1.1/man1/openssl-ts.html
 
    ```
    openssl ts -query -data "210707_nice_experiment_1.pdf" -sha512 -cert -out "210707_nice_experiment_1.tsq"
@@ -137,6 +141,17 @@ Markdown PDFプラグインをインストールします(VSCodiumの場合はMa
    ```
 
 
+### タイムスタンプの有効期間について
+
+TSA証明書(上記chain.txt)の期限切れまでがタイムスタンプの有効期間です。最長で10年程度とのことですが、期限切れが近いTSA証明書を使用するほどタイムスタンプの有効期間は短くなります。今回使用したDFNの証明書の有効期間は2031年頃までです。
+
+Informationen über die Zertifizierungsstelle in der DFN-PKI DFN-CA Global G2 - Interface für die DFN-PCA  
+https://info.pca.dfn.de/dfn-ca-global-g2/
+
+また、タイムスタンプの署名の証明書の期限は短い(1−5年程度?上記DFNは3年?)ですので、タイムスタンプ付与からしばらくするとverifyコマンドが通らなくなることがあります(Verify error:certificate has expired になる)。署名証明書自体は失効しても、それ以前に有効なタイムスタンプが付与されていれば問題ありません。verifyコマンドに-attimeオプションを付けて証明書が切れる前の日付を指定すると、証明書失効前に有効なタイムスタンプが付与されたかどうかが検証できます。また、一応verifyコマンドに-no\_check\_timeオプションを付けることで、有効期限を無視してハッシュの整合性だけ検証することも可能です。
+
+
+
 ### 実験ノート、データの保管と検索
 
 作成したPDFとタイムスタンプ関連ファイルをクラウドに保管します。ファイル名の命名規則やフォルダ構造で、時系列あるいは分類別などで整理して保管します。
@@ -147,5 +162,4 @@ Google Drive、Boxなどの大規模商用クラウドは高速な全文検索�
 
 ### 課題
 
-- タイムスタンプの有効期限
 - 事務方に「ノートを確認したいから紙媒体で提出しろ」と言われた時の対応
