@@ -40,6 +40,11 @@ tags:
 - Small https://onlinelibrary.wiley.com/journal/16136829
 
 
+#### ラボオートメーション
+
+- SLAS discovery https://slas-discovery.org/
+
+
 #### インフォマティクス、オーミクス
 
 - J. Chem. Inf. Model. https://pubs.acs.org/journal/jcisd8
