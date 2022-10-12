@@ -1,0 +1,1 @@
+{"componentChunkName":"component---src-templates-tag-posts-js","path":"/tags/supervisor/","result":{"data":{"allMarkdownRemark":{"totalCount":1,"edges":[{"node":{"fields":{"slug":"/ubuntu22-supervisor/"},"frontmatter":{"title":"Ubuntu 22.04.1にアップグレードしたらSupervisorが動かなくなった"}}}]}},"pageContext":{"tag":"Supervisor"}},"staticQueryHashes":["401191528"]}
