@@ -1,7 +1,7 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2022-01-05
+dateModified: 2023-05-09
 tags:
   - macOS
   - environment setup
@@ -14,11 +14,9 @@ tags:
 #### 公式サイトからダウンロード
 
 - Google Chrome
-- Sophos (自宅のみ)
-- Symantec (職場のみ)
+- Falcon
 - Box
 - Google Drive (自宅のみ)
-- Sourcetree
 - Zotero
 - InkScape
 - KNIME
@@ -26,7 +24,6 @@ tags:
 - Tabula
 - Julia
 - Zoom
-- WebEX
 - Microsoft Office
 - VSCode
 
@@ -37,18 +34,6 @@ tags:
 - StuffIt Expander
 - Microsoft Remote Desktop
 
-
-#### アプリケーション設定
-
-- Sourcetree
-
-GitHubのOAuth情報をキーチェーンに登録するため以下のコマンドを打つ
-
-```
-git config --global credential.helper osxkeychain
-```
-
-高容量ファイルがDiffされると重くなるので、SourceTreeのDiff設定で*.xml, *.svg, *.json, *.yaml, *.knimeあたりを無視するようにする。
 
 
 ### 開発環境
@@ -91,6 +76,7 @@ brew install cmake
 brew install openssl
 brew link openssl --force
 brew install rsync
+brew install juliaup
 brew install pirj/homebrew-noclamshell/noclamshell
 brew services start noclamshell
 ```
