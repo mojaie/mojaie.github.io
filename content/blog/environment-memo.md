@@ -1,7 +1,7 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2023-05-09
+dateModified: 2024-02-07
 tags:
   - macOS
   - environment setup
@@ -15,6 +15,7 @@ tags:
 
 - Google Chrome
 - Falcon
+- F5 BIG-IP (自宅のみ)
 - Box
 - Google Drive (自宅のみ)
 - Zotero
@@ -22,7 +23,6 @@ tags:
 - KNIME
 - DeepL
 - Tabula
-- Julia
 - Zoom
 - Microsoft Office
 - VSCode
@@ -33,6 +33,9 @@ tags:
 - Taurine
 - StuffIt Expander
 - Microsoft Remote Desktop
+
+
+#### アプリケーション設定
 
 
 
@@ -47,11 +50,13 @@ cd ~/Workspace
 git clone https://github.com/mojaie/localenv.git
 ```
 
-.zshrcのシンボリックリンクを作成
+localからホームにシンボリックリンクを作成
 
 ```
 cd ~
 ln -s ~/Workspace/localenv/.zshrc
+cd .ssh
+ln -s ~/Workspace/localenv/ssh/config
 ```
 
 
@@ -86,11 +91,14 @@ brew services start noclamshell
 
 Extensionを入れる
 
+- Git Graph
+- Hex Editor
 - Japanese Language Pack
-- Julia
 - Markdown PDF
 - Render Line Endings
+- YAML (評価中)
 - zenkaku
+- Julia (保留)
 
 
 #### Python
@@ -142,23 +150,22 @@ poetry add simplejson
 poetry add xlsxwriter
 poetry add selenium
 poetry add chromedriver-binary-auto  # Selenium用。自動で適切なバージョンのChrome driverが入る
-
+```
 
 
 ### Julia
 
-- Mac版公式アプリケーションをダウンロードしてインストール
+- Juliaupでインストール
 - 実行可能バイナリにパスを通す(localenvの.zshrcに記載済み)
 - デフォルトプロジェクトに必要なライブラリをインストール
 
 ```
 add IJulia
-add Revise
-
+# 以下グローバルは必要に応じて
+# add Revise
 # add BinaryBuilder
 # add PackageCompiler
 # add Plots
-# add MassInstallAction
 ```
 
 Jupyterのカーネルが登録されているか確認
@@ -211,6 +218,8 @@ brew install homebrew/science/pymol
 
 
 ### KNIME
+
+大半のワークフローはStreamlitに移行したのでそれほど使わないかもしれない
 
 Install KNIME Extensions...で下記拡張をインストール
 
@@ -271,40 +280,7 @@ Install KNIME Extensions...で下記拡張をインストール
 
 ### Legacy
 
-#### Atom
-
-VSCodiumへ移行済み。以下2019年以前の設定。
-
-設定ファイルの共有
-
-```
-cd ~/.atom
-ln -s ~/Workspace/localenv/atom_settings/config.cson
-ln -s ~/Workspace/localenv/atom_settings/styles.less
-ln -s ~/Workspace/localenv/atom_settings/init.coffee
-```
-
-パッケージのインストール
-
-- language-julia
-- language-latex
-- language-restructuredtext(不要？)
-- latex
-- linter
-- linter-eslint
-- linter-flake8
-- linter-htmlhint
-- show-ideographic-space
-- split-diff
-- rst-preview-pandoc(不要？)
-
-テーマのインストール
-
-- seti-ui アイコンが良い
-- predawn-syntax 見やすい
-
-
-#### その他旧conda時代のPython環境
+#### 旧conda時代のPython環境
 
 condaは使わない。RDKitはDocker使用。
 

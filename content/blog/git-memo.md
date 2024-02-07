@@ -1,7 +1,7 @@
 ---
 title: Gitメモ
 dateCreated: 2021-02-19
-dateModified: 2021-02-19
+dateModified: 2023-08-21
 tags:
   - git
   - GitHub
@@ -79,13 +79,14 @@ Source Treeを使う場合はstagingに関するコマンドなどはあまり�
 
 ### push to deploy
 
-古いバージョンではリモートをnon-bareで作成  
+古いバージョンではリモートをnon-bareで作成(git 1.8.3.1で確認)  
 - リモートでgit config --add receive.denyCurrentBranch ignore
 - hooks/post-receiveを作成
+  - git hookのカレントディレクトリは.gitなので、上の階層(Working dir)に移動してからgit reset
 
 ```
 #!/bin/sh
-cd 作業ディレクトリ
+cd ..
 git --git-dir=.git reset --hard HEAD
 ```
 
