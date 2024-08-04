@@ -1,7 +1,7 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2024-02-07
+dateModified: 2024-08-05
 tags:
   - macOS
   - environment setup
@@ -20,6 +20,7 @@ tags:
 - Google Drive (自宅のみ)
 - Zotero
 - InkScape
+- Cytoscape
 - KNIME
 - DeepL
 - Tabula
@@ -33,10 +34,7 @@ tags:
 - Taurine
 - StuffIt Expander
 - Microsoft Remote Desktop
-
-
-#### アプリケーション設定
-
+- Okta Verify
 
 
 ### 開発環境
@@ -62,28 +60,37 @@ ln -s ~/Workspace/localenv/ssh/config
 
 #### Homebrew
 
+
+- globalインストール
+  - `/usr/local`に既にあるファイルフォルダの権限を変更するので注意が必要(全てwritable、ユーザはインストールユーザ、グループはadmin)
+- もしくは`~/.homebrew`にローカルインストールする
+  - マルチユーザ環境の場合`/usr/local`は避ける
+  - ローカル環境の欠点としてはbottleを使えずビルドが必要なパッケージが多いのでインストールに相当な時間がかかる(pythonなど)
+
 ```
-mkdir .homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C .homebrew
-brew update
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew doctor
 ```
 
-- XQuartzが必要であればcaskで入れる。
+- XQuartzが必要であればcaskで入れる(おそらく不要)。
 - cmakeはmacにデフォルトでインストールされていない。C++ビルドに必須。
 - OpenSSLも何かと必要(MacOSデフォルトはLibreSSL)
   - 実験ノートのタイプスタンプにも使うので最新版を入れてbrew linkしておく
 - rsyncはmacデフォルトにもあるがbrewで3.0系を入れる
-- noclamshellでクラムシェルモードを無効化
 
 ```
-# brew cask install xquartz
-brew install cmake
-brew install openssl
-brew link openssl --force
-brew install rsync
-brew install juliaup
-brew install pirj/homebrew-noclamshell/noclamshell
-brew services start noclamshell
+brew install rsync  # localインストールはopensslビルドするのでかなり時間がかかる
+brew link openssl --force  # LibreSSLからの切り替え、要シェル再起動
+
+brew install juliaup  # Julia環境
+brew install rye  # Python環境
+
+brew install node  # localインストールはかなり時間かかる
+brew install cmake  # localインストールはかなり時間かかる
+
+# brew cask install xquartz  # 現在はおそらく不要
+# brew install pirj/homebrew-noclamshell/noclamshell  # ディスプレイ使うことが少なくなったので不要
+# brew services start noclamshell  # 同上
 ```
 
 
@@ -101,8 +108,79 @@ Extensionを入れる
 - Julia (保留)
 
 
-#### Python
+#### Python (Rye)
 
+- PyPIのHatchは扱いにくいのでRyeをインストール
+
+```sh
+rye init <project name>  # プロジェクト作成
+rye pin 3.10  # syncでこのバージョンのPythonが入る、場所は~/.rye
+rye sync  # .venv作成、切り替え
+rye add <package>  # パッケージインストール
+```
+
+- `rye run`で仮想環境内からコマンド実行
+- 爆速なので仮想環境切り替えというよりその都度pin->syncし直せばよさそう
+- TODO: おそらくRyeの不具合で、ローカルパッケージの相対パスが効かない。
+  - https://github.com/astral-sh/rye/issues/912
+  - 次のバージョンで修正されると思うが、上記issueに解決策が出ていて、手動でpyproject.tomlにPROJECT_ROOTを指定すれば問題ない。
+  - `streamlit @ file:///${PROJECT_ROOT}/temp/streamlit-1.29.0.tar.gz`
+
+
+### Julia
+
+- 実行可能バイナリにパスを通す(localenvの.zshrcに記載済み)
+- instantiateでlocalenvの依存パッケージをインストール(Project.tomlに記載)
+
+```
+pkg> instantiate
+```
+
+Jupyterのカーネルが登録されているか確認
+
+```
+poetry run jupyter kernelspec list
+```
+
+カーネルが入ってないことがある?一旦プレコンパイルが必要?(要確認)
+
+```
+using IJulia
+```
+
+
+### Node.js
+
+- TODO: 情報が古いので要確認
+
+```
+npm install -g yarn
+yarn global add eslint
+```
+
+
+### PyMol
+
+- TODO: 調査
+
+```
+brew install homebrew/dupes/tcl-tk --enable-threads --with-x11  # for PyMol
+brew install python --with-brewed-tk  # for PyMol
+brew install homebrew/science/pymol
+```
+
+
+
+### その他
+
+- TODO: gromacsとかpsi4のdocker
+
+
+
+## Legacy
+
+
+### Python (pyenv+poetry)
 - pyenvとPoetryを使う(Poetry単独だと2.7系のシステムPythonを使おうとする)
 - Julia関連(IJuliaやPyCallなど)はなぜかConda.jlのpythonを推すので要検討
 
@@ -153,73 +231,11 @@ poetry add chromedriver-binary-auto  # Selenium用。自動で適切なバージ
 ```
 
 
-### Julia
-
-- Juliaupでインストール
-- 実行可能バイナリにパスを通す(localenvの.zshrcに記載済み)
-- デフォルトプロジェクトに必要なライブラリをインストール
-
-```
-add IJulia
-# 以下グローバルは必要に応じて
-# add Revise
-# add BinaryBuilder
-# add PackageCompiler
-# add Plots
-```
-
-Jupyterのカーネルが登録されているか確認
-
-```
-poetry run jupyter kernelspec list
-```
-
-カーネルが入ってないことがある?一旦プレコンパイルが必要?(要確認)
-
-```
-using IJulia
-```
-
-
-#### TODO: カスタムデフォルトsysimageからの起動
-
-```
-cd $LOCAL
-create_sysimage(:Plots, sysimage_path="sysimage/sys_plots.dylib", precompile_execution_file="script/precompile_plots.jl")
-```
-
-
-
-### Node.js
-
-```
-brew install node
-npm install -g yarn
-yarn global add eslint
-```
-
-
-### PyMol
-
-- TODO: ラボォ氏のテキストを参考に構築、もしくはDocker
-
-```
-brew install homebrew/dupes/tcl-tk --enable-threads --with-x11  # for PyMol
-brew install python --with-brewed-tk  # for PyMol
-brew install homebrew/science/pymol
-```
-
-
-
-### その他
-
-- TODO: gromacsとかpsi4のdocker
-
-
-
 ### KNIME
 
-大半のワークフローはStreamlitに移行したのでそれほど使わないかもしれない
+Version 5でBIRTベースのreportingが廃止になり、大半のワークフローはStreamlitに移行したので今後使わないかもしれない。
+
+No-codeアプリ開発を習得できるレベルの人員がそれなりに多い組織でないと機能しないし、科学技術用途はビジネス用途に比べて定型解析が少ないので最初からPythonを教育したほうがいい。
 
 Install KNIME Extensions...で下記拡張をインストール
 
@@ -278,11 +294,9 @@ Install KNIME Extensions...で下記拡張をインストール
 
 
 
-### Legacy
+### 旧conda時代のPython環境
 
-#### 旧conda時代のPython環境
-
-condaは使わない。RDKitはDocker使用。
+(2024年現在)condaはライセンス条件が安定しないのでインストール禁止。RDKitはDocker使用。
 
 ```
 conda install rdkit -c rdkit  # vegaが先だとコンフリクトする？
@@ -300,6 +314,8 @@ pip install git+https://github.com/taynaud/python-louvain.git@networkx2
 
 
 ### LaTeX
+
+TeXはOverleafの方が良い
 
 - MacTeX公式からBasicTeX.pkgをダウンロードしてインストール
 - /Library/TeX/texbinにパスを通す
