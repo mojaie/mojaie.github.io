@@ -1,15 +1,13 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2024-08-05
+dateModified: 2024-08-07
 tags:
   - macOS
   - environment setup
 ---
 
-
 ### アプリケーション
-
 
 #### 公式サイトからダウンロード
 
@@ -102,8 +100,9 @@ Extensionを入れる
 - Hex Editor
 - Japanese Language Pack
 - Markdown PDF
+- Markdown Preview Mermaid Support
 - Render Line Endings
-- YAML (評価中)
+- YAML
 - zenkaku
 - Julia (保留)
 
@@ -125,9 +124,13 @@ rye add <package>  # パッケージインストール
   - https://github.com/astral-sh/rye/issues/912
   - 次のバージョンで修正されると思うが、上記issueに解決策が出ていて、手動でpyproject.tomlにPROJECT_ROOTを指定すれば問題ない。
   - `streamlit @ file:///${PROJECT_ROOT}/temp/streamlit-1.29.0.tar.gz`
+- pyproject.tomlにworkspace(例えばlocalenv)の設定をするとworkspace内の開発中のパッケージがその都度更新を反映するので便利
+  - パッケージングの必要がないworkspace最上階フォルダは`virtual=true`にする
+  - Workspaceでシンボリックリンクが認識されない->バグ
+  - 当面はassay-spec-utilsはlocalenvのサブパッケージとして扱う
 
 
-### Julia
+#### Julia
 
 - 実行可能バイナリにパスを通す(localenvの.zshrcに記載済み)
 - instantiateでlocalenvの依存パッケージをインストール(Project.tomlに記載)
@@ -139,7 +142,7 @@ pkg> instantiate
 Jupyterのカーネルが登録されているか確認
 
 ```
-poetry run jupyter kernelspec list
+rye run jupyter kernelspec list
 ```
 
 カーネルが入ってないことがある?一旦プレコンパイルが必要?(要確認)
@@ -149,7 +152,7 @@ using IJulia
 ```
 
 
-### Node.js
+#### Node.js
 
 - TODO: 情報が古いので要確認
 
@@ -159,7 +162,7 @@ yarn global add eslint
 ```
 
 
-### PyMol
+#### PyMol
 
 - TODO: 調査
 
@@ -171,16 +174,16 @@ brew install homebrew/science/pymol
 
 
 
-### その他
+#### その他
 
 - TODO: gromacsとかpsi4のdocker
 
 
 
-## Legacy
+### 開発環境(Legacy)
 
+#### Python (pyenv+poetry)
 
-### Python (pyenv+poetry)
 - pyenvとPoetryを使う(Poetry単独だと2.7系のシステムPythonを使おうとする)
 - Julia関連(IJuliaやPyCallなど)はなぜかConda.jlのpythonを推すので要検討
 
@@ -231,7 +234,7 @@ poetry add chromedriver-binary-auto  # Selenium用。自動で適切なバージ
 ```
 
 
-### KNIME
+#### KNIME
 
 Version 5でBIRTベースのreportingが廃止になり、大半のワークフローはStreamlitに移行したので今後使わないかもしれない。
 
@@ -239,7 +242,7 @@ No-codeアプリ開発を習得できるレベルの人員がそれなりに多�
 
 Install KNIME Extensions...で下記拡張をインストール
 
-#### 必須
+##### 必須
 
 - KNIME Python Integration
 
@@ -257,7 +260,7 @@ Install KNIME Extensions...で下記拡張をインストール
 
   SDFile読み書きなど
 
-#### 評価中
+##### 評価中
 
 - KNIME Python Integration (Labs)
 - KNIME Modern UI Preview
@@ -281,7 +284,7 @@ Install KNIME Extensions...で下記拡張をインストール
   ストリーミング(非同期実行)ができるようになる。
 
 
-#### Windows編
+##### Windows編
 
 基本的には上記そのままインストール可能
 
@@ -293,8 +296,7 @@ Install KNIME Extensions...で下記拡張をインストール
   - conda install seaborn
 
 
-
-### 旧conda時代のPython環境
+#### 旧conda時代のPython環境
 
 (2024年現在)condaはライセンス条件が安定しないのでインストール禁止。RDKitはDocker使用。
 
@@ -313,7 +315,7 @@ pip install git+https://github.com/taynaud/python-louvain.git@networkx2
 ```
 
 
-### LaTeX
+#### LaTeX
 
 TeXはOverleafの方が良い
 
