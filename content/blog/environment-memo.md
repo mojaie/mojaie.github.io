@@ -101,6 +101,7 @@ Extensionを入れる
 - Japanese Language Pack
 - Markdown PDF
 - Markdown Preview Mermaid Support
+- Prettier
 - Render Line Endings
 - YAML
 - zenkaku
