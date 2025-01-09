@@ -1,7 +1,7 @@
 ---
 title: 作業環境構築メモ
 dateCreated: 2020-05-19
-dateModified: 2024-08-07
+dateModified: 2025-01-08
 tags:
   - macOS
   - environment setup
@@ -17,25 +17,29 @@ tags:
 - Box
 - Google Drive (自宅のみ)
 - Zotero
-- InkScape
-- Cytoscape
+- Zoom
+- VSCode
+- Office 365
 - KNIME
+
+- Cytoscape
+- InkScape
 - DeepL
 - Tabula
-- Zoom
-- Microsoft Office
-- VSCode
 
 
 #### App storeからダウンロード
 
+- Slack
 - Taurine
-- StuffIt Expander
-- Microsoft Remote Desktop
+- Windows App (旧Remote Desktop)
+
 - Okta Verify
+- StuffIt Expander
 
 
 ### 開発環境
+
 
 #### localenv
 
@@ -55,10 +59,26 @@ cd .ssh
 ln -s ~/Workspace/localenv/ssh/config
 ```
 
+#### VSCode
+
+Extensionを入れる
+
+- Git Graph
+- Hex Editor
+- Japanese Language Pack
+- Markdown PDF
+- Render Line Endings
+- zenkaku
+
+- Markdown Preview Mermaid Support
+- Prettier
+- YAML (評価中)
+- Julia (保留)
+
 
 #### Homebrew
 
-
+- Apple Siliconはデフォルトが`/usr/local`ではなく`/opt/homebrew`
 - globalインストール
   - `/usr/local`に既にあるファイルフォルダの権限を変更するので注意が必要(全てwritable、ユーザはインストールユーザ、グループはadmin)
 - もしくは`~/.homebrew`にローカルインストールする
@@ -78,7 +98,7 @@ brew doctor
 
 ```
 brew install rsync  # localインストールはopensslビルドするのでかなり時間がかかる
-brew link openssl --force  # LibreSSLからの切り替え、要シェル再起動
+brew link openssl --force  # LibreSSLからの切り替え、要シェル再起動 ->Apple Siliconでは不要になってる
 
 brew install juliaup  # Julia環境
 brew install rye  # Python環境
@@ -90,22 +110,6 @@ brew install cmake  # localインストールはかなり時間かかる
 # brew install pirj/homebrew-noclamshell/noclamshell  # ディスプレイ使うことが少なくなったので不要
 # brew services start noclamshell  # 同上
 ```
-
-
-#### VSCode
-
-Extensionを入れる
-
-- Git Graph
-- Hex Editor
-- Japanese Language Pack
-- Markdown PDF
-- Markdown Preview Mermaid Support
-- Prettier
-- Render Line Endings
-- YAML
-- zenkaku
-- Julia (保留)
 
 
 #### Python (Rye)
