@@ -12,10 +12,6 @@ tags:
 #### 公式サイトからダウンロード
 
 - Google Chrome
-- Falcon
-- F5 BIG-IP (自宅のみ)
-- Box
-- Google Drive (自宅のみ)
 - Zotero
 - Zoom
 - VSCode
@@ -40,7 +36,6 @@ tags:
 
 ### 開発環境
 
-
 #### localenv
 
 localenvをcloneする。初回git使用時にコマンドラインツールのインストールを促されるのでインストールする。
@@ -59,6 +54,15 @@ cd .ssh
 ln -s ~/Workspace/localenv/ssh/config
 ```
 
+#### Git
+
+pushするにはGitのユーザ名とメールアドレスの設定が必要
+
+```
+git config --global user.name "User name"
+git config --global user.email "user@email.com"
+```
+
 #### VSCode
 
 Extensionを入れる
@@ -74,7 +78,6 @@ Extensionを入れる
 - Prettier
 - YAML (評価中)
 - Julia (保留)
-
 
 #### Homebrew
 
