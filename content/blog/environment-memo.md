@@ -108,6 +108,7 @@ brew install rye  # Python環境
 
 brew install node  # localインストールはかなり時間かかる
 brew install cmake  # localインストールはかなり時間かかる
+brew install gettext  # envsubst
 
 # brew cask install xquartz  # 現在はおそらく不要
 # brew install pirj/homebrew-noclamshell/noclamshell  # ディスプレイ使うことが少なくなったので不要
