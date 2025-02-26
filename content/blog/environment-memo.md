@@ -104,7 +104,7 @@ brew install rsync  # localインストールはopensslビルドするのでか�
 brew link openssl --force  # LibreSSLからの切り替え、要シェル再起動 ->Apple Siliconでは不要になってる
 
 brew install juliaup  # Julia環境
-brew install rye  # Python環境
+brew install uv  # Python環境
 
 brew install node  # localインストールはかなり時間かかる
 brew install cmake  # localインストールはかなり時間かかる
@@ -116,27 +116,26 @@ brew install gettext  # envsubst
 ```
 
 
-#### Python (Rye)
+#### Python (uv)
 
-- PyPIのHatchは扱いにくいのでRyeをインストール
+- PyPIのHatchは扱いにくいのでuvをインストール (rye->uvに切り替え済み)
 
 ```sh
-rye init <project name>  # プロジェクト作成
-rye pin 3.10  # syncでこのバージョンのPythonが入る、場所は~/.rye
-rye sync  # .venv作成、切り替え
-rye add <package>  # パッケージインストール
+uv init <project name>  # プロジェクト作成
+uv sync  # .venv作成、切り替え
+uv add <package>  # パッケージインストール
 ```
 
-- `rye run`で仮想環境内からコマンド実行
+- `uv run`で仮想環境内からコマンド実行
 - 爆速なので仮想環境切り替えというよりその都度pin->syncし直せばよさそう
 - TODO: おそらくRyeの不具合で、ローカルパッケージの相対パスが効かない。
   - https://github.com/astral-sh/rye/issues/912
   - 次のバージョンで修正されると思うが、上記issueに解決策が出ていて、手動でpyproject.tomlにPROJECT_ROOTを指定すれば問題ない。
   - `streamlit @ file:///${PROJECT_ROOT}/temp/streamlit-1.29.0.tar.gz`
-- pyproject.tomlにworkspace(例えばlocalenv)の設定をするとworkspace内の開発中のパッケージがその都度更新を反映するので便利
-  - パッケージングの必要がないworkspace最上階フォルダは`virtual=true`にする
-  - Workspaceでシンボリックリンクが認識されない->バグ
-  - 当面はassay-spec-utilsはlocalenvのサブパッケージとして扱う
+- (rye)pyproject.tomlにworkspace(例えばlocalenv)の設定をするとworkspace内の開発中のパッケージがその都度更新を反映するので便利
+  - uvではtools.uv.sourcesでリポジトリの場所を指定、editable=trueにすると変更が即反映される
+- (rye)パッケージングの必要がないworkspace最上階フォルダは`virtual=true`にする
+  - uvではpyprojext.tomlにbuildの指定がない場合自動的に仮想パッケージ扱いになる
 
 
 #### Julia
