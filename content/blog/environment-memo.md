@@ -18,10 +18,17 @@ tags:
 - Office 365
 - KNIME
 
-- Cytoscape
-- InkScape
-- DeepL
-- Tabula
+- Marvin (Marvin Sketchをダウンロード->Suiteが入る)
+- Adoptium OpenJDK (Marvin必須?多分不要)
+- BIOVIA connector
+
+- 様子見
+  - Cytoscape
+  - InkScape
+  - DeepL
+  - Tabula
+
+
 
 
 #### App storeからダウンロード
